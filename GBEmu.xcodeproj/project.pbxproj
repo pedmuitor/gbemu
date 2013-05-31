@@ -1,0 +1,259 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EBF7DD011759288800A443B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBF7DD001759288800A443B9 /* Foundation.framework */; };
+		EBF7DD161759291000A443B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD12175928CD00A443B9 /* main.m */; };
+		EBF7DD171759291300A443B9 /* GBCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD14175928CD00A443B9 /* GBCPU.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EBF7DCFB1759288800A443B9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		EBF7DCFD1759288800A443B9 /* GBEmu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GBEmu; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBF7DD001759288800A443B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		EBF7DD10175928CD00A443B9 /* GBEmu-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBEmu-Prefix.pch"; sourceTree = "<group>"; };
+		EBF7DD11175928CD00A443B9 /* GBEmu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GBEmu.1; sourceTree = "<group>"; };
+		EBF7DD12175928CD00A443B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EBF7DD14175928CD00A443B9 /* GBCPU.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GBCPU.c; sourceTree = "<group>"; };
+		EBF7DD15175928CD00A443B9 /* GBCPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPU.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EBF7DCFA1759288800A443B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBF7DD011759288800A443B9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EBF7DCF41759288800A443B9 = {
+			isa = PBXGroup;
+			children = (
+				EBF7DD0E175928CD00A443B9 /* src */,
+				EBF7DCFF1759288800A443B9 /* Frameworks */,
+				EBF7DCFE1759288800A443B9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EBF7DCFE1759288800A443B9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EBF7DCFD1759288800A443B9 /* GBEmu */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EBF7DCFF1759288800A443B9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EBF7DD001759288800A443B9 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EBF7DD0E175928CD00A443B9 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				EBF7DD0F175928CD00A443B9 /* app */,
+				EBF7DD13175928CD00A443B9 /* emu */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		EBF7DD0F175928CD00A443B9 /* app */ = {
+			isa = PBXGroup;
+			children = (
+				EBF7DD10175928CD00A443B9 /* GBEmu-Prefix.pch */,
+				EBF7DD11175928CD00A443B9 /* GBEmu.1 */,
+				EBF7DD12175928CD00A443B9 /* main.m */,
+			);
+			path = app;
+			sourceTree = "<group>";
+		};
+		EBF7DD13175928CD00A443B9 /* emu */ = {
+			isa = PBXGroup;
+			children = (
+				EBF7DD15175928CD00A443B9 /* GBCPU.h */,
+				EBF7DD14175928CD00A443B9 /* GBCPU.c */,
+			);
+			path = emu;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EBF7DCFC1759288800A443B9 /* GBEmu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBF7DD0B1759288800A443B9 /* Build configuration list for PBXNativeTarget "GBEmu" */;
+			buildPhases = (
+				EBF7DCF91759288800A443B9 /* Sources */,
+				EBF7DCFA1759288800A443B9 /* Frameworks */,
+				EBF7DCFB1759288800A443B9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GBEmu;
+			productName = GBEmu;
+			productReference = EBF7DCFD1759288800A443B9 /* GBEmu */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EBF7DCF51759288800A443B9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = None;
+			};
+			buildConfigurationList = EBF7DCF81759288800A443B9 /* Build configuration list for PBXProject "GBEmu" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EBF7DCF41759288800A443B9;
+			productRefGroup = EBF7DCFE1759288800A443B9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EBF7DCFC1759288800A443B9 /* GBEmu */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EBF7DCF91759288800A443B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBF7DD161759291000A443B9 /* main.m in Sources */,
+				EBF7DD171759291300A443B9 /* GBCPU.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		EBF7DD091759288800A443B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		EBF7DD0A1759288800A443B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		EBF7DD0C1759288800A443B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "src/app/GBEmu-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EBF7DD0D1759288800A443B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "src/app/GBEmu-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EBF7DCF81759288800A443B9 /* Build configuration list for PBXProject "GBEmu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBF7DD091759288800A443B9 /* Debug */,
+				EBF7DD0A1759288800A443B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EBF7DD0B1759288800A443B9 /* Build configuration list for PBXNativeTarget "GBEmu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBF7DD0C1759288800A443B9 /* Debug */,
+				EBF7DD0D1759288800A443B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EBF7DCF51759288800A443B9 /* Project object */;
+}
