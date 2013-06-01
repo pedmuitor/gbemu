@@ -22,15 +22,6 @@ void LD (int8_t *r, int8_t n)
     *r = n;
 }
 
-void LD_R8 (int8_t *r1, int8_t *r2)
-{
-    *r1 = *r2;
-}
-
-void LD_A (int8_t n)
-{
-    LD(&REG_A, n);
-}
 
 //----------------------------------------------//
 //                                              //
@@ -286,61 +277,27 @@ void ADD_SP (int8_t n)
     REG_SP      = sp;
 }
 
-void INC_BC ()
+void INC16 (int8_t *hr, int8_t *lr)
 {
-    int16_t regBC     = REG_BC + 1;
+    int8_t hrVal    = *hr;
+    int8_t lrVal    = *lr;
+   
+    int16_t regHRLR = ((0xFF00 & hrVal <<8) | (0x00FF & lrVal));
+    regHRLR += 1;
     
-    REG_B   = (0xFF & (regBC >> 8));
-    REG_C   = 0xFF & regBC;
+    *hr   = (0xFF & (regHRLR >> 8));
+    *lr   = 0xFF & regHRLR;
 }
 
-void INC_DE ()
+void DEC16 (int8_t *hr, int8_t *lr)
 {
-    int16_t regDE     = REG_DE + 1;
+    int8_t hrVal    = *hr;
+    int8_t lrVal    = *lr;
     
-    REG_D   = (0xFF & (regDE >> 8));
-    REG_E   = 0xFF & regDE;
-}
-
-void INC_HL ()
-{
-    int16_t regHL     = REG_HL + 1;
+    int16_t regHRLR = ((0xFF00 & hrVal <<8) | (0x00FF & lrVal));
+    regHRLR -= 1;
     
-    REG_H   = (0xFF & (regHL >> 8));
-    REG_L   = 0xFF & regHL;
-}
-
-void INC_SP ()
-{
-    REG_SP += 1;
-}
-
-void DEC_BC ()
-{
-    int16_t regBC     = REG_BC - 1;
-    
-    REG_B   = (0xFF & (regBC >> 8));
-    REG_C   = 0xFF & regBC;
-}
-
-void DEC_DE ()
-{
-    int16_t regDE     = REG_DE - 1;
-    
-    REG_D   = (0xFF & (regDE >> 8));
-    REG_E   = 0xFF & regDE;
-}
-
-void DEC_HL ()
-{
-    int16_t regHL     = REG_HL - 1;
-    
-    REG_H   = (0xFF & (regHL >> 8));
-    REG_L   = 0xFF & regHL;
-}
-
-void DEC_SP ()
-{
-    REG_SP -= 1;
+    *hr   = (0xFF & (regHRLR >> 8));
+    *lr   = 0xFF & regHRLR;
 }
 

@@ -49,15 +49,9 @@ struct {
 //                                              //
 //----------------------------------------------//
 
-// LD r,n         - Put value n into R.
-
+// LD r,n         - r -> n
 void LD (int8_t *r, int8_t n);
 
-// LD r1,r2       - Put value r2 into r1.
-void LD_R8 (int8_t *r1, int8_t *r2);
-
-//LD n,A         - Put value A into n.
-void LD_A (int8_t n);
 
 //----------------------------------------------//
 //                                              //
@@ -223,10 +217,7 @@ void ADD_SP (int8_t n);
 //Flags affected:
 //None.
 
-void INC_BC ();
-void INC_DE ();
-void INC_HL ();
-void INC_SP ();
+void INC16 (int8_t *hr, int8_t *lr);
 
 //DEC nn         - Decrement register nn.
 //
@@ -235,10 +226,8 @@ void INC_SP ();
 //Flags affected:
 //None
 
-void DEC_BC ();
-void DEC_DE ();
-void DEC_HL ();
-void DEC_SP ();
+void DEC16 (int8_t *hr, int8_t *lr);
+
 
 //----------------------------------------------//
 //                                              //
