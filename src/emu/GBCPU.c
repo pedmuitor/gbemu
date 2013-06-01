@@ -10,6 +10,8 @@
 #include <stdint.h>
 
 #include "GBCPU.h"
+#include "GBMemory.h"
+
 
 //----------------------------------------------//
 //                                              //
@@ -24,15 +26,28 @@ void LD (int8_t *r, int8_t n)
 
 //----------------------------------------------//
 //                                              //
-//                  8-Bit ALU                   //
+//                 16-Bit Loads                 //
 //                                              //
 //----------------------------------------------//
 
-void LD16 (int8_t *hr, int8_t *lr, int16_t nn)
+void LD16HL (int8_t *hr, int8_t *lr, int16_t nn)
 {
     *hr   = (0xFF & (nn >> 8));
     *lr   = 0xFF & nn;
 }
+
+void LD16 (uint16_t *r, int16_t nn)
+{
+    *r = nn;
+}
+
+//----------------------------------------------//
+//                                              //
+//                  8-Bit ALU                   //
+//                                              //
+//----------------------------------------------//
+
+
 
 //Helpers
 void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag);
@@ -268,7 +283,7 @@ void ADD16 (int16_t nn)
     
     add16(&sum, nn);
     
-    LD16(&REG_H, &REG_L, sum);
+    LD16HL(&REG_H, &REG_L, sum);
 }
 
 void ADD_SP (int8_t n)
@@ -289,7 +304,7 @@ void INC16 (int8_t *hr, int8_t *lr)
     int16_t nn = ((0xFF00 & hrVal <<8) | (0x00FF & lrVal));
     nn += 1;
     
-    LD16(hr, lr, nn);
+    LD16HL(hr, lr, nn);
 
 }
 
@@ -301,6 +316,6 @@ void DEC16 (int8_t *hr, int8_t *lr)
     int16_t nn = ((0xFF00 & hrVal <<8) | (0x00FF & lrVal));
     nn -= 1;
     
-    LD16(hr, lr, nn);
+    LD16HL(hr, lr, nn);
 }
 

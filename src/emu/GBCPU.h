@@ -13,7 +13,7 @@
 
 struct {
     struct {
-        int8_t  A, B, C, D, E, H, L;
+        int8_t  A, B, C, D, E, F, H, L;
         uint16_t PC, SP;
     }_r;
     
@@ -29,10 +29,13 @@ struct {
 #define REG_C           REGISTERS.C
 #define REG_D           REGISTERS.D
 #define REG_E           REGISTERS.E
+#define REG_F           REGISTERS.F
 #define REG_H           REGISTERS.H
 #define REG_L           REGISTERS.L
 #define REG_SP          REGISTERS.SP
+#define REG_PC          REGISTERS.PC
 
+#define REG_AF          ((0xFF00 & REG_A <<8) | (0x00FF & REG_F))
 #define REG_BC          ((0xFF00 & REG_B <<8) | (0x00FF & REG_C))
 #define REG_DE          ((0xFF00 & REG_D <<8) | (0x00FF & REG_E))
 #define REG_HL          ((0xFF00 & REG_H <<8) | (0x00FF & REG_L))
@@ -42,6 +45,7 @@ struct {
 #define FLAG_N          FLAGS.N
 #define FLAG_H          FLAGS.H
 #define FLAG_C          FLAGS.C
+
 
 //----------------------------------------------//
 //                                              //
@@ -60,7 +64,8 @@ void LD (int8_t *r, int8_t n);
 //----------------------------------------------//
 
 // LD HRLR,nn        - HRLR <- nn
-void LD16 (int8_t *hr, int8_t *lr, int16_t nn);
+void LD16HL (int8_t *hr, int8_t *lr, int16_t nn);
+void LD16 (uint16_t *r, int16_t nn);
 
 //----------------------------------------------//
 //                                              //

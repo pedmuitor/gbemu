@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C46C0C21759EB87006D9BD9 /* GBMemory.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C46C0C11759EB87006D9BD9 /* GBMemory.c */; };
+		1C930B99175AC05400889E2C /* GBCPUInstructions.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C930B98175AC05400889E2C /* GBCPUInstructions.c */; };
 		EBF7DD011759288800A443B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBF7DD001759288800A443B9 /* Foundation.framework */; };
 		EBF7DD161759291000A443B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD12175928CD00A443B9 /* main.m */; };
 		EBF7DD171759291300A443B9 /* GBCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD14175928CD00A443B9 /* GBCPU.c */; };
@@ -25,6 +27,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1C46C0C01759EB7E006D9BD9 /* GBMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBMemory.h; sourceTree = "<group>"; };
+		1C46C0C11759EB87006D9BD9 /* GBMemory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBMemory.c; sourceTree = "<group>"; };
+		1C930B97175AC02F00889E2C /* GBCPUInstructions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPUInstructions.h; sourceTree = "<group>"; };
+		1C930B98175AC05400889E2C /* GBCPUInstructions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBCPUInstructions.c; sourceTree = "<group>"; };
 		EBF7DCFD1759288800A443B9 /* GBEmu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GBEmu; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF7DD001759288800A443B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EBF7DD10175928CD00A443B9 /* GBEmu-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBEmu-Prefix.pch"; sourceTree = "<group>"; };
@@ -95,6 +101,10 @@
 			children = (
 				EBF7DD15175928CD00A443B9 /* GBCPU.h */,
 				EBF7DD14175928CD00A443B9 /* GBCPU.c */,
+				1C46C0C01759EB7E006D9BD9 /* GBMemory.h */,
+				1C46C0C11759EB87006D9BD9 /* GBMemory.c */,
+				1C930B97175AC02F00889E2C /* GBCPUInstructions.h */,
+				1C930B98175AC05400889E2C /* GBCPUInstructions.c */,
 			);
 			path = emu;
 			sourceTree = "<group>";
@@ -152,6 +162,8 @@
 			files = (
 				EBF7DD161759291000A443B9 /* main.m in Sources */,
 				EBF7DD171759291300A443B9 /* GBCPU.c in Sources */,
+				1C46C0C21759EB87006D9BD9 /* GBMemory.c in Sources */,
+				1C930B99175AC05400889E2C /* GBCPUInstructions.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +264,7 @@
 				EBF7DD0D1759288800A443B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
