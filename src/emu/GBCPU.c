@@ -22,12 +22,17 @@ void LD (int8_t *r, int8_t n)
     *r = n;
 }
 
-
 //----------------------------------------------//
 //                                              //
 //                  8-Bit ALU                   //
 //                                              //
 //----------------------------------------------//
+
+void LD16 (int8_t *hr, int8_t *lr, int16_t nn)
+{
+    *hr   = (0xFF & (nn >> 8));
+    *lr   = 0xFF & nn;
+}
 
 //Helpers
 void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag);
@@ -78,7 +83,7 @@ void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag)
         }
     }
     
-    *r  =  sum;
+    *r  = sum;
 }
 
 void addA (int8_t n, bool c)
@@ -130,7 +135,7 @@ void sub8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag, bool store)
     }
     
     if (store) {
-        *r   = sub;
+        *r  = sub;
     }
 }
 
@@ -259,12 +264,11 @@ void add16 (int16_t *r, int16_t nn)
 
 void ADD16 (int16_t nn)
 {
-    int16_t regHL     = REG_HL;
+    int16_t sum     = REG_HL;
     
-    add16(&regHL, nn);
+    add16(&sum, nn);
     
-    REG_H   = (0xFF & (regHL >> 8));
-    REG_L   = 0xFF & regHL;
+    LD16(&REG_H, &REG_L, sum);
 }
 
 void ADD_SP (int8_t n)
@@ -282,11 +286,11 @@ void INC16 (int8_t *hr, int8_t *lr)
     int8_t hrVal    = *hr;
     int8_t lrVal    = *lr;
    
-    int16_t regHRLR = ((0xFF00 & hrVal <<8) | (0x00FF & lrVal));
-    regHRLR += 1;
+    int16_t nn = ((0xFF00 & hrVal <<8) | (0x00FF & lrVal));
+    nn += 1;
     
-    *hr   = (0xFF & (regHRLR >> 8));
-    *lr   = 0xFF & regHRLR;
+    LD16(hr, lr, nn);
+
 }
 
 void DEC16 (int8_t *hr, int8_t *lr)
@@ -294,10 +298,9 @@ void DEC16 (int8_t *hr, int8_t *lr)
     int8_t hrVal    = *hr;
     int8_t lrVal    = *lr;
     
-    int16_t regHRLR = ((0xFF00 & hrVal <<8) | (0x00FF & lrVal));
-    regHRLR -= 1;
+    int16_t nn = ((0xFF00 & hrVal <<8) | (0x00FF & lrVal));
+    nn -= 1;
     
-    *hr   = (0xFF & (regHRLR >> 8));
-    *lr   = 0xFF & regHRLR;
+    LD16(hr, lr, nn);
 }
 
