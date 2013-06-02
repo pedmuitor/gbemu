@@ -18,7 +18,7 @@
 void setUp(void);
 void shutDown(void);
 
-void cycle(void);
+void nextOperation(void);
 uint8_t readOperationByteParameter(void);
 uint16_t readOpertionWordParameter(void);
 

@@ -30,9 +30,9 @@ void shutDown(void)
     
 }
 
-void cycle(void)
+void nextOperation(void)
 {
-    uint8_t opCode = 0; //TODO: read opcode from memory
+    uint8_t opCode = getByteAt(REG_PC++);
     int8_t n = 0;
     int16_t nn = 0;
     
@@ -444,7 +444,7 @@ void cycle(void)
 
 uint8_t readOperationByteParameter(void)
 {
-    uint8_t result = getByteAt(++REG_PC);
+    uint8_t result = getByteAt(REG_PC++);
     return result;
 }
 
@@ -452,8 +452,8 @@ uint16_t readOpertionWordParameter(void)
 {
     //TODO: little endian o big endian?
     uint16_t result;
-    uint8_t nH = getByteAt(++REG_PC);
-    uint8_t nL = getByteAt(++REG_PC);
+    uint8_t nH = getByteAt(REG_PC++);
+    uint8_t nL = getByteAt(REG_PC++);
     result = ((0xFF00 & nH <<8) | (0x00FF & nL));
     
     return result;
