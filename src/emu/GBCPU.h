@@ -33,6 +33,7 @@ struct {
 #define REG_L           REGISTERS.L
 #define REG_SP          REGISTERS.SP
 
+#define REG16_STORE(ptrRH,ptrRL,nn)     *(ptrRH)   = (0xFF & ((nn) >> 8));*(ptrRH)   = 0xFF & (nn);
 #define REG_BC          ((0xFF00 & REG_B <<8) | (0x00FF & REG_C))
 #define REG_DE          ((0xFF00 & REG_D <<8) | (0x00FF & REG_E))
 #define REG_HL          ((0xFF00 & REG_H <<8) | (0x00FF & REG_L))
@@ -60,7 +61,9 @@ void LD (int8_t *r, int8_t n);
 //----------------------------------------------//
 
 // LD HRLR,nn        - HRLR <- nn
-void LD16 (int8_t *hr, int8_t *lr, int16_t nn);
+void LD16 (int16_t *rr, int16_t nn);
+
+
 
 //----------------------------------------------//
 //                                              //
@@ -183,6 +186,11 @@ void INC (int8_t *r);
 //C - Not affected.
 void DEC (int8_t *r);
 
+void DAA ();
+
+void CPL ();
+
+
 
 //----------------------------------------------//
 //                                              //
@@ -199,18 +207,7 @@ void DEC (int8_t *r);
 //N - Reset.
 //H - Set if carry from bit 11.
 //C - Set if carry from bit 15.
-void ADD16 (int16_t nn);
-
-//ADD SP,n       - Add n to Stack Pointer [SP].
-//
-//n = one byte signed immediate value.
-//
-//Flags affected:
-//Z - Reset.
-//N - Reset.
-//H - Set or reset according to operation.
-//C - Set or reset according to operation.
-void ADD_SP (int8_t n);
+void ADD16 (int16_t* rr, int16_t nn);
 
 //INC nn         - Increment register nn.
 //
@@ -219,7 +216,7 @@ void ADD_SP (int8_t n);
 //Flags affected:
 //None.
 
-void INC16 (int8_t *hr, int8_t *lr);
+void INC16 (int16_t* rr);
 
 //DEC nn         - Decrement register nn.
 //
@@ -228,7 +225,7 @@ void INC16 (int8_t *hr, int8_t *lr);
 //Flags affected:
 //None
 
-void DEC16 (int8_t *hr, int8_t *lr);
+void DEC16 (int16_t* rr);
 
 
 //----------------------------------------------//

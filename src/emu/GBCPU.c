@@ -24,15 +24,20 @@ void LD (int8_t *r, int8_t n)
 
 //----------------------------------------------//
 //                                              //
-//                  8-Bit ALU                   //
+//                  16-Bit Loads                //
 //                                              //
 //----------------------------------------------//
 
-void LD16 (int8_t *hr, int8_t *lr, int16_t nn)
+void LD16 (int16_t *rr, int16_t nn)
 {
-    *hr   = (0xFF & (nn >> 8));
-    *lr   = 0xFF & nn;
+    *rr = nn;
 }
+
+//----------------------------------------------//
+//                                              //
+//                  8-Bit ALU                   //
+//                                              //
+//----------------------------------------------//
 
 //Helpers
 void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag);
@@ -217,6 +222,21 @@ void DEC (int8_t *r)
     sub8(r, 1, false, true, false, true);
 }
 
+void DAA ()
+{
+    FLAG_H  = 0;
+    
+    //TODO;
+}
+
+void CPL ()
+{
+    FLAG_N = 1;
+    FLAG_H = 1;
+    
+    REG_A  ^= 0xFF;
+}
+
 //----------------------------------------------//
 //                                              //
 //                  16-Bit ALU                  //
@@ -262,45 +282,22 @@ void add16 (int16_t *r, int16_t nn)
     }
 }
 
-void ADD16 (int16_t nn)
-{
-    int16_t sum     = REG_HL;
+void ADD16 (int16_t* rr, int16_t nn)
+{    
+    add16(rr, nn);
     
-    add16(&sum, nn);
-    
-    LD16(&REG_H, &REG_L, sum);
+    if (rr == ((int16_t*)&(REG_SP))) {
+        FLAG_Z  = 0;
+    }
 }
 
-void ADD_SP (int8_t n)
+void INC16 (int16_t* rr)
 {
-    FLAG_Z  = 0;
-    FLAG_N  = 0;
-    
-    int16_t sp  = REG_SP;
-    add16(&sp, (0x00FF & n));
-    REG_SP      = sp;
+    (*rr) += 1;
 }
 
-void INC16 (int8_t *hr, int8_t *lr)
+void DEC16 (int16_t* rr)
 {
-    int8_t hrVal    = *hr;
-    int8_t lrVal    = *lr;
-   
-    int16_t nn = ((0xFF00 & hrVal <<8) | (0x00FF & lrVal));
-    nn += 1;
-    
-    LD16(hr, lr, nn);
-
-}
-
-void DEC16 (int8_t *hr, int8_t *lr)
-{
-    int8_t hrVal    = *hr;
-    int8_t lrVal    = *lr;
-    
-    int16_t nn = ((0xFF00 & hrVal <<8) | (0x00FF & lrVal));
-    nn -= 1;
-    
-    LD16(hr, lr, nn);
+    (*rr) -= 1;
 }
 

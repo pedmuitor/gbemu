@@ -28,7 +28,6 @@ int main(int argc, const char * argv[])
         
         REG_H = 0x7F;
         REG_L = 0xFF;
-        ADD16(0x7FFF);
         
         
     }
