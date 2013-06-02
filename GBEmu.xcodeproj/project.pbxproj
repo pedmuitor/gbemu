@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1C46C0C21759EB87006D9BD9 /* GBMemory.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C46C0C11759EB87006D9BD9 /* GBMemory.c */; };
-		1C930B99175AC05400889E2C /* GBCPUInstructions.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C930B98175AC05400889E2C /* GBCPUInstructions.c */; };
+		1C930B99175AC05400889E2C /* GBCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C930B98175AC05400889E2C /* GBCPU.c */; };
 		EBF7DD011759288800A443B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBF7DD001759288800A443B9 /* Foundation.framework */; };
 		EBF7DD161759291000A443B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD12175928CD00A443B9 /* main.m */; };
-		EBF7DD171759291300A443B9 /* GBCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD14175928CD00A443B9 /* GBCPU.c */; };
+		EBF7DD171759291300A443B9 /* GBCPU_ALU.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD14175928CD00A443B9 /* GBCPU_ALU.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,17 +27,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1C1B9C98175B6F7B00944B65 /* GBMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBMacros.h; sourceTree = "<group>"; };
 		1C46C0C01759EB7E006D9BD9 /* GBMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBMemory.h; sourceTree = "<group>"; };
 		1C46C0C11759EB87006D9BD9 /* GBMemory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBMemory.c; sourceTree = "<group>"; };
-		1C930B97175AC02F00889E2C /* GBCPUInstructions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPUInstructions.h; sourceTree = "<group>"; };
-		1C930B98175AC05400889E2C /* GBCPUInstructions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBCPUInstructions.c; sourceTree = "<group>"; };
+		1C930B97175AC02F00889E2C /* GBCPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPU.h; sourceTree = "<group>"; };
+		1C930B98175AC05400889E2C /* GBCPU.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBCPU.c; sourceTree = "<group>"; };
 		EBF7DCFD1759288800A443B9 /* GBEmu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GBEmu; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF7DD001759288800A443B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EBF7DD10175928CD00A443B9 /* GBEmu-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBEmu-Prefix.pch"; sourceTree = "<group>"; };
 		EBF7DD11175928CD00A443B9 /* GBEmu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = GBEmu.1; sourceTree = "<group>"; };
 		EBF7DD12175928CD00A443B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		EBF7DD14175928CD00A443B9 /* GBCPU.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GBCPU.c; sourceTree = "<group>"; };
-		EBF7DD15175928CD00A443B9 /* GBCPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPU.h; sourceTree = "<group>"; };
+		EBF7DD14175928CD00A443B9 /* GBCPU_ALU.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GBCPU_ALU.c; sourceTree = "<group>"; };
+		EBF7DD15175928CD00A443B9 /* GBCPU_ALU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPU_ALU.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,12 +100,13 @@
 		EBF7DD13175928CD00A443B9 /* emu */ = {
 			isa = PBXGroup;
 			children = (
-				EBF7DD15175928CD00A443B9 /* GBCPU.h */,
-				EBF7DD14175928CD00A443B9 /* GBCPU.c */,
+				1C1B9C98175B6F7B00944B65 /* GBMacros.h */,
+				EBF7DD15175928CD00A443B9 /* GBCPU_ALU.h */,
+				EBF7DD14175928CD00A443B9 /* GBCPU_ALU.c */,
 				1C46C0C01759EB7E006D9BD9 /* GBMemory.h */,
 				1C46C0C11759EB87006D9BD9 /* GBMemory.c */,
-				1C930B97175AC02F00889E2C /* GBCPUInstructions.h */,
-				1C930B98175AC05400889E2C /* GBCPUInstructions.c */,
+				1C930B97175AC02F00889E2C /* GBCPU.h */,
+				1C930B98175AC05400889E2C /* GBCPU.c */,
 			);
 			path = emu;
 			sourceTree = "<group>";
@@ -161,9 +163,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBF7DD161759291000A443B9 /* main.m in Sources */,
-				EBF7DD171759291300A443B9 /* GBCPU.c in Sources */,
+				EBF7DD171759291300A443B9 /* GBCPU_ALU.c in Sources */,
 				1C46C0C21759EB87006D9BD9 /* GBMemory.c in Sources */,
-				1C930B99175AC05400889E2C /* GBCPUInstructions.c in Sources */,
+				1C930B99175AC05400889E2C /* GBCPU.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

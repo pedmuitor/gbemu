@@ -9,26 +9,33 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#import "GBMacros.h"
+#import "GBCPU.h"
 #import "GBMemory.h"
 
-uint8_t getByteAt(uint16_t address)
+int8_t getByteAt(int16_t address)
 {
     //TODO: return byte at address
     return 0;
 }
 
-uint16_t getWordAt(uint16_t address)
+int16_t getWordAt(int16_t address)
 {
-    //TODO: return word at address
-    return 0;
+    //TODO: big-low endian
+    int8_t l = getByteAt(address);
+    int8_t h = getByteAt(address + 1);
+    
+    int16_t result = DWORD_FROM_HL(h, l);
+    
+    return result;
 }
 
-void writeByteAt(uint16_t address, uint8_t value)
+void writeByteAt(int16_t address, int8_t value)
 {
     //TODO: write byte at address
 }
 
-void writeWordAt(uint16_t address, uint16_t value)
+void writeWordAt(int16_t address, int16_t value)
 {
     //TODO: write word at address
 }

@@ -1,303 +1,461 @@
 //
-//  GBCPU.c
+//  GBCPUInstructions.c
 //  GBEmu
 //
-//  Created by Pedro Muiños on 31/05/13.
+//  Created by Jesús on 02/06/13.
 //  Copyright (c) 2013 None. All rights reserved.
 //
 
 #include <stdio.h>
 #include <stdint.h>
 
+#include "GBMacros.h"
 #include "GBCPU.h"
+#include "GBCPU_ALU.h"
+#include "GBMemory.h"
 
 //----------------------------------------------//
 //                                              //
-//                  8-Bit Loads                 //
+//                 CPU Commands                 //
 //                                              //
 //----------------------------------------------//
 
-void LD (int8_t *r, int8_t n)
+void setUp(void)
 {
-    *r = n;
+    //TODO: setup registers initial values
+    REG_SP = 0xFFFE;
 }
 
-//----------------------------------------------//
-//                                              //
-//                  16-Bit Loads                //
-//                                              //
-//----------------------------------------------//
-
-void LD16 (int16_t *rr, int16_t nn)
+void shutDown(void)
 {
-    *rr = nn;
+    
 }
 
-//----------------------------------------------//
-//                                              //
-//                  8-Bit ALU                   //
-//                                              //
-//----------------------------------------------//
-
-//Helpers
-void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag);
-void addA (int8_t n, bool c);
-void sub8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag, bool store);
-void subA (int8_t n, bool c, bool store);
-
-void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag)
+void nextOperation(void)
 {
-    int8_t number    = n + c;
-    int8_t rval      = *r;
-    int8_t  sum      = rval + number;
-
-    FLAG_N      = 0;
-    FLAG_Z      = (0 == sum);
+    uint8_t opCode = getByteAt(REG_PC++);
+    int8_t n = 0;
+    int16_t nn = 0;
     
-    //Overflow check:
-    //-----------------
-    //Operands with different signs never cause overflow
-    //It happens when adding operands with like signs and the result has a different sign
-    
-    //Half overflow
-    if (hFlag) {
-        int8_t hn       = number & 0x0F;
-        int8_t hr       = rval & 0x0F;
-        int8_t msbn     = (hn & 0x08) >> 3;
-        int8_t msbr     = (hr & 0x08) >> 3;
-        
-        if (msbn ^ msbr) {
-            FLAG_H          = 0;
-        }else {
-            int8_t msbs     = ((hn + hr) & 0x08) >> 3;
-            FLAG_H          = (0 != (msbs ^ msbn));
-        }
+    switch (opCode) {
+            //8-Bit loads
+        case 0x06:
+            n = readOperationByteParameter();
+            LD(&REG_B, n);
+            break;
+        case 0x0E:
+            n = readOperationByteParameter();
+            LD(&REG_C, n);
+            break;
+        case 0x16:
+            n = readOperationByteParameter();
+            LD(&REG_D, n);
+            break;
+        case 0x1E:
+            n = readOperationByteParameter();
+            LD(&REG_E, n);
+            break;
+        case 0x26:
+            n = readOperationByteParameter();
+            LD(&REG_H, n);
+            break;
+        case 0x2E:
+            n = readOperationByteParameter();
+            LD(&REG_L, n);
+            break;
+            
+            //LD r1, r2
+        case 0x7F:
+            LD(&REG_A, REG_A);
+            break;
+        case 0x78:
+            LD(&REG_A, REG_B);
+            break;
+        case 0x79:
+            LD(&REG_A, REG_C);
+            break;
+        case 0x7A:
+            LD(&REG_A, REG_D);
+            break;
+        case 0x7B:
+            LD(&REG_A, REG_E);
+            break;
+        case 0x7C:
+            LD(&REG_A, REG_H);
+            break;
+        case 0x7D:
+            LD(&REG_A, REG_L);
+            break;
+        case 0x7E:
+            n = getByteAt(REG_HL);
+            LD(&REG_A, n);
+            break;
+            
+        case 0x40:
+            LD(&REG_B, REG_B);
+            break;
+        case 0x41:
+            LD(&REG_B, REG_C);
+            break;
+        case 0x42:
+            LD(&REG_B, REG_D);
+            break;
+        case 0x43:
+            LD(&REG_B, REG_E);
+            break;
+        case 0x44:
+            LD(&REG_B, REG_H);
+            break;
+        case 0x45:
+            LD(&REG_B, REG_L);
+            break;
+        case 0x46:
+            n = getByteAt(REG_HL);
+            LD(&REG_B, n);
+            break;
+            
+        case 0x48:
+            LD(&REG_C, REG_B);
+            break;
+        case 0x49:
+            LD(&REG_C, REG_C);
+            break;
+        case 0x4A:
+            LD(&REG_C, REG_D);
+            break;
+        case 0x4B:
+            LD(&REG_C, REG_E);
+            break;
+        case 0x4C:
+            LD(&REG_C, REG_H);
+            break;
+        case 0x4D:
+            LD(&REG_C, REG_L);
+            break;
+        case 0x4E:
+            n = getByteAt(REG_HL);
+            LD(&REG_C, n);
+            break;
+            
+        case 0x50:
+            LD(&REG_D, REG_B);
+            break;
+        case 0x51:
+            LD(&REG_D, REG_C);
+            break;
+        case 0x52:
+            LD(&REG_D, REG_D);
+            break;
+        case 0x53:
+            LD(&REG_D, REG_E);
+            break;
+        case 0x54:
+            LD(&REG_D, REG_H);
+            break;
+        case 0x55:
+            LD(&REG_D, REG_L);
+            break;
+        case 0x56:
+            n = getByteAt(REG_HL);
+            LD(&REG_D, n);
+            break;
+            
+        case 0x58:
+            LD(&REG_E, REG_B);
+            break;
+        case 0x59:
+            LD(&REG_E, REG_C);
+            break;
+        case 0x5A:
+            LD(&REG_E, REG_D);
+            break;
+        case 0x5B:
+            LD(&REG_E, REG_E);
+            break;
+        case 0x5C:
+            LD(&REG_E, REG_H);
+            break;
+        case 0x5D:
+            LD(&REG_E, REG_L);
+            break;
+        case 0x5E:
+            n = getByteAt(REG_HL);
+            LD(&REG_E, n);
+            break;
+            
+        case 0x60:
+            LD(&REG_H, REG_B);
+            break;
+        case 0x61:
+            LD(&REG_H, REG_C);
+            break;
+        case 0x62:
+            LD(&REG_H, REG_D);
+            break;
+        case 0x63:
+            LD(&REG_H, REG_E);
+            break;
+        case 0x64:
+            LD(&REG_H, REG_H);
+            break;
+        case 0x65:
+            LD(&REG_H, REG_L);
+            break;
+        case 0x66:
+            n = getByteAt(REG_HL);
+            LD(&REG_H, n);
+            break;
+            
+        case 0x68:
+            LD(&REG_L, REG_B);
+            break;
+        case 0x69:
+            LD(&REG_L, REG_C);
+            break;
+        case 0x6A:
+            LD(&REG_L, REG_D);
+            break;
+        case 0x6B:
+            LD(&REG_L, REG_E);
+            break;
+        case 0x6C:
+            LD(&REG_L, REG_H);
+            break;
+        case 0x6D:
+            LD(&REG_L, REG_L);
+            break;
+        case 0x6E:
+            n = getByteAt(REG_HL);
+            LD(&REG_L, n);
+            break;
+            
+        case 0x70:
+            writeByteAt(REG_HL, REG_B);
+            break;
+        case 0x71:
+            writeByteAt(REG_HL, REG_C);
+            break;
+        case 0x72:
+            writeByteAt(REG_HL, REG_D);
+            break;
+        case 0x73:
+            writeByteAt(REG_HL, REG_E);
+            break;
+        case 0x74:
+            writeByteAt(REG_HL, REG_H);
+            break;
+        case 0x75:
+            writeByteAt(REG_HL, REG_L);
+            break;
+        case 0x36:
+            n = readOperationByteParameter();
+            writeByteAt(REG_HL, n);
+            break;
+            
+            //LD A, n
+        case 0x0A:
+            n = getByteAt(REG_BC);
+            LD(&REG_A, n);
+            break;
+        case 0x1A:
+            n = getByteAt(REG_DE);
+            LD(&REG_A, n);
+            break;
+        case 0xFA:
+            //TODO: mirar si big endian o little endian
+            nn = readOpertionWordParameter();
+            n = getByteAt(nn);
+            LD(&REG_A, n);
+            break;
+        case 0x3E:
+            //TODO: A, # <- que significa esto??
+            break;
+            
+            //LD n, A
+        case 0x47:
+            LD(&REG_B, REG_A);
+            break;
+        case 0x4F:
+            LD(&REG_C, REG_A);
+            break;
+        case 0x57:
+            LD(&REG_D, REG_A);
+            break;
+        case 0x5F:
+            LD(&REG_E, REG_A);
+            break;
+        case 0x67:
+            LD(&REG_H, REG_A);
+            break;
+        case 0x6F:
+            LD(&REG_L, REG_A);
+            break;
+        case 0x02:
+            writeByteAt(REG_BC, REG_A);
+            break;
+        case 0x12:
+            writeByteAt(REG_DE, REG_A);
+            break;
+        case 0x77:
+            writeByteAt(REG_HL, REG_A);
+            break;
+        case 0xEA:
+            nn = readOpertionWordParameter();
+            writeByteAt(nn, REG_A);
+            break;
+            
+            //LD A, (C)
+        case 0xF2:
+            n = getByteAt(0xFF00 + REG_C);
+            LD(&REG_A, n);
+            break;
+            
+            //LD (C), A
+        case 0xE2:
+            writeByteAt(0xFF00 + REG_C, REG_A);
+            break;
+            
+            //LDD A, (HL)
+        case 0x3A:
+            n = getByteAt(REG_HL);
+            LD(&REG_A, n);
+            DEC16_HL(&REG_H, &REG_L);
+            break;
+            
+            //LDD (HL), A
+        case 0x32:
+            writeByteAt(REG_HL, REG_A);
+            DEC16_HL(&REG_H, &REG_L);
+            break;
+            
+            //LDI A, (HL)
+        case 0x2A:
+            n = getByteAt(REG_HL);
+            LD(&REG_A, n);
+            INC16_HL(&REG_H, &REG_L);
+            break;
+            
+            //LDI (HL), A
+        case 0x22:
+            writeByteAt(REG_HL, REG_A);
+            INC16_HL(&REG_H, &REG_L);
+            break;
+            
+            //LDH (n), A
+        case 0xE0:
+            n = readOperationByteParameter();
+            writeByteAt(0xFF00 + n, REG_A);
+            break;
+            
+            //LDH A, (n)
+        case 0xF0:
+            n = readOperationByteParameter();
+            n = getByteAt(0xFF00 + n);
+            LD(&REG_A, n);
+            
+            //16-bit ops
+            //LD n, nn
+        case 0x01:
+            nn = readOpertionWordParameter();
+            LD16_HL(&REG_B, &REG_C, nn);
+            break;
+        case 0x11:
+            nn = readOpertionWordParameter();
+            LD16_HL(&REG_D, &REG_E, nn);
+            break;
+        case 0x21:
+            nn = readOpertionWordParameter();
+            LD16_HL(&REG_H, &REG_L, nn);
+            break;
+        case 0x31:
+            nn = readOpertionWordParameter();
+            LD16(&REG_SP, nn);
+            break;
+            
+            //LD SP, HL
+        case 0xF9:
+            LD16(&REG_SP, REG_HL);
+            break;
+            
+            //LDHL SP, n
+        case 0xF8:
+            n = readOperationByteParameter();
+            LD16_HL(&REG_H, &REG_L, REG_SP + n);
+            //TODO: setear flags...
+            break;
+            
+            //LD (nn), SP
+        case 0x08:
+            nn = readOpertionWordParameter();
+            writeWordAt(nn, REG_SP);
+            break;
+            
+            //PUSH nn
+        case 0xF5:
+            writeWordAt(REG_SP, REG_AF);
+            DEC16(&REG_SP);
+            DEC16(&REG_SP);
+            break;
+        case 0xC5:
+            writeWordAt(REG_SP, REG_AF);
+            DEC16(&REG_SP);
+            DEC16(&REG_SP);
+            break;
+        case 0xD5:
+            writeWordAt(REG_SP, REG_AF);
+            DEC16(&REG_SP);
+            DEC16(&REG_SP);
+            break;
+        case 0xE5:
+            writeWordAt(REG_SP, REG_AF);
+            DEC16(&REG_SP);
+            DEC16(&REG_SP);
+            break;
+            
+            //POP nn
+        case 0xF1:
+            nn = getByteAt(REG_SP);
+            HL_FROM_DWORD(nn, &REG_A, &REG_F);
+            INC16(&REG_SP);
+            INC16(&REG_SP);
+            break;
+        case 0xC1:
+            nn = getByteAt(REG_SP);
+            HL_FROM_DWORD(nn, &REG_B, &REG_C);
+            INC16(&REG_SP);
+            INC16(&REG_SP);
+            break;
+        case 0xD1:
+            nn = getByteAt(REG_SP);
+            HL_FROM_DWORD(nn, &REG_D, &REG_E);
+            INC16(&REG_SP);
+            INC16(&REG_SP);
+            break;
+        case 0xE1:
+            nn = getByteAt(REG_SP);
+            HL_FROM_DWORD(nn, &REG_H, &REG_L);
+            INC16(&REG_SP);
+            INC16(&REG_SP);
+            break;
+        default:
+            break;
     }
-    
-    //Overflow
-    if (cFlag) {
-        int8_t msbn      = (number & 0x80) >> 7;
-        int8_t msbr      = (rval & 0x80) >> 7;
-        
-        
-        if (msbn ^ msbr) {
-            FLAG_C      = 0;
-        }else {
-            int8_t msbs   = (sum & 0x80) >> 7;
-            FLAG_C      = (0 != (msbs ^ msbn));
-        }
-    }
-    
-    *r  = sum;
 }
 
-void addA (int8_t n, bool c)
+
+int8_t readOperationByteParameter(void)
 {
-    add8(&(REG_A), n, c, true, true);
+    uint8_t result = getByteAt(REG_PC++);
+    return result;
 }
 
-void sub8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag, bool store)
+int16_t readOpertionWordParameter(void)
 {
-    int8_t number      = ~(n + c) + 0x01;
-    int8_t rval        = *r;
-    int8_t sub         = rval + number;
+    //TODO: little endian o big endian?
+    uint16_t result;
+    uint8_t nH = getByteAt(REG_PC++);
+    uint8_t nL = getByteAt(REG_PC++);
+    result = DWORD_FROM_HL(nH, nL);
     
-    FLAG_N  = 1;
-    FLAG_Z  = (0 == sub);
-    
-    //Overflow check:
-    //-----------------
-    //Operands with different signs never cause overflow
-    //It happens when adding operands with like signs and the result has a different sign
-    
-    //Half overflow
-    if (hFlag) {
-        int8_t hn       = number & 0x0F;
-        int8_t hr       = rval & 0x0F;
-        int8_t msbn     = (hn & 0x08) >> 3;
-        int8_t msbr     = (hr & 0x08) >> 3;
-        
-        if (msbn ^ msbr) {
-            FLAG_H          = 1;
-        }else {
-            int8_t msbs     = ((hn + hr) & 0x08) >> 3;
-            FLAG_H          = (0 == (msbs ^ msbn));
-        }
-    }
-    
-    //Overflow
-    if (cFlag) {
-        int8_t msbn      = (number & 0x80) >> 7;
-        int8_t msbr      = (rval & 0x80) >> 7;
-        
-        
-        if (msbn ^ msbr) {
-            FLAG_C      = 1;
-        }else {
-            int8_t msbs   = (sub & 0x80) >> 7;
-            FLAG_C      = (0 == (msbs ^ msbn));
-        }
-    }
-    
-    if (store) {
-        *r  = sub;
-    }
+    return result;
 }
-
-void subA (int8_t n, bool c, bool store)
-{
-    sub8(&(REG_A), n, c, true, true, store);
-}
-
-
-
-void ADC (int8_t n)
-{
-    addA(n, true);
-}
-
-void ADD (int8_t n)
-{
-    addA(n, false);
-}
-
-void SUB (int8_t n)
-{
-    subA(n, false, true);
-}
-
-void SBC (int8_t n)
-{
-    subA(n, true, true);
-}
-
-void AND (int8_t n)
-{
-    REG_A &= n;
-    if (0 == REG_A) {
-        FLAG_Z  = 1;
-    }
-    
-    FLAG_N  = 0;
-    FLAG_H  = 1;
-    FLAG_C  = 0;
-}
-
-void OR (int8_t n)
-{
-    REG_A |= n;
-    if (0 == REG_A) {
-        FLAG_Z  = 1;
-    }
-    
-    FLAG_N  = 0;
-    FLAG_H  = 0;
-    FLAG_C  = 0;
-}
-
-void XOR (int8_t n)
-{
-    REG_A ^= n;
-    if (0 == REG_A) {
-        FLAG_Z  = 1;
-    }
-    
-    FLAG_N  = 0;
-    FLAG_H  = 0;
-    FLAG_C  = 0;
-}
-
-void CP (int8_t n)
-{
-    subA(n, false, false);
-}
-
-void INC (int8_t *r)
-{
-    add8(r, 1, false, true, false);
-}
-
-void DEC (int8_t *r)
-{
-    sub8(r, 1, false, true, false, true);
-}
-
-void DAA ()
-{
-    FLAG_H  = 0;
-    
-    //TODO;
-}
-
-void CPL ()
-{
-    FLAG_N = 1;
-    FLAG_H = 1;
-    
-    REG_A  ^= 0xFF;
-}
-
-//----------------------------------------------//
-//                                              //
-//                  16-Bit ALU                  //
-//                                              //
-//----------------------------------------------//
-
-//Helpers
-void add16 (int16_t *r, int16_t nn);
-
-void add16 (int16_t *r, int16_t nn)
-{
-    int16_t rVal   = *r;
-    int16_t sum    = rVal + nn;
-    
-    FLAG_N  = 0;
-    
-    //Overflow check:
-    //-----------------
-    //Operands with different signs never cause overflow
-    //It happens when adding operands with like signs and the result has a different sign
-    
-    int16_t hl11        = (rVal & 0x0FFF);
-    int16_t nn11        = (nn & 0x0FFF);
-    int8_t hl11msb      = hl11 >> 11;
-    int8_t nn11msb     = nn11 >> 11;
-    
-    if (hl11msb ^ nn11msb) {
-        FLAG_H  = 0;
-    }else {
-        int16_t hsum11        = (sum & 0x0FFF);
-        int8_t hsum11msb      = hsum11 >> 11;
-        FLAG_H  = (0 != (hsum11msb ^ nn11msb));
-    }
-    
-    int8_t hlmsb = (rVal >> 15) & 0x01;
-    int8_t nnmsb = (nn >> 15) & 0x01;
-    
-    if (hlmsb ^ nnmsb) {
-        FLAG_C  = 0;
-    }else {
-        int8_t summsb = (sum >> 15) & 0x01;
-        FLAG_C = (0 != (summsb ^nnmsb));
-    }
-}
-
-void ADD16 (int16_t* rr, int16_t nn)
-{    
-    add16(rr, nn);
-    
-    if (rr == ((int16_t*)&(REG_SP))) {
-        FLAG_Z  = 0;
-    }
-}
-
-void INC16 (int16_t* rr)
-{
-    (*rr) += 1;
-}
-
-void DEC16 (int16_t* rr)
-{
-    (*rr) -= 1;
-}
-
