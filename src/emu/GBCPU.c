@@ -16,9 +16,41 @@
 
 //----------------------------------------------//
 //                                              //
-//                 CPU Commands                 //
+//                  Helper Loads                //
 //                                              //
 //----------------------------------------------//
+
+void LD (int8_t *r, int8_t n)
+{
+    *r = n;
+}
+
+void LD16 (int16_t *rr, int16_t nn)
+{
+    *rr = nn;
+}
+
+void LD16_HL (int8_t *rh, int8_t *rl, int16_t nn)
+{
+    *rl = (0xFF & ((nn) >> 8));
+    *rh = 0xFF & (nn);
+}
+
+void INC16_HL (int8_t *rh, int8_t *rl)
+{
+    int16_t r = DWORD_FROM_HL(*rh, *rl);
+    INC16(&r);
+    LD16_HL(rh, rl, r);
+}
+
+void DEC16_HL (int8_t *rh, int8_t *rl)
+{
+    int16_t r = DWORD_FROM_HL(*rh, *rl);
+    DEC16(&r);
+    LD16_HL(rh, rl, r);
+}
+
+
 
 void setUp(void)
 {
@@ -329,7 +361,7 @@ void nextOperation(void)
             break;
             
             //LDI A, (HL)
-        case 0x2A:
+        case 0x2A: 
             n = getByteAt(REG_HL);
             LD(&REG_A, n);
             INC16_HL(&REG_H, &REG_L);
@@ -393,49 +425,41 @@ void nextOperation(void)
             //PUSH nn
         case 0xF5:
             writeWordAt(REG_SP, REG_AF);
-            DEC16(&REG_SP);
-            DEC16(&REG_SP);
+            REG_SP -= 2;
             break;
         case 0xC5:
-            writeWordAt(REG_SP, REG_AF);
-            DEC16(&REG_SP);
-            DEC16(&REG_SP);
+            writeWordAt(REG_SP, REG_BC);
+            REG_SP -= 2;
             break;
         case 0xD5:
-            writeWordAt(REG_SP, REG_AF);
-            DEC16(&REG_SP);
-            DEC16(&REG_SP);
+            writeWordAt(REG_SP, REG_DE);
+            REG_SP -= 2;
             break;
         case 0xE5:
-            writeWordAt(REG_SP, REG_AF);
-            DEC16(&REG_SP);
-            DEC16(&REG_SP);
+            writeWordAt(REG_SP, REG_HL);
+            REG_SP -= 2;
             break;
             
             //POP nn
         case 0xF1:
             nn = getByteAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_A, &REG_F);
-            INC16(&REG_SP);
-            INC16(&REG_SP);
+            REG_SP += 2;
             break;
         case 0xC1:
             nn = getByteAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_B, &REG_C);
-            INC16(&REG_SP);
-            INC16(&REG_SP);
+            REG_SP += 2;
             break;
         case 0xD1:
             nn = getByteAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_D, &REG_E);
-            INC16(&REG_SP);
-            INC16(&REG_SP);
+            REG_SP += 2;
             break;
         case 0xE1:
             nn = getByteAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_H, &REG_L);
-            INC16(&REG_SP);
-            INC16(&REG_SP);
+            REG_SP += 2;
             break;
         default:
             break;

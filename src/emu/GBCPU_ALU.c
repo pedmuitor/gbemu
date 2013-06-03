@@ -16,33 +16,6 @@
 
 //----------------------------------------------//
 //                                              //
-//                  8-Bit Loads                 //
-//                                              //
-//----------------------------------------------//
-
-void LD (int8_t *r, int8_t n)
-{
-    *r = n;
-}
-
-//----------------------------------------------//
-//                                              //
-//                  16-Bit Loads                //
-//                                              //
-//----------------------------------------------//
-
-void LD16 (int16_t *rr, int16_t nn)
-{
-    *rr = nn;
-}
-
-void LD16_HL (int8_t *rh, int8_t *rl, int16_t nn)
-{
-    REG16_STORE(rh, rl, nn);
-}
-
-//----------------------------------------------//
-//                                              //
 //                  8-Bit ALU                   //
 //                                              //
 //----------------------------------------------//
@@ -304,21 +277,21 @@ void INC16 (int16_t* rr)
     (*rr) += 1;
 }
 
-void INC16_HL (int8_t *rh, int8_t *rl)
-{
-    int16_t nn = DWORD_FROM_HL(*rh, *rl);
-    HL_FROM_DWORD(++nn, rh, rl);
-}
+//void INC16_HL (int8_t *rh, int8_t *rl)
+//{
+//    int16_t nn = DWORD_FROM_HL(*rh, *rl);
+//    HL_FROM_DWORD(++nn, rh, rl);
+//}
 
 void DEC16 (int16_t* rr)
 {
     (*rr) -= 1;
 }
 
-void DEC16_HL (int8_t *rh, int8_t *rl)
-{
-    int16_t nn = DWORD_FROM_HL(*rh, *rl);
-    HL_FROM_DWORD(--nn, rh, rl);
-}
+//void DEC16_HL (int8_t *rh, int8_t *rl)
+//{
+//    int16_t nn = DWORD_FROM_HL(*rh, *rl);
+//    HL_FROM_DWORD(--nn, rh, rl);
+//}
 
 

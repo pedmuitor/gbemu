@@ -35,7 +35,6 @@ struct {
 #define REG_PC          REGISTERS.PC
 #define REG_SP          REGISTERS.SP
 
-#define REG16_STORE(ptrRH,ptrRL,nn)     *(ptrRH)   = (0xFF & ((nn) >> 8));*(ptrRH)   = 0xFF & (nn);
 #define REG_AF          DWORD_FROM_HL(REG_A, REG_F)
 #define REG_BC          DWORD_FROM_HL(REG_B, REG_C)
 #define REG_DE          DWORD_FROM_HL(REG_D, REG_E)

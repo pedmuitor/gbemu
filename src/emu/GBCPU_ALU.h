@@ -9,26 +9,6 @@
 #ifndef GBEmu_GBCPU_ALU_h
 #define GBEmu_GBCPU_ALU_h
 
-//----------------------------------------------//
-//                                              //
-//                  8-Bit Loads                 //
-//                                              //
-//----------------------------------------------//
-
-// LD r,n         - r <- n
-void LD (int8_t *r, int8_t n);
-
-
-//----------------------------------------------//
-//                                              //
-//                  16-Bit Loads                //
-//                                              //
-//----------------------------------------------//
-
-// LD HRLR,nn        - HRLR <- nn
-void LD16 (int16_t *rr, int16_t nn);
-void LD16_HL (int8_t *rh, int8_t *rl, int16_t nn);
-
 
 //----------------------------------------------//
 //                                              //
@@ -182,7 +162,6 @@ void ADD16 (int16_t* rr, int16_t nn);
 //None.
 
 void INC16 (int16_t* rr);
-void INC16_HL (int8_t *rh, int8_t *rl);
 
 //DEC nn         - Decrement register nn.
 //
@@ -192,7 +171,6 @@ void INC16_HL (int8_t *rh, int8_t *rl);
 //None
 
 void DEC16 (int16_t* rr);
-void DEC16_HL (int8_t *rh, int8_t *rl);
 
 
 //----------------------------------------------//
