@@ -78,11 +78,13 @@ void SWAP (int8_t *r);
 
 //----------------------------------------------//
 //                                              //
-//                  Bit Opcodes                 //
+//              SingleBit Opcodes               //
 //                                              //
 //----------------------------------------------//
 
-
+void BIT (int8_t r, int8_t n);
+void SET (int8_t *r, int8_t n);
+void RES (int8_t *r, int8_t n);
 
 
 

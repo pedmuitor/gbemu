@@ -28,9 +28,21 @@ struct {
 
 uint8_t bitAtIndex (int n, int index)
 {
-	uint8_t p = (int8_t)pow(2, index);
-    uint8_t result = (n & p) >> (index);
+	uint8_t mask = (int8_t)pow(2, index);
+    uint8_t result = (n & mask) >> (index);
     return result;
+}
+
+void setBitAtIndex (int8_t *r, int index, uint8_t value)
+{
+    uint8_t mask = ~((int8_t)pow(2, index));
+    *r &= mask;
+    
+    if (value) {
+        *r |= (0x01) << index;
+    }
+    
+    *r &= 0xFF;
 }
 
 uint8_t moreSignificantBit (int n, int size)
@@ -408,3 +420,27 @@ void SWAP (int8_t *r)
     ALU_FLAG_N = 0;
 }
 
+//----------------------------------------------//
+//                                              //
+//              SingleBit Opcodes               //
+//                                              //
+//----------------------------------------------//
+
+void BIT (int8_t r, int8_t n)
+{
+    uint8_t b = bitAtIndex(r, n);
+    
+    ALU_FLAG_Z = (0 == b);
+    ALU_FLAG_N = 0;
+    ALU_FLAG_H = 1;
+}
+
+void SET (int8_t *r, int8_t n)
+{
+    setBitAtIndex(r, n, 1);
+}
+
+void RES (int8_t *r, int8_t n)
+{
+    setBitAtIndex(r, n, 0);
+}
