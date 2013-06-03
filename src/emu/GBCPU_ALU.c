@@ -106,6 +106,7 @@ void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag)
     }
     
     *r  = sum;
+    *r &= 0xFF;
 }
 
 void addA (int8_t n, bool c)
@@ -158,6 +159,7 @@ void sub8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag, bool store)
     
     if (store) {
         *r  = sub;
+        *r &= 0xFF;
     }
 }
 
@@ -308,15 +310,14 @@ void add16 (int16_t *r, int16_t nn)
         int8_t summsb = (sum >> 15) & 0x01;
         ALU_FLAG_C = (0 != (summsb ^nnmsb));
     }
+    
+    *r = sum;
+    *r &= 0xFFFF;
 }
 
 void ADD16 (int16_t* rr, int16_t nn)
 {    
     add16(rr, nn);
-    
-    if (rr == ((int16_t*)&(REG_SP))) {
-        ALU_FLAG_Z  = 0;
-    }
 }
 
 void INC16 (int16_t* rr)
