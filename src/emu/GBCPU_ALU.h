@@ -17,124 +17,29 @@
 //----------------------------------------------//
 
 
-//ADC A,n        - Add n + Carry flag to A.
-//
-//n = A,B,C,D,E,H,L,[HL],#
-//
-//Flags affected:
-//Z - Set if result is zero.
-//N - Reset.
-//H - Set if carry from bit 3.
-//C - Set if carry from bit 7.
 void ADC (int8_t n);
 
-//ADD A,n        - Add n to A.
-//
-//n = A,B,C,D,E,H,L,[HL],#
-//
-//Flags affected:
-//Z - Set if result is zero.
-//N - Reset.
-//H - Set if carry from bit 3.
-//C - Set if carry from bit 7.
 void ADD (int8_t n);
 
-//SUB n          - Subtract n from A.
-//
-//n = A,B,C,D,E,H,L,[HL],#
-//
-//Flags affected:
-//Z - Set if result is zero.
-//N - Set.
-//H - Set if no borrow from bit 4.
-//C - Set if no borrow.
 void SUB (int8_t n);
 
-//SBC A,n        - Subtract n + Carry flag from A.
-//
-//n = A,B,C,D,E,H,L,[HL],#
-//
-//Flags affected:
-//Z - Set if result is zero.
-//N - Set.
-//H - Set if no borrow from bit 4.
-//C - Set if no borrow.
 void SBC (int8_t n);
 
-//AND n          - Logically AND n with A, result in A.
-//
-//n = A,B,C,D,E,H,L,[HL],#
-//
-//Flags affected:
-//Z - Set if result is zero.
-//N - Reset.
-//H - Set.
-//C - Reset.
 void AND (int8_t n);
 
-//OR n           - Logical OR n with register A, result in A.
-//
-//n = A,B,C,D,E,H,L,[HL],#
-//
-//Flags affected:
-//Z - Set if result is zero.
-//N - Reset.
-//H - Reset.
-//C - Reset.
 void OR (int8_t n);
 
-//XOR n          - Logical exclusive OR n with
-//register A, result in A.
-//
-//n = A,B,C,D,E,H,L,[HL],#
-//
-//Flags affected:
-//Z - Set if result is zero.
-//N - Reset.
-//H - Reset.
-//C - Reset.
 void XOR (int8_t n);
 
-//CP n           - Compare A with n.
-//
-//This is basically an A - n subtraction
-//instruction but the results are thrown away.
-//
-//n = A,B,C,D,E,H,L,[HL],#
-//
-//Flags affected:
-//Z - Set if result is zero. [Set if A = n.]
-//N - Set.
-//H - Set if no borrow from bit 4.
-//C - Set for no borrow. [Set if A < n.]
 void CP (int8_t n);
 
-//INC n          - Increment register n.
-//
-//n = A,B,C,D,E,H,L,[HL]
-//
-//Flags affected:
-//Z - Set if result is zero.
-//N - Reset.
-//H - Set if carry from bit 3.
-//C - Not affected.
 void INC (int8_t *r);
 
-//DEC n          - Decrement register n.
-//
-//n = A,B,C,D,E,H,L,[HL]
-//
-//Flags affected:
-//Z - Set if reselt is zero.
-//N - Set.
-//H - Set if no borrow from bit 4.
-//C - Not affected.
 void DEC (int8_t *r);
 
 void DAA ();
 
 void CPL ();
-
 
 
 //----------------------------------------------//
@@ -143,32 +48,9 @@ void CPL ();
 //                                              //
 //----------------------------------------------//
 
-//ADD HL,nn      - Add n to HL.
-//
-//nn = BC,DE,HL
-//
-//Flags affected:
-//Z - Not affected.
-//N - Reset.
-//H - Set if carry from bit 11.
-//C - Set if carry from bit 15.
 void ADD16 (int16_t* rr, int16_t nn);
 
-//INC nn         - Increment register nn.
-//
-//nn = BC,DE,HL,SP
-//
-//Flags affected:
-//None.
-
 void INC16 (int16_t* rr);
-
-//DEC nn         - Decrement register nn.
-//
-//nn = BC,DE,HL,SP
-//
-//Flags affected:
-//None
 
 void DEC16 (int16_t* rr);
 
@@ -177,6 +59,22 @@ void DEC16 (int16_t* rr);
 //                Rotates & Shifts              //
 //                                              //
 //----------------------------------------------//
+
+void RL (int8_t *r);
+
+void RLC (int8_t *r);
+
+void RR (int8_t *r);
+
+void RRC (int8_t *r);
+
+void SLA (int8_t *r);
+
+void SRA (int8_t *r);
+
+void SRL (int8_t *r);
+
+void SWAP (int8_t *r);
 
 //----------------------------------------------//
 //                                              //
