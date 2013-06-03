@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #include "GBCPU.h"
+#include "GBCPU_ALU.h"
 
 int main(int argc, const char * argv[])
 {
@@ -26,8 +27,9 @@ int main(int argc, const char * argv[])
         
         NSLog(@"A %d", REG_A);
         
-        REG_H = 0x7F;
-        REG_L = 0xFF;
+        int16_t t = 0xAAA0;
+        ADD16(&t, 1);
+        
         
         
     }
