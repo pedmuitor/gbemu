@@ -277,21 +277,42 @@ void INC16 (int16_t* rr)
     (*rr) += 1;
 }
 
-//void INC16_HL (int8_t *rh, int8_t *rl)
-//{
-//    int16_t nn = DWORD_FROM_HL(*rh, *rl);
-//    HL_FROM_DWORD(++nn, rh, rl);
-//}
-
 void DEC16 (int16_t* rr)
 {
     (*rr) -= 1;
 }
 
-//void DEC16_HL (int8_t *rh, int8_t *rl)
-//{
-//    int16_t nn = DWORD_FROM_HL(*rh, *rl);
-//    HL_FROM_DWORD(--nn, rh, rl);
-//}
 
+void setFlagZ(bool z)
+{
+    REG_F &= 0x7F;
+    if (z) {
+        REG_F|= 0x80;
+    }
+}
+
+void setFlagN(bool n)
+{
+    REG_F &= 0xBF;
+    if (n) {
+        REG_F |= 0x40;
+    }
+}
+
+
+void setFlagC(bool c)
+{
+    REG_F &= 0xEF;
+    if (c) {
+        REG_F |= 0x10;
+    }
+}
+
+void setFlagH(bool h)
+{
+    REG_F &= 0xDF;
+    if (h) {
+        REG_F |= 0x20;
+    }
+}
 
