@@ -16,7 +16,7 @@
 
 //----------------------------------------------//
 //                                              //
-//                  Helper Loads                //
+//                  Helpers                     //
 //                                              //
 //----------------------------------------------//
 
@@ -48,6 +48,39 @@ void DEC16_HL (int8_t *rh, int8_t *rl)
     int16_t r = DWORD_FROM_HL(*rh, *rl);
     DEC16(&r);
     LD16_HL(rh, rl, r);
+}
+
+void setFlagZ(bool z)
+{
+    REG_F &= 0x7F;
+    if (z) {
+        REG_F|= 0x80;
+    }
+}
+
+void setFlagN(bool n)
+{
+    REG_F &= 0xBF;
+    if (n) {
+        REG_F |= 0x40;
+    }
+}
+
+
+void setFlagC(bool c)
+{
+    REG_F &= 0xEF;
+    if (c) {
+        REG_F |= 0x10;
+    }
+}
+
+void setFlagH(bool h)
+{
+    REG_F &= 0xDF;
+    if (h) {
+        REG_F |= 0x20;
+    }
 }
 
 
@@ -300,7 +333,8 @@ void nextOperation(void)
             LD(&REG_A, n);
             break;
         case 0x3E:
-            //TODO: A, # <- que significa esto??
+            n = readOperationByteParameter();
+            LD(&REG_A, n);
             break;
             
             //LD n, A
@@ -410,11 +444,16 @@ void nextOperation(void)
             break;
             
             //LDHL SP, n
-        case 0xF8:
+        case 0xF8: {
             n = readOperationByteParameter();
-            LD16_HL(&REG_H, &REG_L, REG_SP + n);
-            //TODO: setear flags...
+            
+            int16_t nn = REG_SP;
+            ADD16(&nn, n);
+            LD16_HL(&REG_H, &REG_L, nn);
+            setFlagZ(0);
+            
             break;
+        }
             
             //LD (nn), SP
         case 0x08:

@@ -185,10 +185,7 @@ void DEC16 (int16_t* rr);
 //----------------------------------------------//
 
 
-void setFlagZ(bool z);
-void setFlagN(bool n);
-void setFlagC(bool c);
-void setFlagH(bool h);
+
 
 
 #endif

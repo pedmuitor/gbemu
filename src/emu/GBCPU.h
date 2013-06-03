@@ -17,10 +17,6 @@ struct {
         int16_t PC, SP;
     }_r;
     
-    struct {
-        bool   Z, N, H, C;
-    }_flags;
-    
 }Z80;
 
 #define REGISTERS       Z80._r
@@ -39,12 +35,6 @@ struct {
 #define REG_BC          DWORD_FROM_HL(REG_B, REG_C)
 #define REG_DE          DWORD_FROM_HL(REG_D, REG_E)
 #define REG_HL          DWORD_FROM_HL(REG_H, REG_L)
-
-#define FLAGS           Z80._flags
-#define FLAG_Z          FLAGS.Z
-#define FLAG_N          FLAGS.N
-#define FLAG_H          FLAGS.H
-#define FLAG_C          FLAGS.C
 
 //----------------------------------------------//
 //                                              //
