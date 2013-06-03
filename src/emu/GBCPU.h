@@ -46,7 +46,7 @@ void setUp(void);
 void shutDown(void);
 
 void nextOperation(void);
-int8_t readOperationByteParameter(void);
-int16_t readOpertionWordParameter(void);
+int8_t readOperationWordParameter(void);
+int16_t readOpertionDwordParameter(void);
 
 #endif

@@ -15,15 +15,6 @@
 #include "GBCPU.h"
 #include "GBCPU_ALU.h"
 
-#define ALU_FLAG_Z          ALUFlags.Z
-#define ALU_FLAG_N          ALUFlags.N
-#define ALU_FLAG_H          ALUFlags.H
-#define ALU_FLAG_C          ALUFlags.C
-
-struct {
-    bool   Z, N, H, C;
-}ALUFlags;
-
 //Global helpers
 
 uint8_t bitAtIndex (int n, int index)
