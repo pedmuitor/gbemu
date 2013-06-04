@@ -1234,6 +1234,98 @@ void nextOperation(void)
             setFlagN(1);
             setFlagH(ALU_FLAG_H);
             break;
+        
+        //ADD HL, n
+        case 0x09:
+            nn = DWORD_FROM_HL(REG_H, REG_L);
+            ADD16(&nn, DWORD_FROM_HL(REG_B, REG_C));
+            HL_FROM_DWORD(nn, &REG_H, &REG_L);
+            setFlagN(0);
+            setFlagH(ALU_FLAG_H);
+            setFlagC(ALU_FLAG_C);
+            break;
+        
+        case 0x19:
+            nn = DWORD_FROM_HL(REG_H, REG_L);
+            ADD16(&nn, DWORD_FROM_HL(REG_D, REG_E));
+            HL_FROM_DWORD(nn, &REG_H, &REG_L);
+            setFlagN(0);
+            setFlagH(ALU_FLAG_H);
+            setFlagC(ALU_FLAG_C);
+            break;
+            
+        case 0x29:
+            nn = DWORD_FROM_HL(REG_H, REG_L);
+            ADD16(&nn, DWORD_FROM_HL(REG_H, REG_L));
+            HL_FROM_DWORD(nn, &REG_H, &REG_L);
+            setFlagN(0);
+            setFlagH(ALU_FLAG_H);
+            setFlagC(ALU_FLAG_C);
+            break;
+            
+        case 0x39:
+            nn = DWORD_FROM_HL(REG_H, REG_L);
+            ADD16(&nn, REG_SP);
+            HL_FROM_DWORD(nn, &REG_H, &REG_L);
+            setFlagN(0);
+            setFlagH(ALU_FLAG_H);
+            setFlagC(ALU_FLAG_C);
+            break;
+            
+        //ADD SP, n
+        case 0xE8:
+            n = readOperationWordParameter();
+            ADD16(&REG_SP, n);
+            setFlagZ(0);
+            setFlagN(0);
+            setFlagH(ALU_FLAG_H);
+            setFlagC(ALU_FLAG_C);
+            
+        //INC nn
+        case 0x03:
+            nn = DWORD_FROM_HL(REG_B, REG_C);
+            INC16(&nn);
+            HL_FROM_DWORD(nn, &REG_B, &REG_C);
+            break;
+        
+        case 0x13:
+            nn = DWORD_FROM_HL(REG_D, REG_E);
+            INC16(&nn);
+            HL_FROM_DWORD(nn, &REG_D, &REG_E);
+            break;
+            
+        case 0x23:
+            nn = DWORD_FROM_HL(REG_H, REG_L);
+            INC16(&nn);
+            HL_FROM_DWORD(nn, &REG_H, &REG_L);
+            break;
+            
+        case 0x33:
+            INC16(&REG_SP);
+            break;
+            
+        //DEC nn
+        case 0x0B:
+            nn = DWORD_FROM_HL(REG_B, REG_C);
+            DEC16(&nn);
+            HL_FROM_DWORD(nn, &REG_B, &REG_C);
+            break;
+            
+        case 0x1B:
+            nn = DWORD_FROM_HL(REG_D, REG_E);
+            DEC16(&nn);
+            HL_FROM_DWORD(nn, &REG_D, &REG_E);
+            break;
+            
+        case 0x2B:
+            nn = DWORD_FROM_HL(REG_H, REG_L);
+            DEC16(&nn);
+            HL_FROM_DWORD(nn, &REG_H, &REG_L);
+            break;
+            
+        case 0x3B:
+            DEC16(&REG_SP);
+            break;
             
         default:
             break;
