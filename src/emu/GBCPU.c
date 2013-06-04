@@ -103,11 +103,30 @@ void setFlagH(bool h)
 }
 
 
+void setHalt(bool halt)
+{
+    FLAGS_HALT = halt;
+}
+
+void setStop(bool stop)
+{
+    FLAGS_STOP = stop;
+}
+
+void setInterruptsEnabled(bool enabled)
+{
+    FLAGS_IE = enabled;
+}
+
 
 void setUp(void)
 {
     //TODO: setup registers initial values
     REG_SP = 0xFFFE;
+    
+    FLAGS_IE = true;
+    FLAGS_STOP = false;
+    FLAGS_HALT = false;
 }
 
 void shutDown(void)
@@ -1325,6 +1344,855 @@ void nextOperation(void)
             
         case 0x3B:
             DEC16(&REG_SP);
+            break;
+            
+        //Miscellanous
+        case 0xCB: {
+            
+            uint8_t opCode2 = readOperationWordParameter();
+            
+            switch (opCode2) {
+                //SWAP n
+                case 0x37:
+                    SWAP(&REG_A);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(0);
+                    break;
+                    
+                case 0x30:
+                    SWAP(&REG_B);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(0);
+                    break;
+                    
+                case 0x31:
+                    SWAP(&REG_C);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(0);
+                    break;
+                    
+                case 0x32:
+                    SWAP(&REG_D);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(0);
+                    break;
+                    
+                case 0x33:
+                    SWAP(&REG_E);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(0);
+                    break;
+                    
+                case 0x34:
+                    SWAP(&REG_H);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(0);
+                    break;
+                    
+                case 0x35:
+                    SWAP(&REG_L);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(0);
+                    break;
+                    
+                case 0x36:
+                    n = getByteAt(DWORD_FROM_HL(REG_H, REG_L));
+                    SWAP(&n);
+                    writeByteAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(0);
+                    break;
+                
+                    
+                //RLC n
+                case 0x07:
+                    RLC(&REG_A);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                
+                case 0x00:
+                    RLC(&REG_B);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                
+                case 0x01:
+                    RLC(&REG_C);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x02:
+                    RLC(&REG_D);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x03:
+                    RLC(&REG_E);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x04:
+                    RLC(&REG_H);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x05:
+                    RLC(&REG_L);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x06:
+                    n = getByteAt(DWORD_FROM_HL(REG_H, REG_L));
+                    RLC(&n);
+                    writeByteAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                //RL n
+                case 0x17:
+                    RL(&REG_A);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x10:
+                    RL(&REG_B);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x11:
+                    RL(&REG_C);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x12:
+                    RL(&REG_D);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x13:
+                    RL(&REG_E);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x14:
+                    RL(&REG_H);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x15:
+                    RL(&REG_L);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x16:
+                    n = getByteAt(DWORD_FROM_HL(REG_H, REG_L));
+                    RL(&n);
+                    writeByteAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                //RRC n
+                case 0x0F:
+                    RRC(&REG_A);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x08:
+                    RRC(&REG_B);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x09:
+                    RRC(&REG_C);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x0A:
+                    RRC(&REG_D);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x0B:
+                    RRC(&REG_E);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x0C:
+                    RRC(&REG_H);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x0D:
+                    RRC(&REG_L);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x0E:
+                    n = getByteAt(DWORD_FROM_HL(REG_H, REG_L));
+                    RRC(&n);
+                    writeByteAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                
+                //RR n
+                case 0x1F:
+                    RR(&REG_A);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x18:
+                    RR(&REG_B);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x19:
+                    RR(&REG_C);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x1A:
+                    RR(&REG_D);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x1B:
+                    RR(&REG_E);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x1C:
+                    RR(&REG_H);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x1D:
+                    RR(&REG_L);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x1E:
+                    n = getByteAt(DWORD_FROM_HL(REG_H, REG_L));
+                    RR(&n);
+                    writeByteAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                //SLA n
+                case 0x27:
+                    SLA(&REG_A);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x20:
+                    SLA(&REG_B);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x21:
+                    SLA(&REG_C);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x22:
+                    SLA(&REG_D);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x23:
+                    SLA(&REG_E);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x24:
+                    SLA(&REG_H);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x25:
+                    SLA(&REG_L);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x26:
+                    n = getByteAt(DWORD_FROM_HL(REG_H, REG_L));
+                    SLA(&n);
+                    writeByteAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                
+                //SRA n
+                case 0x2F:
+                    SRA(&REG_A);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x28:
+                    SRA(&REG_B);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x29:
+                    SRA(&REG_C);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x2A:
+                    SRA(&REG_D);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x2B:
+                    SRA(&REG_E);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x2C:
+                    SRA(&REG_H);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x2D:
+                    SRA(&REG_L);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x2E:
+                    n = getByteAt(DWORD_FROM_HL(REG_H, REG_L));
+                    SRA(&n);
+                    writeByteAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                
+                //SRL n
+                case 0x3F:
+                    SRL(&REG_A);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x38:
+                    SRL(&REG_B);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x39:
+                    SRL(&REG_C);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x3A:
+                    SRL(&REG_D);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x3B:
+                    SRL(&REG_E);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x3C:
+                    SRL(&REG_H);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x3D:
+                    SRL(&REG_L);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                case 0x3E:
+                    n = getByteAt(DWORD_FROM_HL(REG_H, REG_L));
+                    SRL(&n);
+                    writeByteAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(0);
+                    setFlagC(ALU_FLAG_C);
+                    break;
+                    
+                //BIT b,r
+                case 0x47:
+                    n = readOperationWordParameter();
+                    BIT(REG_A, n);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(1);
+                    break;
+                
+                case 0x40:
+                    n = readOperationWordParameter();
+                    BIT(REG_B, n);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(1);
+                    break;
+                
+                case 0x41:
+                    n = readOperationWordParameter();
+                    BIT(REG_C, n);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(1);
+                    break;
+                    
+                case 0x42:
+                    n = readOperationWordParameter();
+                    BIT(REG_D, n);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(1);
+                    break;
+                    
+                case 0x43:
+                    n = readOperationWordParameter();
+                    BIT(REG_E, n);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(1);
+                    break;
+                    
+                case 0x44:
+                    n = readOperationWordParameter();
+                    BIT(REG_H, n);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(1);
+                    break;
+                    
+                case 0x45:
+                    n = readOperationWordParameter();
+                    BIT(REG_L, n);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(1);
+                    break;
+                    
+                case 0x46: {
+                    n = readOperationWordParameter();
+                    int8_t n2 = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    BIT(n2, n);
+                    setFlagZ(ALU_FLAG_Z);
+                    setFlagN(0);
+                    setFlagH(1);
+                    break;
+                }
+                    
+                    
+                //SET b,r
+                case 0xC7:
+                    n = readOperationWordParameter();
+                    SET(&REG_A, n);
+                    break;
+                    
+                case 0xC0:
+                    n = readOperationWordParameter();
+                    SET(&REG_B, n);
+                    break;
+                    
+                case 0xC1:
+                    n = readOperationWordParameter();
+                    SET(&REG_C, n);
+                    break;
+                    
+                case 0xC2:
+                    n = readOperationWordParameter();
+                    SET(&REG_D, n);
+                    break;
+                    
+                case 0xC3:
+                    n = readOperationWordParameter();
+                    SET(&REG_E, n);
+                    break;
+                    
+                case 0xC4:
+                    n = readOperationWordParameter();
+                    SET(&REG_H, n);
+                    break;
+                    
+                case 0xC5:
+                    n = readOperationWordParameter();
+                    SET(&REG_L, n);
+                    break;
+                    
+                case 0xC6: {
+                    n = readOperationWordParameter();
+                    int8_t n2 = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    SET(&n2, n);
+                    break;
+                }
+                    
+                //RES b,r
+                case 0x87:
+                    n = readOperationWordParameter();
+                    RES(&REG_A, n);
+                    break;
+                    
+                case 0x80:
+                    n = readOperationWordParameter();
+                    RES(&REG_B, n);
+                    break;
+                    
+                case 0x81:
+                    n = readOperationWordParameter();
+                    RES(&REG_C, n);
+                    break;
+                    
+                case 0x82:
+                    n = readOperationWordParameter();
+                    RES(&REG_D, n);
+                    break;
+                    
+                case 0x83:
+                    n = readOperationWordParameter();
+                    RES(&REG_E, n);
+                    break;
+                    
+                case 0x84:
+                    n = readOperationWordParameter();
+                    RES(&REG_H, n);
+                    break;
+                    
+                case 0x85:
+                    n = readOperationWordParameter();
+                    RES(&REG_L, n);
+                    break;
+                    
+                case 0x86: {
+                    n = readOperationWordParameter();
+                    int8_t n2 = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    RES(&n2, n);
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+            
+        }
+            
+        //DAA
+        case 0x27:
+            DAA();
+            setFlagZ(ALU_FLAG_Z);
+            setFlagH(0);
+            setFlagC(ALU_FLAG_C);
+            break;
+        
+        //CPL
+        case 0x2F:
+            CPL();
+            setFlagN(1);
+            setFlagH(1);
+            break;
+            
+        //CCF
+        case 0x3F:
+            setFlagN(0);
+            setFlagH(0);
+            setFlagC(!getFlagC());
+            break;
+        
+        //SCF
+        case 0x37:
+            setFlagN(0);
+            setFlagH(0);
+            setFlagC(1);
+            break;
+        
+        //NOP
+        case 0x00:
+            break;
+            
+        //HALT
+        case 0x76:
+            setHalt(1);
+            break;
+            
+        case 0x10: {
+            
+            uint8_t opCode2 = readOperationWordParameter();
+            switch (opCode2) {
+                //STOP
+                case 0x00:
+                    setStop(1);
+                    break;
+                default:
+                    break;
+            }
+        }
+            
+        //DI
+        case 0xF3:
+            setInterruptsEnabled(0);
+            break;
+        
+        //EI
+        case 0xFB:
+            setInterruptsEnabled(1);
+            break;
+            
+        //RLCA
+        case 0x07:
+            RLC(&REG_A);
+            setFlagZ(ALU_FLAG_Z);
+            setFlagH(0);
+            setFlagN(0);
+            setFlagC(ALU_FLAG_C);
+            break;
+        
+        //RLA
+        case 0x17:
+            RL(&REG_A);
+            setFlagZ(ALU_FLAG_Z);
+            setFlagH(0);
+            setFlagN(0);
+            setFlagC(ALU_FLAG_C);
+            break;
+            
+        //RRCA
+        case 0x0F:
+            RRC(&REG_A);
+            setFlagZ(ALU_FLAG_Z);
+            setFlagH(0);
+            setFlagN(0);
+            setFlagC(ALU_FLAG_C);
+            break;
+        
+        //RRA
+        case 0x1F:
+            RR(&REG_A);
+            setFlagZ(ALU_FLAG_Z);
+            setFlagH(0);
+            setFlagN(0);
+            setFlagC(ALU_FLAG_C);
+            break;
+        
+        //Jumps
+        //JP nn
+        case 0xC3:
+            //TODO: check little-big endian
+            nn = readOpertionDwordParameter();
+            //TODO: checkear si es esto
+            REG_PC = nn;
+            break;
+        
+        //JP cc, nn
+        case 0xC2:
+            nn = readOpertionDwordParameter();
+            if (getFlagZ() == 0) {
+                //TODO: checkear si es esto
+                REG_PC = nn;
+            }
+            break;
+            
+        case 0xCA:
+            nn = readOpertionDwordParameter();
+            if (getFlagZ() == 1) {
+                //TODO: checkear si es esto
+                REG_PC = nn;
+            }
+            break;
+            
+        case 0xD2:
+            nn = readOpertionDwordParameter();
+            if (getFlagC() == 0) {
+                //TODO: checkear si es esto
+                REG_PC = nn;
+            }
+            break;
+            
+        case 0xDA:
+            nn = readOpertionDwordParameter();
+            if (getFlagC() == 1) {
+                //TODO: checkear si es esto
+                REG_PC = nn;
+            }
             break;
             
         default:

@@ -17,6 +17,12 @@ struct {
         int16_t PC, SP;
     }_r;
     
+    struct {
+        bool interruptsEnabled;
+        bool halt;
+        bool stop;
+    }_controlFlags;
+    
 }Z80;
 
 #define REGISTERS       Z80._r
@@ -30,6 +36,11 @@ struct {
 #define REG_L           REGISTERS.L
 #define REG_PC          REGISTERS.PC
 #define REG_SP          REGISTERS.SP
+
+#define CONTROL_FLAGS   Z80._controlFlags
+#define FLAGS_STOP      CONTROL_FLAGS.stop
+#define FLAGS_HALT      CONTROL_FLAGS.halt
+#define FLAGS_IE        CONTROL_FLAGS.interruptsEnabled
 
 #define REG_AF          DWORD_FROM_HL(REG_A, REG_F)
 #define REG_BC          DWORD_FROM_HL(REG_B, REG_C)
