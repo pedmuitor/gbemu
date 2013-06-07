@@ -64,6 +64,10 @@ void subA (int8_t n, bool c, bool store);
 
 void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag)
 {
+    if (c) {
+        c = getFlagC();
+    }
+    
     int8_t number    = n + c;
     int8_t rval      = *r;
     int8_t  sum      = rval + number;
@@ -116,6 +120,10 @@ void addA (int8_t n, bool c)
 
 void sub8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag, bool store)
 {
+    if (c) {
+        c = getFlagC();
+    }
+    
     int8_t number      = ~(n + c) + 0x01;
     int8_t rval        = *r;
     int8_t sub         = rval + number;
@@ -348,7 +356,7 @@ void RL (int8_t *r)
 void RLC (int8_t *r)
 {
     SLA(r);
-    *r |= ALU_FLAG_C;
+    *r |= getFlagC();
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
 }
@@ -365,7 +373,7 @@ void RR (int8_t *r)
 void RRC (int8_t *r)
 {
     SRL(r);
-    *r |= ((ALU_FLAG_C << 7) & 0x80);
+    *r |= ((getFlagC() << 7) & 0x80);
     
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
