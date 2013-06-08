@@ -15,10 +15,6 @@ int main(int argc, const char * argv[])
 
     @autoreleasepool {
         
-        REG_A = 0x01;
-        ADD(0x01);
-        
-        
     }
     return 0;
 }
