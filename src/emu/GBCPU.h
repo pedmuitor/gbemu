@@ -66,11 +66,14 @@ int16_t readOpertionDwordParameter(void);
 //                                              //
 //----------------------------------------------//
 
-
 bool getFlagZ();
+void setFlagZ(bool z);
 bool getFlagN();
+void setFlagN(bool n);
 bool getFlagC();
+void setFlagC(bool c);
 bool getFlagH();
+void setFlagH(bool h);
 
 
 #endif

@@ -17,16 +17,6 @@
 		EBF7DD171759291300A443B9 /* GBCPU_ALU.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD14175928CD00A443B9 /* GBCPU_ALU.c */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		EBEB3AEE1763272200C18938 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EBF7DCF51759288800A443B9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EBEB3AD0176325A100C18938;
-			remoteInfo = GBEmuTests;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		EBF7DCFB1759288800A443B9 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -201,7 +191,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				EBEB3AEF1763272200C18938 /* PBXTargetDependency */,
 			);
 			name = GBEmu;
 			productName = GBEmu;
@@ -283,14 +272,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		EBEB3AEF1763272200C18938 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = EBEB3AD0176325A100C18938 /* GBEmuTests */;
-			targetProxy = EBEB3AEE1763272200C18938 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
 		EBEB3AE4176325A100C18938 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -302,7 +283,7 @@
 				GCC_PREFIX_HEADER = "src/tests/GBEmuTests-Prefix.pch";
 				INFOPLIST_FILE = "src/tests/GBEmuTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_AFTER_BUILD = YES;
+				TEST_AFTER_BUILD = NO;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -318,7 +299,7 @@
 				GCC_PREFIX_HEADER = "src/tests/GBEmuTests-Prefix.pch";
 				INFOPLIST_FILE = "src/tests/GBEmuTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_AFTER_BUILD = YES;
+				TEST_AFTER_BUILD = NO;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -411,6 +392,7 @@
 				EBEB3AE5176325A100C18938 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EBF7DCF81759288800A443B9 /* Build configuration list for PBXProject "GBEmu" */ = {
 			isa = XCConfigurationList;
