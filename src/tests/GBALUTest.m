@@ -35,11 +35,14 @@
         0x01,
         0x8A,
         0xB1,
-        
-        //H Tests
         0x07,
-        //C Tests
-        0x78
+        0x78,
+        0xFD,
+        0x80,
+        0x9B,
+        0x26,
+        0xAA,
+        0x5A
     };
     
     int8_t numbersToAdd [] = {
@@ -47,7 +50,13 @@
         0x2C,
         0xD2,
         0x06,
-        0x69
+        0x69,
+        0x03,
+        0x80,
+        0x61,
+        0x76,
+        0xBB,
+        0xA6
     };
     
     int8_t expectedResult [] = {
@@ -55,7 +64,13 @@
         0xB6,
         0x83,
         0x0D,
-        0xE1
+        0xE1,
+        0x00,
+        0x00,
+        0xFC,
+        0x9C,
+        0x65,
+        0x00
     };
     
     int8_t expectedZ [] = {
@@ -63,7 +78,13 @@
         0,
         0,
         0,
-        0
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1
     };
     
     int8_t expectedH [] = {
@@ -71,7 +92,13 @@
         1,
         0,
         1,
-        1
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
     };
     
     int8_t expectedC [] = {
@@ -79,7 +106,13 @@
         0,
         0,
         0,
-        1
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
     };
 
     int nTests = sizeof(numbersToAdd)/sizeof(int8_t);
