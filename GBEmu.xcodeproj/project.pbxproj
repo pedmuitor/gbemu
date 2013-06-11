@@ -9,12 +9,31 @@
 /* Begin PBXBuildFile section */
 		1C46C0C21759EB87006D9BD9 /* GBMemory.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C46C0C11759EB87006D9BD9 /* GBMemory.c */; };
 		1C930B99175AC05400889E2C /* GBCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C930B98175AC05400889E2C /* GBCPU.c */; };
+		EB24BC54176798A900B15730 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBEB3AD4176325A100C18938 /* Cocoa.framework */; };
+		EB24BC7917679A6800B15730 /* GBALUTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EB24BC7817679A6800B15730 /* GBALUTest.m */; };
+		EB24BC7F17679B0000B15730 /* GBEmuTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB24BC7B17679B0000B15730 /* GBEmuTests-Info.plist */; };
+		EB24BC8017679B0000B15730 /* GHUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB24BC7D17679B0000B15730 /* GHUnit.framework */; };
+		EB24BC8117679B0000B15730 /* GHUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = EB24BC7E17679B0000B15730 /* GHUnitTestMain.m */; };
+		EB24BC8217679B0600B15730 /* GHUnit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = EB24BC7D17679B0000B15730 /* GHUnit.framework */; };
+		EB24BC8717679CCE00B15730 /* GBCPU_ALU.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD14175928CD00A443B9 /* GBCPU_ALU.c */; };
+		EB24BC8817679CCE00B15730 /* GBMemory.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C46C0C11759EB87006D9BD9 /* GBMemory.c */; };
+		EB24BC8917679CCE00B15730 /* GBCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C930B98175AC05400889E2C /* GBCPU.c */; };
 		EBF7DD011759288800A443B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBF7DD001759288800A443B9 /* Foundation.framework */; };
 		EBF7DD161759291000A443B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD12175928CD00A443B9 /* main.m */; };
 		EBF7DD171759291300A443B9 /* GBCPU_ALU.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7DD14175928CD00A443B9 /* GBCPU_ALU.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		EB24BC75176799E600B15730 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EB24BC8217679B0600B15730 /* GHUnit.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EBF7DCFB1759288800A443B9 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -32,6 +51,13 @@
 		1C46C0C11759EB87006D9BD9 /* GBMemory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBMemory.c; sourceTree = "<group>"; };
 		1C930B97175AC02F00889E2C /* GBCPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPU.h; sourceTree = "<group>"; };
 		1C930B98175AC05400889E2C /* GBCPU.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBCPU.c; sourceTree = "<group>"; };
+		EB24BC53176798A900B15730 /* GBEmuTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GBEmuTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB24BC7717679A6800B15730 /* GBALUTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBALUTest.h; sourceTree = "<group>"; };
+		EB24BC7817679A6800B15730 /* GBALUTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBALUTest.m; sourceTree = "<group>"; };
+		EB24BC7B17679B0000B15730 /* GBEmuTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GBEmuTests-Info.plist"; sourceTree = "<group>"; };
+		EB24BC7C17679B0000B15730 /* GBEmuTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GBEmuTests-Prefix.pch"; sourceTree = "<group>"; };
+		EB24BC7D17679B0000B15730 /* GHUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GHUnit.framework; sourceTree = "<group>"; };
+		EB24BC7E17679B0000B15730 /* GHUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUnitTestMain.m; sourceTree = "<group>"; };
 		EBEB3AD2176325A100C18938 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		EBEB3AD4176325A100C18938 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		EBEB3AD7176325A100C18938 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -47,6 +73,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		EB24BC50176798A900B15730 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB24BC54176798A900B15730 /* Cocoa.framework in Frameworks */,
+				EB24BC8017679B0000B15730 /* GHUnit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EBF7DCFA1759288800A443B9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,6 +93,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB24BC6A176798BD00B15730 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				EB24BC7A17679B0000B15730 /* testApp */,
+				EB24BC7717679A6800B15730 /* GBALUTest.h */,
+				EB24BC7817679A6800B15730 /* GBALUTest.m */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		EB24BC7A17679B0000B15730 /* testApp */ = {
+			isa = PBXGroup;
+			children = (
+				EB24BC7B17679B0000B15730 /* GBEmuTests-Info.plist */,
+				EB24BC7C17679B0000B15730 /* GBEmuTests-Prefix.pch */,
+				EB24BC7D17679B0000B15730 /* GHUnit.framework */,
+				EB24BC7E17679B0000B15730 /* GHUnitTestMain.m */,
+			);
+			path = testApp;
+			sourceTree = "<group>";
+		};
 		EBEB3AD6176325A100C18938 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				EBF7DCFD1759288800A443B9 /* GBEmu */,
+				EB24BC53176798A900B15730 /* GBEmuTests.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,6 +156,7 @@
 		EBF7DD0E175928CD00A443B9 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				EB24BC6A176798BD00B15730 /* tests */,
 				EBF7DD0F175928CD00A443B9 /* app */,
 				EBF7DD13175928CD00A443B9 /* emu */,
 			);
@@ -132,6 +190,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		EB24BC52176798A900B15730 /* GBEmuTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB24BC69176798A900B15730 /* Build configuration list for PBXNativeTarget "GBEmuTests" */;
+			buildPhases = (
+				EB24BC4F176798A900B15730 /* Sources */,
+				EB24BC50176798A900B15730 /* Frameworks */,
+				EB24BC51176798A900B15730 /* Resources */,
+				EB24BC75176799E600B15730 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GBEmuTests;
+			productName = GBEmuTests;
+			productReference = EB24BC53176798A900B15730 /* GBEmuTests.app */;
+			productType = "com.apple.product-type.application";
+		};
 		EBF7DCFC1759288800A443B9 /* GBEmu */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EBF7DD0B1759288800A443B9 /* Build configuration list for PBXNativeTarget "GBEmu" */;
@@ -171,11 +247,35 @@
 			projectRoot = "";
 			targets = (
 				EBF7DCFC1759288800A443B9 /* GBEmu */,
+				EB24BC52176798A900B15730 /* GBEmuTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		EB24BC51176798A900B15730 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB24BC7F17679B0000B15730 /* GBEmuTests-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		EB24BC4F176798A900B15730 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB24BC7917679A6800B15730 /* GBALUTest.m in Sources */,
+				EB24BC8117679B0000B15730 /* GHUnitTestMain.m in Sources */,
+				EB24BC8717679CCE00B15730 /* GBCPU_ALU.c in Sources */,
+				EB24BC8817679CCE00B15730 /* GBMemory.c in Sources */,
+				EB24BC8917679CCE00B15730 /* GBCPU.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EBF7DCF91759288800A443B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -190,6 +290,50 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		EB24BC67176798A900B15730 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"\"$(SRCROOT)/src/tests\"",
+					"\"$(SRCROOT)/src/tests/testApp\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "src/tests/testApp/GBEmuTests-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/src/tests/testApp/GBEmuTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		EB24BC68176798A900B15730 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"\"$(SRCROOT)/src/tests\"",
+					"\"$(SRCROOT)/src/tests/testApp\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "src/tests/testApp/GBEmuTests-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/src/tests/testApp/GBEmuTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		EBF7DD091759288800A443B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -270,6 +414,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EB24BC69176798A900B15730 /* Build configuration list for PBXNativeTarget "GBEmuTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB24BC67176798A900B15730 /* Debug */,
+				EB24BC68176798A900B15730 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EBF7DCF81759288800A443B9 /* Build configuration list for PBXProject "GBEmu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
