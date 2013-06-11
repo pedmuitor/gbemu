@@ -52,7 +52,7 @@ void DEC16_HL (int8_t *rh, int8_t *rl)
 
 bool getFlagZ()
 {
-    return ((REG_F & 0x80) == 0);
+    return ((REG_F & 0x80) != 0);
 }
 
 void setFlagZ(bool z)
@@ -65,7 +65,7 @@ void setFlagZ(bool z)
 
 bool getFlagN()
 {
-    return ((REG_F & 0x40) == 0);
+    return ((REG_F & 0x40) != 0);
 }
 
 void setFlagN(bool n)
@@ -78,7 +78,7 @@ void setFlagN(bool n)
 
 bool getFlagC()
 {
-    return ((REG_F & 0x10) == 0);
+    return ((REG_F & 0x10) != 0);
 }
 
 void setFlagC(bool c)
@@ -91,7 +91,7 @@ void setFlagC(bool c)
 
 bool getFlagH()
 {
-    return ((REG_F & 0x20) == 0);
+    return ((REG_F & 0x20) != 0);
 }
 
 void setFlagH(bool h)
