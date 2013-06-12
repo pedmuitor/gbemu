@@ -119,9 +119,11 @@
     
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
+            GHTestLog(@"Carry flag reset");
             setFlagC(0);
         }else {
             setFlagC(1);
+            GHTestLog(@"Carry flag set");
         }
         
         for (int i = 0; i < nTests; i++) {
@@ -151,7 +153,9 @@
         0x9B,
         0x26,
         0xAA,
-        0x5A
+        0x5A,
+        0xFE,
+        0x15,
     };
     
     int8_t numbersToAdd [] = {
@@ -165,10 +169,12 @@
         0x61,
         0x76,
         0xBB,
-        0xA6
+        0xA6,
+        0x01,
+        0xA2,
     };
     
-    int8_t expectedResult [] = {
+    int8_t expectedResult_cReset [] = {
         0x01,
         0xB6,
         0x83,
@@ -179,38 +185,92 @@
         0xFC,
         0x9C,
         0x65,
-        0x00
+        0x00,
+        0xFF,
+        0xB7,
     };
     
-    int8_t expectedZ [] = {
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        0,
-        0,
-        0,
-        1
+    int8_t expectedResult_cSet [] = {
+        0x02,
+        0xB7,
+        0x84,
+        0x0E,
+        0xE2,
+        0x01,
+        0x01,
+        0xFD,
+        0x9D,
+        0x66,
+        0x01,
+        0x00,
+        0xB8,
     };
     
-    int8_t expectedH [] = {
+    int8_t expectedZ_cReset [] = {
         0,
-        1,
         0,
-        1,
-        1,
         0,
         0,
         0,
         1,
         1,
-        0
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
     };
     
-    int8_t expectedC [] = {
+    int8_t expectedZ_cSet [] = {
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+    };
+    
+    int8_t expectedH_cReset [] = {
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+    };
+    
+    int8_t expectedH_cSet [] = {
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+    };
+    
+    int8_t expectedC_cReset [] = {
         0,
         0,
         0,
@@ -221,25 +281,65 @@
         0,
         1,
         1,
-        0
+        0,
+        0,
+        0,
+    };
+    
+    int8_t expectedC_cSet [] = {
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
     };
     
     int nTests = sizeof(numbersToAdd)/sizeof(int8_t);
     
-    for (int i = 0; i < nTests; i++) {
-        setFlagC(0);
+    for (int j = 0; j < 2; j++) {
+        int8_t *expectedResult = nil;
+        int8_t *expectedZ = nil;
+        int8_t *expectedH = nil;
+        int8_t *expectedC = nil;
         
-        REG_A = initialValues[i];
-        GHTestLog(@"Operation %d: %#X + %#X", i, REG_A, numbersToAdd[i]);
-        ADC(numbersToAdd[i]);
         
-        GHAssertTrue(REG_A == expectedResult[i], @"Result %#X --> expected %#X", REG_A, expectedResult[i]);
-        GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
-        GHAssertTrue(ALU_FLAG_Z == expectedZ[i], @"Z %d --> expected %d", ALU_FLAG_Z, expectedZ[i]);
-        GHAssertTrue(ALU_FLAG_H == expectedH[i], @"H %d --> expected %d", ALU_FLAG_H, expectedH[i]);
-        GHAssertTrue(ALU_FLAG_C == expectedC[i], @"C %d --> expected %d", ALU_FLAG_C, expectedC[i]);
+        
+        if (0 == j) {
+            expectedResult = expectedResult_cReset;
+            expectedZ = expectedZ_cReset;
+            expectedH = expectedH_cReset;
+            expectedC = expectedC_cReset;
+            GHTestLog(@"Carry flag reset");
+            setFlagC(0);
+        }else {
+            expectedResult = expectedResult_cSet;
+            expectedZ = expectedZ_cSet;
+            expectedH = expectedH_cSet;
+            expectedC = expectedC_cSet;
+            setFlagC(1);
+            GHTestLog(@"Carry flag set");
+        }
+        
+        for (int i = 0; i < nTests; i++) {
+            REG_A = initialValues[i];
+            GHTestLog(@"Operation %d: %#X + %#X", i, REG_A, numbersToAdd[i]);
+            ADC(numbersToAdd[i]);
+            
+            GHAssertTrue(REG_A == expectedResult[i], @"Result %#X --> expected %#X", REG_A, expectedResult[i]);
+            GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+            GHAssertTrue(ALU_FLAG_Z == expectedZ[i], @"Z %d --> expected %d", ALU_FLAG_Z, expectedZ[i]);
+            GHAssertTrue(ALU_FLAG_H == expectedH[i], @"H %d --> expected %d", ALU_FLAG_H, expectedH[i]);
+            GHAssertTrue(ALU_FLAG_C == expectedC[i], @"C %d --> expected %d", ALU_FLAG_C, expectedC[i]);
+        }
     }
-    
 }
 
 @end
