@@ -103,27 +103,27 @@ void sub8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag, bool store)
     if (hFlag) {
         int8_t hn       = number & 0x0F;
         int8_t hr       = rval & 0x0F;
-        int8_t msbn     = (hn & 0x08) >> 3;
-        int8_t msbr     = (hr & 0x08) >> 3;
+        int8_t msbn     = bitAtIndex(hn, 3);
+        int8_t msbr     = bitAtIndex(hr, 3);
         
         if (msbn ^ msbr) {
             ALU_FLAG_H          = 1;
         }else {
-            int8_t msbs     = ((hn + hr) & 0x08) >> 3;
+            int8_t msbs         = bitAtIndex((hn + hr) & 0x08, 3);
             ALU_FLAG_H          = (0 == (msbs ^ msbn));
         }
     }
     
     //Overflow
     if (cFlag) {
-        int8_t msbn      = (number & 0x80) >> 7;
-        int8_t msbr      = (rval & 0x80) >> 7;
+        int8_t msbn      = moreSignificantBit(number, sizeof(int8_t));
+        int8_t msbr      = moreSignificantBit(rval, sizeof(int8_t));
         
         
         if (msbn ^ msbr) {
             ALU_FLAG_C      = 1;
         }else {
-            int8_t msbs   = (sub & 0x80) >> 7;
+            int8_t msbs   = moreSignificantBit(sub, sizeof(int8_t));
             ALU_FLAG_C      = (0 == (msbs ^ msbn));
         }
     }
