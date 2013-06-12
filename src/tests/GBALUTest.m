@@ -117,16 +117,24 @@
 
     int nTests = sizeof(numbersToAdd)/sizeof(int8_t);
     
-    for (int i = 0; i < nTests; i++) {
-        REG_A = initialValues[i];
-        GHTestLog(@"Operation %d: %#X + %#X", i, REG_A, numbersToAdd[i]);
-        ADD(numbersToAdd[i]);
+    for (int j = 0; j < 2; j++) {
+        if (0 == j) {
+            setFlagC(0);
+        }else {
+            setFlagC(1);
+        }
         
-        GHAssertTrue(REG_A == expectedResult[i], @"Result %#X --> expected %#X", REG_A, expectedResult[i]);
-        GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
-        GHAssertTrue(ALU_FLAG_Z == expectedZ[i], @"Z %d --> expected %d", ALU_FLAG_Z, expectedZ[i]);
-        GHAssertTrue(ALU_FLAG_H == expectedH[i], @"H %d --> expected %d", ALU_FLAG_H, expectedH[i]);
-        GHAssertTrue(ALU_FLAG_C == expectedC[i], @"C %d --> expected %d", ALU_FLAG_C, expectedC[i]);
+        for (int i = 0; i < nTests; i++) {
+            REG_A = initialValues[i];
+            GHTestLog(@"Operation %d: %#X + %#X", i, REG_A, numbersToAdd[i]);
+            ADD(numbersToAdd[i]);
+            
+            GHAssertTrue(REG_A == expectedResult[i], @"Result %#X --> expected %#X", REG_A, expectedResult[i]);
+            GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+            GHAssertTrue(ALU_FLAG_Z == expectedZ[i], @"Z %d --> expected %d", ALU_FLAG_Z, expectedZ[i]);
+            GHAssertTrue(ALU_FLAG_H == expectedH[i], @"H %d --> expected %d", ALU_FLAG_H, expectedH[i]);
+            GHAssertTrue(ALU_FLAG_C == expectedC[i], @"C %d --> expected %d", ALU_FLAG_C, expectedC[i]);
+        }
     }
 }
 
