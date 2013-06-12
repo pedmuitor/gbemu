@@ -70,10 +70,10 @@ bool getFlagZ();
 void setFlagZ(bool z);
 bool getFlagN();
 void setFlagN(bool n);
-bool getFlagC();
-void setFlagC(bool c);
 bool getFlagH();
 void setFlagH(bool h);
+bool getFlagC();
+void setFlagC(bool c);
 
 
 #endif

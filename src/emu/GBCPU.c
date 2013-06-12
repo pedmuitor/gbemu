@@ -13,6 +13,7 @@
 #include "GBCPU.h"
 #include "GBCPU_ALU.h"
 #include "GBMemory.h"
+#include "GBUtils.h"
 
 //----------------------------------------------//
 //                                              //
@@ -52,54 +53,42 @@ void DEC16_HL (int8_t *rh, int8_t *rl)
 
 bool getFlagZ()
 {
-    return ((REG_F & 0x80) != 0);
+    return bitAtIndex(REG_F, 7);
 }
 
 void setFlagZ(bool z)
 {
-    REG_F &= 0x7F;
-    if (z) {
-        REG_F|= 0x80;
-    }
+    setBitAtIndex(&REG_F, 7, z);
 }
 
 bool getFlagN()
 {
-    return ((REG_F & 0x40) != 0);
+    return bitAtIndex(REG_F, 6);
 }
 
 void setFlagN(bool n)
 {
-    REG_F &= 0xBF;
-    if (n) {
-        REG_F |= 0x40;
-    }
-}
-
-bool getFlagC()
-{
-    return ((REG_F & 0x10) != 0);
-}
-
-void setFlagC(bool c)
-{
-    REG_F &= 0xEF;
-    if (c) {
-        REG_F |= 0x10;
-    }
+    setBitAtIndex(&REG_F, 6, n);
 }
 
 bool getFlagH()
 {
-    return ((REG_F & 0x20) != 0);
+    return bitAtIndex(REG_F, 5);
 }
 
 void setFlagH(bool h)
 {
-    REG_F &= 0xDF;
-    if (h) {
-        REG_F |= 0x20;
-    }
+    setBitAtIndex(&REG_F, 5, h);
+}
+
+bool getFlagC()
+{
+   return bitAtIndex(REG_F, 4);
+}
+
+void setFlagC(bool c)
+{
+    setBitAtIndex(&REG_F, 4, c);
 }
 
 
