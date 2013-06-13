@@ -330,7 +330,7 @@
         
         for (int i = 0; i < nTests; i++) {
             REG_A = initialValues[i];
-            GHTestLog(@"Operation %d: %#X + %#X", i, REG_A, numbersToAdd[i]);
+            GHTestLog(@"Operation %d: %#X + %#X + %d", i, REG_A, numbersToAdd[i], getFlagC());
             ADC(numbersToAdd[i]);
             
             GHAssertTrue(REG_A == expectedResult[i], @"Result %#X --> expected %#X", REG_A, expectedResult[i]);
@@ -411,7 +411,7 @@
         
         for (int i = 0; i < nTests; i++) {
             REG_A = initialValues[i];
-            GHTestLog(@"Operation %d: %#X + %#X", i, REG_A, numbersToSub[i]);
+            GHTestLog(@"Operation %d: %#X - %#X", i, REG_A, numbersToSub[i]);
             SUB(numbersToSub[i]);
             
             GHAssertTrue(REG_A == expectedResult[i], @"Result %#X --> expected %#X", REG_A, expectedResult[i]);
@@ -541,7 +541,7 @@
         
         for (int i = 0; i < nTests; i++) {
             REG_A = initialValues[i];
-            GHTestLog(@"Operation %d: %#X + %#X", i, REG_A, numbersToSub[i]);
+            GHTestLog(@"Operation %d: %#X - %#X - %d", i, REG_A, numbersToSub[i], getFlagC());
             SBC(numbersToSub[i]);
             
             GHAssertTrue(REG_A == expectedResult[i], @"Result %#X --> expected %#X", REG_A, expectedResult[i]);
@@ -553,4 +553,105 @@
     }
 }
 
+- (void)testAND
+{
+    int8_t initialValues[] = {
+        0x00,
+        0xB3,
+        0xC0,
+        0x04,
+        0x3A,
+        0xAF,
+        0x9D
+    };
+    
+    int8_t numbers[] = {
+        0xFF,
+        0xA5,
+        0xC0,
+        0x00,
+        0xA2,
+        0x01,
+        0x76
+    };
+    
+
+    int nTests = sizeof(initialValues)/sizeof(int8_t);
+    
+    for (int j = 0; j < 2; j++) {
+        if (0 == j) {
+            GHTestLog(@"Carry flag reset");
+            setFlagC(0);
+        }else {
+            setFlagC(1);
+            GHTestLog(@"Carry flag set");
+        }
+        
+        for (int i = 0; i < nTests; i++) {
+            REG_A = initialValues[i];
+            GHTestLog(@"Operation %d: %#X & %#X", i, REG_A, numbers[i]);
+            AND(numbers[i]);
+            
+            int8_t expectedResult = (initialValues[i] & numbers[i]);
+            int8_t expectedZ = (0 == expectedResult)? 1:0;
+            
+            GHAssertTrue(REG_A == expectedResult, @"Result %#X --> expected %#X", REG_A, expectedResult);
+            GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+            GHAssertTrue(ALU_FLAG_Z == expectedZ, @"Z %d --> expected %d", ALU_FLAG_Z, expectedZ);
+            GHAssertTrue(ALU_FLAG_H == 1, @"H %d --> expected %d", ALU_FLAG_H, 1);
+            GHAssertTrue(ALU_FLAG_C == 0, @"C %d --> expected %d", ALU_FLAG_C, 0);
+        }
+    }
+}
+
+- (void)testOR
+{
+    int8_t initialValues[] = {
+        0x00,
+        0xB3,
+        0xC0,
+        0x04,
+        0x3A,
+        0xAF,
+        0x9D
+    };
+    
+    int8_t numbers[] = {
+        0x31,
+        0xA5,
+        0xC0,
+        0x00,
+        0xA2,
+        0x01,
+        0x76
+    };
+    
+    
+    int nTests = sizeof(initialValues)/sizeof(int8_t);
+    
+    for (int j = 0; j < 2; j++) {
+        if (0 == j) {
+            GHTestLog(@"Carry flag reset");
+            setFlagC(0);
+        }else {
+            setFlagC(1);
+            GHTestLog(@"Carry flag set");
+        }
+        
+        for (int i = 0; i < nTests; i++) {
+            REG_A = initialValues[i];
+            GHTestLog(@"Operation %d: %#X | %#X", i, REG_A, numbers[i]);
+            OR(numbers[i]);
+            
+            int8_t expectedResult = (initialValues[i] | numbers[i]);
+            int8_t expectedZ = (0 == expectedResult)? 1:0;
+            
+            GHAssertTrue(REG_A == expectedResult, @"Result %#X --> expected %#X", REG_A, expectedResult);
+            GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+            GHAssertTrue(ALU_FLAG_Z == expectedZ, @"Z %d --> expected %d", ALU_FLAG_Z, expectedZ);
+            GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
+            GHAssertTrue(ALU_FLAG_C == 0, @"C %d --> expected %d", ALU_FLAG_C, 0);
+        }
+    }
+}
 @end

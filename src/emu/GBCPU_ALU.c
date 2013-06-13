@@ -163,10 +163,8 @@ void SBC (int8_t n)
 void AND (int8_t n)
 {
     REG_A &= n;
-    if (0 == REG_A) {
-        ALU_FLAG_Z  = 1;
-    }
     
+    ALU_FLAG_Z = (0 == REG_A)? 1:0;
     ALU_FLAG_N  = 0;
     ALU_FLAG_H  = 1;
     ALU_FLAG_C  = 0;
@@ -175,10 +173,8 @@ void AND (int8_t n)
 void OR (int8_t n)
 {
     REG_A |= n;
-    if (0 == REG_A) {
-        ALU_FLAG_Z  = 1;
-    }
     
+    ALU_FLAG_Z = (0 == REG_A)? 1:0;
     ALU_FLAG_N  = 0;
     ALU_FLAG_H  = 0;
     ALU_FLAG_C  = 0;
@@ -187,10 +183,8 @@ void OR (int8_t n)
 void XOR (int8_t n)
 {
     REG_A ^= n;
-    if (0 == REG_A) {
-        ALU_FLAG_Z  = 1;
-    }
-    
+   
+    ALU_FLAG_Z = (0 == REG_A)? 1:0;
     ALU_FLAG_N  = 0;
     ALU_FLAG_H  = 0;
     ALU_FLAG_C  = 0;
@@ -225,9 +219,7 @@ void DAA ()
     
     REG_A  = temp + n;
     
-    if (0 == REG_A) {
-        ALU_FLAG_Z  = 1;
-    }
+    ALU_FLAG_Z = (0 == REG_A)? 1:0;
 }
 
 void CPL ()
