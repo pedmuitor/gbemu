@@ -2,6 +2,7 @@
 // Prefix header for all source files of the 'GBEmu' target in the 'GBEmu' project
 //
 
+
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
     #import "GBMacros.h"

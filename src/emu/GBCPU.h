@@ -60,4 +60,20 @@ void nextOperation(void);
 int8_t readOperationWordParameter(void);
 int16_t readOpertionDwordParameter(void);
 
+//----------------------------------------------//
+//                                              //
+//                 Flags Access                 //
+//                                              //
+//----------------------------------------------//
+
+bool getFlagZ();
+void setFlagZ(bool z);
+bool getFlagN();
+void setFlagN(bool n);
+bool getFlagH();
+void setFlagH(bool h);
+bool getFlagC();
+void setFlagC(bool c);
+
+
 #endif

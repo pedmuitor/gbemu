@@ -6,49 +6,13 @@
 //  Copyright (c) 2013 None. All rights reserved.
 //
 
-#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
 
-#include "GBMacros.h"
+#include "GBUtils.h"    
 #include "GBCPU.h"
 #include "GBCPU_ALU.h"
-
-//Global helpers
-
-uint8_t bitAtIndex (int n, int index)
-{
-	uint8_t mask = (int8_t)pow(2, index);
-    uint8_t result = (n & mask) >> (index);
-    return result;
-}
-
-void setBitAtIndex (int8_t *r, int index, uint8_t value)
-{
-    uint8_t mask = ~((int8_t)pow(2, index));
-    *r &= mask;
-    
-    if (value) {
-        *r |= (0x01) << index;
-    }
-    
-    *r &= 0xFF;
-}
-
-uint8_t moreSignificantBit (int n, int size)
-{
-	int sizeInBits	= size*8;
-	int bit 		= sizeInBits - 1;
-    
-	return bitAtIndex(n, bit);
-}
-
-uint8_t lessSignificantBit (int n)
-{
-    return bitAtIndex(n, 0);
-}
-
 
 //----------------------------------------------//
 //                                              //
@@ -64,6 +28,10 @@ void subA (int8_t n, bool c, bool store);
 
 void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag)
 {
+    if (c) {
+        c = getFlagC();
+    }
+    
     int8_t number    = n + c;
     int8_t rval      = *r;
     int8_t  sum      = rval + number;
@@ -80,27 +48,26 @@ void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag)
     if (hFlag) {
         int8_t hn       = number & 0x0F;
         int8_t hr       = rval & 0x0F;
-        int8_t msbn     = (hn & 0x08) >> 3;
-        int8_t msbr     = (hr & 0x08) >> 3;
+        int8_t msbn     = bitAtIndex(hn, 3);
+        int8_t msbr     = bitAtIndex(hr, 3);
         
         if (msbn ^ msbr) {
             ALU_FLAG_H          = 0;
         }else {
-            int8_t msbs     = ((hn + hr) & 0x08) >> 3;
+            int8_t msbs         = bitAtIndex((hn + hr) & 0x08, 3);
             ALU_FLAG_H          = (0 != (msbs ^ msbn));
         }
     }
     
     //Overflow
     if (cFlag) {
-        int8_t msbn      = (number & 0x80) >> 7;
-        int8_t msbr      = (rval & 0x80) >> 7;
-        
-        
+        int8_t msbn      = moreSignificantBit(number, sizeof(int8_t));
+        int8_t msbr      = moreSignificantBit(rval, sizeof(int8_t));
+
         if (msbn ^ msbr) {
             ALU_FLAG_C      = 0;
         }else {
-            int8_t msbs   = (sum & 0x80) >> 7;
+            int8_t msbs   = moreSignificantBit(sum, sizeof(int8_t));
             ALU_FLAG_C      = (0 != (msbs ^ msbn));
         }
     }
@@ -116,6 +83,10 @@ void addA (int8_t n, bool c)
 
 void sub8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag, bool store)
 {
+    if (c) {
+        c = getFlagC();
+    }
+    
     int8_t number      = ~(n + c) + 0x01;
     int8_t rval        = *r;
     int8_t sub         = rval + number;
@@ -132,27 +103,27 @@ void sub8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag, bool store)
     if (hFlag) {
         int8_t hn       = number & 0x0F;
         int8_t hr       = rval & 0x0F;
-        int8_t msbn     = (hn & 0x08) >> 3;
-        int8_t msbr     = (hr & 0x08) >> 3;
+        int8_t msbn     = bitAtIndex(hn, 3);
+        int8_t msbr     = bitAtIndex(hr, 3);
         
         if (msbn ^ msbr) {
             ALU_FLAG_H          = 1;
         }else {
-            int8_t msbs     = ((hn + hr) & 0x08) >> 3;
+            int8_t msbs         = bitAtIndex((hn + hr) & 0x08, 3);
             ALU_FLAG_H          = (0 == (msbs ^ msbn));
         }
     }
     
     //Overflow
     if (cFlag) {
-        int8_t msbn      = (number & 0x80) >> 7;
-        int8_t msbr      = (rval & 0x80) >> 7;
+        int8_t msbn      = moreSignificantBit(number, sizeof(int8_t));
+        int8_t msbr      = moreSignificantBit(rval, sizeof(int8_t));
         
         
         if (msbn ^ msbr) {
             ALU_FLAG_C      = 1;
         }else {
-            int8_t msbs   = (sub & 0x80) >> 7;
+            int8_t msbs   = moreSignificantBit(sub, sizeof(int8_t));
             ALU_FLAG_C      = (0 == (msbs ^ msbn));
         }
     }
@@ -192,10 +163,8 @@ void SBC (int8_t n)
 void AND (int8_t n)
 {
     REG_A &= n;
-    if (0 == REG_A) {
-        ALU_FLAG_Z  = 1;
-    }
     
+    ALU_FLAG_Z = (0 == REG_A)? 1:0;
     ALU_FLAG_N  = 0;
     ALU_FLAG_H  = 1;
     ALU_FLAG_C  = 0;
@@ -204,10 +173,8 @@ void AND (int8_t n)
 void OR (int8_t n)
 {
     REG_A |= n;
-    if (0 == REG_A) {
-        ALU_FLAG_Z  = 1;
-    }
     
+    ALU_FLAG_Z = (0 == REG_A)? 1:0;
     ALU_FLAG_N  = 0;
     ALU_FLAG_H  = 0;
     ALU_FLAG_C  = 0;
@@ -216,10 +183,8 @@ void OR (int8_t n)
 void XOR (int8_t n)
 {
     REG_A ^= n;
-    if (0 == REG_A) {
-        ALU_FLAG_Z  = 1;
-    }
-    
+   
+    ALU_FLAG_Z = (0 == REG_A)? 1:0;
     ALU_FLAG_N  = 0;
     ALU_FLAG_H  = 0;
     ALU_FLAG_C  = 0;
@@ -254,9 +219,7 @@ void DAA ()
     
     REG_A  = temp + n;
     
-    if (0 == REG_A) {
-        ALU_FLAG_Z  = 1;
-    }
+    ALU_FLAG_Z = (0 == REG_A)? 1:0;
 }
 
 void CPL ()
@@ -348,7 +311,7 @@ void RL (int8_t *r)
 void RLC (int8_t *r)
 {
     SLA(r);
-    *r |= ALU_FLAG_C;
+    *r |= getFlagC();
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
 }
@@ -365,7 +328,7 @@ void RR (int8_t *r)
 void RRC (int8_t *r)
 {
     SRL(r);
-    *r |= ((ALU_FLAG_C << 7) & 0x80);
+    *r |= ((getFlagC() << 7) & 0x80);
     
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;

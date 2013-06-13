@@ -15,23 +15,6 @@ int main(int argc, const char * argv[])
 
     @autoreleasepool {
         
-        for (int i = 0; i < 30; i++) {
-            INC(&REG_A);
-        }
-        
-        NSLog(@"A %d", REG_A);
-        
-        for (int i = 0; i < 7; i++) {
-            DEC(&REG_A);
-        }
-        
-        NSLog(@"A %d", REG_A);
-        
-        int16_t t = 0xAAA0;
-        ADD16(&t, 1);
-        
-        
-        
     }
     return 0;
 }
