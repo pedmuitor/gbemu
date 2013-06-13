@@ -209,15 +209,17 @@ void DAA ()
 {
     ALU_FLAG_H  = 0;
     
-    int8_t n    = REG_A;
-    int8_t temp = 0;
+    uint8_t n    = (uint8_t)REG_A;
+    int8_t res  = 0;
     
+    int8_t i = 0;
     while (n > 0) {
-        temp += 0x10;
-        n -= 10;
+        res  |= (n % 10) << 4*i;
+        n /= 10;
+        i++;
     }
-    
-    REG_A  = temp + n;
+
+    REG_A  = res;
     
     ALU_FLAG_Z = (0 == REG_A)? 1:0;
 }
