@@ -9,10 +9,10 @@
 #ifndef GBEmu_GBMemory_h
 #define GBEmu_GBMemory_h
 
-int8_t getWordAt(int16_t address);
-int16_t getDwordAt(int16_t address);
+int8_t GBMemory_getWordAt(int16_t address);
+int16_t GBMemory_getDwordAt(int16_t address);
 
-void writeWordAt(int16_t address, int8_t value);
-void writeDwordAt(int16_t address, int16_t value);
+void GBMemory_writeWordAt(int16_t address, int8_t value);
+void GBMemory_writeDwordAt(int16_t address, int16_t value);
 
 #endif

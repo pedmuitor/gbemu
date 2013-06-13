@@ -13,29 +13,29 @@
 #import "GBCPU.h"
 #import "GBMemory.h"
 
-int8_t getWordAt(int16_t address)
+int8_t GBMemory_getWordAt(int16_t address)
 {
     //TODO: return byte at address
     return 0;
 }
 
-int16_t getDwordAt(int16_t address)
+int16_t GBMemory_getDwordAt(int16_t address)
 {
     //TODO: big-low endian
-    int8_t l = getWordAt(address);
-    int8_t h = getWordAt(address + 1);
+    int8_t l = GBMemory_getWordAt(address);
+    int8_t h = GBMemory_getWordAt(address + 1);
     
     int16_t result = DWORD_FROM_HL(h, l);
     
     return result;
 }
 
-void writeWordAt(int16_t address, int8_t value)
+void GBMemory_writeWordAt(int16_t address, int8_t value)
 {
     //TODO: write byte at address
 }
 
-void writeDwordAt(int16_t address, int16_t value)
+void GBMemory_writeDwordAt(int16_t address, int16_t value)
 {
     //TODO: write word at address
 }

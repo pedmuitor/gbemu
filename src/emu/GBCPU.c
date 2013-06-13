@@ -136,7 +136,7 @@ void shutDown(void)
 
 void nextOperation(void)
 {
-    uint8_t opCode = getWordAt(REG_PC++);
+    uint8_t opCode = GBMemory_getWordAt(REG_PC++);
     int8_t n = 0;
     int16_t nn = 0;
     
@@ -190,7 +190,7 @@ void nextOperation(void)
             LD(&REG_A, REG_L);
             break;
         case 0x7E:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             LD(&REG_A, n);
             break;
             
@@ -213,7 +213,7 @@ void nextOperation(void)
             LD(&REG_B, REG_L);
             break;
         case 0x46:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             LD(&REG_B, n);
             break;
             
@@ -236,7 +236,7 @@ void nextOperation(void)
             LD(&REG_C, REG_L);
             break;
         case 0x4E:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             LD(&REG_C, n);
             break;
             
@@ -259,7 +259,7 @@ void nextOperation(void)
             LD(&REG_D, REG_L);
             break;
         case 0x56:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             LD(&REG_D, n);
             break;
             
@@ -282,7 +282,7 @@ void nextOperation(void)
             LD(&REG_E, REG_L);
             break;
         case 0x5E:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             LD(&REG_E, n);
             break;
             
@@ -305,7 +305,7 @@ void nextOperation(void)
             LD(&REG_H, REG_L);
             break;
         case 0x66:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             LD(&REG_H, n);
             break;
             
@@ -328,46 +328,46 @@ void nextOperation(void)
             LD(&REG_L, REG_L);
             break;
         case 0x6E:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             LD(&REG_L, n);
             break;
             
         case 0x70:
-            writeWordAt(REG_HL, REG_B);
+            GBMemory_writeWordAt(REG_HL, REG_B);
             break;
         case 0x71:
-            writeWordAt(REG_HL, REG_C);
+            GBMemory_writeWordAt(REG_HL, REG_C);
             break;
         case 0x72:
-            writeWordAt(REG_HL, REG_D);
+            GBMemory_writeWordAt(REG_HL, REG_D);
             break;
         case 0x73:
-            writeWordAt(REG_HL, REG_E);
+            GBMemory_writeWordAt(REG_HL, REG_E);
             break;
         case 0x74:
-            writeWordAt(REG_HL, REG_H);
+            GBMemory_writeWordAt(REG_HL, REG_H);
             break;
         case 0x75:
-            writeWordAt(REG_HL, REG_L);
+            GBMemory_writeWordAt(REG_HL, REG_L);
             break;
         case 0x36:
             n = readOperationWordParameter();
-            writeWordAt(REG_HL, n);
+            GBMemory_writeWordAt(REG_HL, n);
             break;
             
             //LD A, n
         case 0x0A:
-            n = getWordAt(REG_BC);
+            n = GBMemory_getWordAt(REG_BC);
             LD(&REG_A, n);
             break;
         case 0x1A:
-            n = getWordAt(REG_DE);
+            n = GBMemory_getWordAt(REG_DE);
             LD(&REG_A, n);
             break;
         case 0xFA:
             //TODO: mirar si big endian o little endian
             nn = readOpertionDwordParameter();
-            n = getWordAt(nn);
+            n = GBMemory_getWordAt(nn);
             LD(&REG_A, n);
             break;
         case 0x3E:
@@ -395,66 +395,66 @@ void nextOperation(void)
             LD(&REG_L, REG_A);
             break;
         case 0x02:
-            writeWordAt(REG_BC, REG_A);
+            GBMemory_writeWordAt(REG_BC, REG_A);
             break;
         case 0x12:
-            writeWordAt(REG_DE, REG_A);
+            GBMemory_writeWordAt(REG_DE, REG_A);
             break;
         case 0x77:
-            writeWordAt(REG_HL, REG_A);
+            GBMemory_writeWordAt(REG_HL, REG_A);
             break;
         case 0xEA:
             nn = readOpertionDwordParameter();
-            writeWordAt(nn, REG_A);
+            GBMemory_writeWordAt(nn, REG_A);
             break;
             
             //LD A, (C)
         case 0xF2:
-            n = getWordAt(0xFF00 + REG_C);
+            n = GBMemory_getWordAt(0xFF00 + REG_C);
             LD(&REG_A, n);
             break;
             
             //LD (C), A
         case 0xE2:
-            writeWordAt(0xFF00 + REG_C, REG_A);
+            GBMemory_writeWordAt(0xFF00 + REG_C, REG_A);
             break;
             
             //LDD A, (HL)
         case 0x3A:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             LD(&REG_A, n);
             DEC16_HL(&REG_H, &REG_L);
             break;
             
             //LDD (HL), A
         case 0x32:
-            writeWordAt(REG_HL, REG_A);
+            GBMemory_writeWordAt(REG_HL, REG_A);
             DEC16_HL(&REG_H, &REG_L);
             break;
             
             //LDI A, (HL)
         case 0x2A: 
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             LD(&REG_A, n);
             INC16_HL(&REG_H, &REG_L);
             break;
             
             //LDI (HL), A
         case 0x22:
-            writeWordAt(REG_HL, REG_A);
+            GBMemory_writeWordAt(REG_HL, REG_A);
             INC16_HL(&REG_H, &REG_L);
             break;
             
             //LDH (n), A
         case 0xE0:
             n = readOperationWordParameter();
-            writeWordAt(0xFF00 + n, REG_A);
+            GBMemory_writeWordAt(0xFF00 + n, REG_A);
             break;
             
             //LDH A, (n)
         case 0xF0:
             n = readOperationWordParameter();
-            n = getWordAt(0xFF00 + n);
+            n = GBMemory_getWordAt(0xFF00 + n);
             LD(&REG_A, n);
             
             //16-bit ops
@@ -499,45 +499,45 @@ void nextOperation(void)
             //LD (nn), SP
         case 0x08:
             nn = readOpertionDwordParameter();
-            writeDwordAt(nn, REG_SP);
+            GBMemory_writeDwordAt(nn, REG_SP);
             break;
             
             //PUSH nn
         case 0xF5:
-            writeDwordAt(REG_SP, REG_AF);
+            GBMemory_writeDwordAt(REG_SP, REG_AF);
             REG_SP -= 2;
             break;
         case 0xC5:
-            writeDwordAt(REG_SP, REG_BC);
+            GBMemory_writeDwordAt(REG_SP, REG_BC);
             REG_SP -= 2;
             break;
         case 0xD5:
-            writeDwordAt(REG_SP, REG_DE);
+            GBMemory_writeDwordAt(REG_SP, REG_DE);
             REG_SP -= 2;
             break;
         case 0xE5:
-            writeDwordAt(REG_SP, REG_HL);
+            GBMemory_writeDwordAt(REG_SP, REG_HL);
             REG_SP -= 2;
             break;
             
             //POP nn
         case 0xF1:
-            nn = getDwordAt(REG_SP);
+            nn = GBMemory_getDwordAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_A, &REG_F);
             REG_SP += 2;
             break;
         case 0xC1:
-            nn = getDwordAt(REG_SP);
+            nn = GBMemory_getDwordAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_B, &REG_C);
             REG_SP += 2;
             break;
         case 0xD1:
-            nn = getDwordAt(REG_SP);
+            nn = GBMemory_getDwordAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_D, &REG_E);
             REG_SP += 2;
             break;
         case 0xE1:
-            nn = getDwordAt(REG_SP);
+            nn = GBMemory_getDwordAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_H, &REG_L);
             REG_SP += 2;
             break;
@@ -592,7 +592,7 @@ void nextOperation(void)
             break;
             
         case 0x86:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             ADD(n);
             setFlagZ(ALU_FLAG_Z);
             setFlagN(0);
@@ -667,7 +667,7 @@ void nextOperation(void)
             break;
             
         case 0x8E:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             ADD(n + getFlagC());
             setFlagZ(ALU_FLAG_Z);
             setFlagN(0);
@@ -742,7 +742,7 @@ void nextOperation(void)
             break;
             
         case 0x96:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             SUB(n);
             setFlagZ(ALU_FLAG_Z);
             setFlagN(1);
@@ -817,7 +817,7 @@ void nextOperation(void)
             break;
             
         case 0x9E:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             SUB(n + getFlagC());
             setFlagZ(ALU_FLAG_Z);
             setFlagN(1);
@@ -892,7 +892,7 @@ void nextOperation(void)
             break;
             
         case 0xA6:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             AND(n);
             setFlagZ(ALU_FLAG_Z);
             setFlagN(0);
@@ -967,7 +967,7 @@ void nextOperation(void)
             break;
             
         case 0xB6:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             OR(n);
             setFlagZ(ALU_FLAG_Z);
             setFlagN(0);
@@ -1042,7 +1042,7 @@ void nextOperation(void)
             break;
             
         case 0xAE:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             XOR(n);
             setFlagZ(ALU_FLAG_Z);
             setFlagN(0);
@@ -1117,7 +1117,7 @@ void nextOperation(void)
             break;
             
         case 0xBE:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             CP(n);
             setFlagZ(ALU_FLAG_Z);
             setFlagN(1);
@@ -1185,9 +1185,9 @@ void nextOperation(void)
             break;
             
         case 0x34:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             INC(&n);
-            writeWordAt(REG_HL, n);
+            GBMemory_writeWordAt(REG_HL, n);
             
             setFlagZ(ALU_FLAG_Z);
             setFlagN(0);
@@ -1245,9 +1245,9 @@ void nextOperation(void)
             break;
             
         case 0x35:
-            n = getWordAt(REG_HL);
+            n = GBMemory_getWordAt(REG_HL);
             DEC(&n);
-            writeWordAt(REG_HL, n);
+            GBMemory_writeWordAt(REG_HL, n);
             
             setFlagZ(ALU_FLAG_Z);
             setFlagN(1);
@@ -1410,9 +1410,9 @@ void nextOperation(void)
                     break;
                     
                 case 0x36:
-                    n = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     SWAP(&n);
-                    writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     setFlagZ(ALU_FLAG_Z);
                     setFlagN(0);
                     setFlagH(0);
@@ -1478,9 +1478,9 @@ void nextOperation(void)
                     break;
                     
                 case 0x06:
-                    n = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     RLC(&n);
-                    writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     setFlagZ(ALU_FLAG_Z);
                     setFlagN(0);
@@ -1546,9 +1546,9 @@ void nextOperation(void)
                     break;
                     
                 case 0x16:
-                    n = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     RL(&n);
-                    writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     setFlagZ(ALU_FLAG_Z);
                     setFlagN(0);
@@ -1614,9 +1614,9 @@ void nextOperation(void)
                     break;
                     
                 case 0x0E:
-                    n = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     RRC(&n);
-                    writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     setFlagZ(ALU_FLAG_Z);
                     setFlagN(0);
@@ -1682,9 +1682,9 @@ void nextOperation(void)
                     break;
                     
                 case 0x1E:
-                    n = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     RR(&n);
-                    writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     setFlagZ(ALU_FLAG_Z);
                     setFlagN(0);
@@ -1750,9 +1750,9 @@ void nextOperation(void)
                     break;
                     
                 case 0x26:
-                    n = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     SLA(&n);
-                    writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     setFlagZ(ALU_FLAG_Z);
                     setFlagN(0);
@@ -1818,9 +1818,9 @@ void nextOperation(void)
                     break;
                     
                 case 0x2E:
-                    n = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     SRA(&n);
-                    writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     setFlagZ(ALU_FLAG_Z);
                     setFlagN(0);
@@ -1886,9 +1886,9 @@ void nextOperation(void)
                     break;
                     
                 case 0x3E:
-                    n = getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     SRL(&n);
-                    writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     setFlagZ(ALU_FLAG_Z);
                     setFlagN(0);
@@ -1955,7 +1955,7 @@ void nextOperation(void)
                     
                 case 0x46: {
                     n = readOperationWordParameter();
-                    int8_t n2 = getDwordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    int8_t n2 = GBMemory_getDwordAt(DWORD_FROM_HL(REG_H, REG_L));
                     BIT(n2, n);
                     setFlagZ(ALU_FLAG_Z);
                     setFlagN(0);
@@ -2002,7 +2002,7 @@ void nextOperation(void)
                     
                 case 0xC6: {
                     n = readOperationWordParameter();
-                    int8_t n2 = getDwordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    int8_t n2 = GBMemory_getDwordAt(DWORD_FROM_HL(REG_H, REG_L));
                     SET(&n2, n);
                     break;
                 }
@@ -2045,7 +2045,7 @@ void nextOperation(void)
                     
                 case 0x86: {
                     n = readOperationWordParameter();
-                    int8_t n2 = getDwordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    int8_t n2 = GBMemory_getDwordAt(DWORD_FROM_HL(REG_H, REG_L));
                     RES(&n2, n);
                     break;
                 }
@@ -2240,7 +2240,7 @@ void nextOperation(void)
         case 0xCD:
             //TODO: mirar little, big endian
             nn = readOpertionDwordParameter();
-            writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = nn;
             break;
@@ -2250,7 +2250,7 @@ void nextOperation(void)
             //TODO: mirar little, big endian
             nn = readOpertionDwordParameter();
             if (getFlagZ() == 0) {
-                writeDwordAt(REG_SP - 2, REG_PC);
+                GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
                 REG_PC = nn;
             }
@@ -2260,7 +2260,7 @@ void nextOperation(void)
             //TODO: mirar little, big endian
             nn = readOpertionDwordParameter();
             if (getFlagZ() == 1) {
-                writeDwordAt(REG_SP - 2, REG_PC);
+                GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
                 REG_PC = nn;
             }
@@ -2270,7 +2270,7 @@ void nextOperation(void)
             //TODO: mirar little, big endian
             nn = readOpertionDwordParameter();
             if (getFlagC() == 0) {
-                writeDwordAt(REG_SP - 2, REG_PC);
+                GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
                 REG_PC = nn;
             }
@@ -2280,7 +2280,7 @@ void nextOperation(void)
             //TODO: mirar little, big endian
             nn = readOpertionDwordParameter();
             if (getFlagC() == 1) {
-                writeDwordAt(REG_SP - 2, REG_PC);
+                GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
                 REG_PC = nn;
             }
@@ -2288,49 +2288,49 @@ void nextOperation(void)
             
         //RST n
         case 0xC7:
-            writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x00;
             break;
         
         case 0xCF:
-            writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x08;
             break;
             
         case 0xD7:
-            writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x10;
             break;
             
         case 0xDF:
-            writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x08;
             break;
             
         case 0xE7:
-            writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x20;
             break;
             
         case 0xEF:
-            writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x28;
             break;
             
         case 0xF7:
-            writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x30;
             break;
             
         case 0xFF:
-            writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x38;
             break;
@@ -2338,7 +2338,7 @@ void nextOperation(void)
         //RET
         case 0xC9:
             //TODO: mirar little, big endian
-            REG_PC = getDwordAt(REG_SP);
+            REG_PC = GBMemory_getDwordAt(REG_SP);
             REG_SP += 2;
             break;
             
@@ -2346,7 +2346,7 @@ void nextOperation(void)
         case 0xC0:
             //TODO: mirar little, big endian
             if (getFlagZ() == 0) {
-                REG_PC = getDwordAt(REG_SP);
+                REG_PC = GBMemory_getDwordAt(REG_SP);
                 REG_SP += 2;
             }
             break;
@@ -2354,7 +2354,7 @@ void nextOperation(void)
         case 0xC8:
             //TODO: mirar little, big endian
             if (getFlagZ() == 1) {
-                REG_PC = getDwordAt(REG_SP);
+                REG_PC = GBMemory_getDwordAt(REG_SP);
                 REG_SP += 2;
             }
             break;
@@ -2362,7 +2362,7 @@ void nextOperation(void)
         case 0xD0:
             //TODO: mirar little, big endian
             if (getFlagC() == 0) {
-                REG_PC = getDwordAt(REG_SP);
+                REG_PC = GBMemory_getDwordAt(REG_SP);
                 REG_SP += 2;
             }
             break;
@@ -2370,7 +2370,7 @@ void nextOperation(void)
         case 0xD8:
             //TODO: mirar little, big endian
             if (getFlagC() == 1) {
-                REG_PC = getDwordAt(REG_SP);
+                REG_PC = GBMemory_getDwordAt(REG_SP);
                 REG_SP += 2;
             }
             break;
@@ -2378,7 +2378,7 @@ void nextOperation(void)
         
         //RETI
         case 0xD9:
-            REG_PC = getDwordAt(REG_SP);
+            REG_PC = GBMemory_getDwordAt(REG_SP);
             REG_SP += 2;
             setInterruptsEnabled(true);
             break;
@@ -2391,7 +2391,7 @@ void nextOperation(void)
 
 int8_t readOperationWordParameter(void)
 {
-    uint8_t result = getWordAt(REG_PC++);
+    uint8_t result = GBMemory_getWordAt(REG_PC++);
     return result;
 }
 
@@ -2399,8 +2399,8 @@ int16_t readOpertionDwordParameter(void)
 {
     //TODO: little endian o big endian?
     uint16_t result;
-    uint8_t nH = getWordAt(REG_PC++);
-    uint8_t nL = getWordAt(REG_PC++);
+    uint8_t nH = GBMemory_getWordAt(REG_PC++);
+    uint8_t nL = GBMemory_getWordAt(REG_PC++);
     result = DWORD_FROM_HL(nH, nL);
     
     return result;
