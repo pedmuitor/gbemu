@@ -8,8 +8,9 @@
 
 #import "GBALUTest.h"
 
-#import "GBCPU.h"
-#import "GBCPU_ALU.h"
+#include "GBCPU.h"
+#include "GBCPU_ALU.h"
+#include "GBUtils.h"
 
 @implementation GBALUTest
 
@@ -986,5 +987,60 @@
         }
     }
 }
+
+
+- (void) testADD16
+{
+    int16_t initialValues[] = {
+        0x405A
+    };
+    
+    int16_t numbers[] = {
+        0x0001
+    };
+    
+    int8_t expectedH[] = {
+        0
+    };
+    
+    int8_t expectedC[] = {
+        0
+    };
+    
+    int nTests = sizeof(initialValues)/sizeof(int8_t);
+    
+    for (int j = 0; j < 2; j++) {
+        if (0 == j) {
+            GHTestLog(@"Carry flag reset");
+            setFlagC(0);
+        }else {
+            setFlagC(1);
+            GHTestLog(@"Carry flag set");
+        }
+        
+        for (int i = 0; i < nTests; i++) {
+            int16_t rr = initialValues[i];
+            int16_t expectedRes = rr + numbers[i];
+            
+            
+            ADD16(&rr, numbers[i]);
+            GHAssertTrue(rr == expectedRes, @"Result %#X --> expected %#X", rr, expectedRes);
+            GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+            GHAssertTrue(ALU_FLAG_H == expectedH[i], @"H %d --> expected %d", ALU_FLAG_H, expectedH[i]);
+            GHAssertTrue(ALU_FLAG_C == expectedC[i], @"C %d --> expected %d", ALU_FLAG_C, expectedC[i]);
+        }
+    }
+}
+
+- (void) testINC16
+{
+
+}
+
+- (void) testDEC16
+{
+    
+}
+
 
 @end

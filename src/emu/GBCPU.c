@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include "GBMacros.h"
 #include "GBCPU.h"
 #include "GBCPU_ALU.h"
 #include "GBMemory.h"

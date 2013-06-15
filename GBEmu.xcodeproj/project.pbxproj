@@ -47,7 +47,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1C1B9C98175B6F7B00944B65 /* GBMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBMacros.h; sourceTree = "<group>"; };
 		1C46C0C01759EB7E006D9BD9 /* GBMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBMemory.h; sourceTree = "<group>"; };
 		1C46C0C11759EB87006D9BD9 /* GBMemory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBMemory.c; sourceTree = "<group>"; };
 		1C930B97175AC02F00889E2C /* GBCPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPU.h; sourceTree = "<group>"; };
@@ -179,7 +178,6 @@
 		EBF7DD13175928CD00A443B9 /* emu */ = {
 			isa = PBXGroup;
 			children = (
-				1C1B9C98175B6F7B00944B65 /* GBMacros.h */,
 				EBF7DD15175928CD00A443B9 /* GBCPU_ALU.h */,
 				EBF7DD14175928CD00A443B9 /* GBCPU_ALU.c */,
 				1C46C0C01759EB7E006D9BD9 /* GBMemory.h */,

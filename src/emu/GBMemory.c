@@ -9,9 +9,9 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#import "GBMacros.h"
-#import "GBCPU.h"
-#import "GBMemory.h"
+#include "GBCPU.h"
+#include "GBMemory.h"
+#include "GBUtils.h"
 
 int8_t GBMemory_getWordAt(int16_t address)
 {
