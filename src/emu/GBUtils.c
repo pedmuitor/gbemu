@@ -13,7 +13,7 @@
 
 uint8_t bitAtIndex (int n, int index)
 {
-	uint8_t mask = (int8_t)pow(2, index);
+	int mask = (int)pow(2, index);
     uint8_t result = (n & mask) >> (index);
     return result;
 }

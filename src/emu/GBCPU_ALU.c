@@ -253,26 +253,23 @@ void add16 (int16_t *r, int16_t nn)
     //Operands with different signs never cause overflow
     //It happens when adding operands with like signs and the result has a different sign
     
-    int16_t hl11        = (rVal & 0x0FFF);
-    int16_t nn11        = (nn & 0x0FFF);
-    int8_t hl11msb      = hl11 >> 11;
-    int8_t nn11msb     = nn11 >> 11;
+    int8_t hl11msb      = bitAtIndex(rVal, 11);
+    int8_t nn11msb     = bitAtIndex(nn, 11);
     
     if (hl11msb ^ nn11msb) {
         ALU_FLAG_H  = 0;
     }else {
-        int16_t hsum11        = (sum & 0x0FFF);
-        int8_t hsum11msb      = hsum11 >> 11;
+        int8_t hsum11msb      = bitAtIndex(sum, 11);
         ALU_FLAG_H  = (0 != (hsum11msb ^ nn11msb));
     }
     
-    int8_t hlmsb = (rVal >> 15) & 0x01;
-    int8_t nnmsb = (nn >> 15) & 0x01;
+    int8_t hlmsb = bitAtIndex(rVal, 15);
+    int8_t nnmsb = bitAtIndex(nn, 15);
     
     if (hlmsb ^ nnmsb) {
         ALU_FLAG_C  = 0;
     }else {
-        int8_t summsb = (sum >> 15) & 0x01;
+        int8_t summsb = bitAtIndex(sum, 15);
         ALU_FLAG_C = (0 != (summsb ^nnmsb));
     }
     

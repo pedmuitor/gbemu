@@ -992,22 +992,50 @@
 - (void) testADD16
 {
     int16_t initialValues[] = {
-        0x405A
+        0x405A,
+        0xA896,
+        0XFFFF,
+        0x0000,
+        0xB6A5,
+        0x6794,
+        0xA751,
+        0xB796
     };
     
     int16_t numbers[] = {
-        0x0001
+        0x0001,
+        0x58A8,
+        0x0001,
+        0x57B3,
+        0xC137,
+        0x71B9,
+        0x54BB,
+        0xA21C
     };
     
     int8_t expectedH[] = {
-        0
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1
     };
     
     int8_t expectedC[] = {
-        0
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1
     };
     
-    int nTests = sizeof(initialValues)/sizeof(int8_t);
+    int nTests = sizeof(initialValues)/sizeof(int16_t);
     
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
@@ -1022,7 +1050,7 @@
             int16_t rr = initialValues[i];
             int16_t expectedRes = rr + numbers[i];
             
-            
+            GHTestLog(@"Operation ADD16(%#X, %#X)", rr, numbers[i]);
             ADD16(&rr, numbers[i]);
             GHAssertTrue(rr == expectedRes, @"Result %#X --> expected %#X", rr, expectedRes);
             GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
