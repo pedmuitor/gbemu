@@ -301,7 +301,8 @@ void DEC16 (int16_t* rr)
 void RL (int8_t *r)
 {
     uint8_t msb = moreSignificantBit(*r, sizeof(int8_t));
-    RLC(r);
+    SLA(r);
+    *r |= getFlagC();
     ALU_FLAG_C = msb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
@@ -309,8 +310,10 @@ void RL (int8_t *r)
 
 void RLC (int8_t *r)
 {
+    uint8_t msb = moreSignificantBit(*r, sizeof(int8_t));
     SLA(r);
-    *r |= getFlagC();
+    *r |= msb;
+    ALU_FLAG_C = msb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
 }
@@ -318,7 +321,8 @@ void RLC (int8_t *r)
 void RR (int8_t *r)
 {
     uint8_t lsb = lessSignificantBit(*r);
-    RRC(r);
+    SLA(r);
+    *r |= ((getFlagC() << 7) & 0x80);
     ALU_FLAG_C = lsb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
@@ -326,9 +330,10 @@ void RR (int8_t *r)
 
 void RRC (int8_t *r)
 {
+    uint8_t lsb = lessSignificantBit(*r);
     SRL(r);
-    *r |= ((getFlagC() << 7) & 0x80);
-    
+    *r |= ((lsb << 7) & 0x80);
+    ALU_FLAG_C = lsb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
 }
