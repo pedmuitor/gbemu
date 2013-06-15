@@ -306,6 +306,7 @@ void RL (int8_t *r)
     ALU_FLAG_C = msb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
+    ALU_FLAG_H = 0;
 }
 
 void RLC (int8_t *r)
@@ -316,12 +317,13 @@ void RLC (int8_t *r)
     ALU_FLAG_C = msb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
+    ALU_FLAG_H = 0;
 }
 
 void RR (int8_t *r)
 {
     uint8_t lsb = lessSignificantBit(*r);
-    SLA(r);
+    SRL(r);
     *r |= ((getFlagC() << 7) & 0x80);
     ALU_FLAG_C = lsb;
     ALU_FLAG_Z = (0 == (*r));
@@ -336,36 +338,46 @@ void RRC (int8_t *r)
     ALU_FLAG_C = lsb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
+    ALU_FLAG_H = 0;
 }
 
 void SLA (int8_t *r)
 {
+    uint8_t msb = moreSignificantBit(*r, sizeof(int8_t));
     *r = (*r) << 1;
     *r &= 0xFE;
     
+    ALU_FLAG_C = msb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
+    ALU_FLAG_H = 0;
 }
 
 void SRA (int8_t *r)
 {
     uint8_t msb = moreSignificantBit(*r, sizeof(int8_t));
-    SLA(r);
+    uint8_t lsb = lessSignificantBit(*r);
+    SRL(r);
     if (msb) {
         *r |= 0x80;
     }
     
+    ALU_FLAG_C = lsb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
+    ALU_FLAG_H = 0;
 }
 
 void SRL (int8_t *r)
 {
+    uint8_t lsb = lessSignificantBit(*r);
     *r = (*r) >> 1;
     *r &= 0x7F;
     
+    ALU_FLAG_C = lsb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
+    ALU_FLAG_H = 0;
 }
 
 void SWAP (int8_t *r)
@@ -377,6 +389,8 @@ void SWAP (int8_t *r)
     
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
+    ALU_FLAG_H = 0;
+    ALU_FLAG_C = 0;
 }
 
 //----------------------------------------------//

@@ -1194,6 +1194,9 @@
         RL(&REG_A);
         GHAssertTrue(REG_A == outValues[i], @"Result %#X --> expected %#X", REG_A, outValues[i]);
         GHAssertTrue(ALU_FLAG_C == c[i], @"C %d --> expected %d", ALU_FLAG_C, c[i]);
+        GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
+        GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+        GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
         setFlagC(ALU_FLAG_C);
     }
     setFlagC(0);
@@ -1246,6 +1249,9 @@
         RLC(&REG_A);
         GHAssertTrue(REG_A == outValues[i], @"Result %#X --> expected %#X", REG_A, outValues[i]);
         GHAssertTrue(ALU_FLAG_C == c[i], @"C %d --> expected %d", ALU_FLAG_C, c[i]);
+        GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
+        GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+        GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
         setFlagC(ALU_FLAG_C);
     }
     setFlagC(0);
@@ -1253,42 +1259,228 @@
 
 - (void)testRR
 {
+    int8_t inValues[] = {
+        0x88,
+        0x44,
+        0x22,
+        0x11,
+        0x08,
+        0x84,
+        0x42,
+        0x21,
+        0x10
+    };
     
+    int8_t outValues[] = {
+        0x44,
+        0x22,
+        0x11,
+        0x08,
+        0x84,
+        0x42,
+        0x21,
+        0x10,
+        0x88
+        
+    };
+    
+    int8_t c[] = {
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0
+    };
+    
+    int nTests = sizeof(inValues)/sizeof(int8_t);
+    
+    setFlagC(0);
+    for (int i = 0; i < nTests; i++) {
+        GHTestLog(@"Operation %i RR(%#X)", i, inValues[i]);
+        REG_A = inValues[i];
+        RR(&REG_A);
+        GHAssertTrue(REG_A == outValues[i], @"Result %#X --> expected %#X", REG_A, outValues[i]);
+        GHAssertTrue(ALU_FLAG_C == c[i], @"C %d --> expected %d", ALU_FLAG_C, c[i]);
+        GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
+        GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+        GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
+        setFlagC(ALU_FLAG_C);
+    }
+    setFlagC(0);
 }
 
 - (void)testRRC
 {
+    int8_t inValues[] = {
+        0x5D,
+        0xAE,
+        0x57,
+        0xAB,
+        0xD5,
+        0xEA,
+        0x75,
+        0xBA,
+        0x5D
+    };
     
+    int8_t outValues[] = {
+        0xAE,
+        0x57,
+        0xAB,
+        0xD5,
+        0xEA,
+        0x75,
+        0xBA,
+        0x5D,
+        0xAE
+    };
+    
+    int8_t c[] = {
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1
+    };
+    
+    int nTests = sizeof(inValues)/sizeof(int8_t);
+    
+    setFlagC(0);
+    for (int i = 0; i < nTests; i++) {
+        GHTestLog(@"Operation %i RRC(%#X)", i, inValues[i]);
+        REG_A = inValues[i];
+        RRC(&REG_A);
+        GHAssertTrue(REG_A == outValues[i], @"Result %#X --> expected %#X", REG_A, outValues[i]);
+        GHAssertTrue(ALU_FLAG_C == c[i], @"C %d --> expected %d", ALU_FLAG_C, c[i]);
+        GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
+        GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+        GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
+        setFlagC(ALU_FLAG_C);
+    }
+    setFlagC(0);
 }
 
 - (void)testSLA
 {
+    int8_t n = 0x9A;
+    REG_A = n;
+    int i = 0;
     
+    int8_t c[] = {
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0
+    };
+    
+    while (abs(n) > 0) {
+        GHTestLog(@"Operation %i SLA(%#X)", i, n);
+        SLA(&REG_A);
+        n <<= 1;
+        GHAssertTrue(REG_A == n, @"Result %#X --> expected %#X", REG_A, n);
+        GHAssertTrue(ALU_FLAG_C == c[i], @"C %d --> expected %d", ALU_FLAG_C, c[i]);
+        GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
+        GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+        GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
+        
+        i++;
+    }
 }
 
 - (void)testSRA
 {
-    
+    for (int i = 0; i < 2; i++) {
+        int8_t n = (i==0)?0xF3:0x6F;
+        REG_A = n;
+        
+        for (int j = 0; j < sizeof(int8_t)*8; j++) {
+            GHTestLog(@"Operation %i SRA(%#X)", j, n);
+            int8_t c = lessSignificantBit(n);
+            SRA(&REG_A);
+            n >>= 1;
+            GHAssertTrue(REG_A == n, @"Result %#X --> expected %#X", REG_A, n);
+            GHAssertTrue(ALU_FLAG_C == c, @"C %d --> expected %d", ALU_FLAG_C, c);
+            GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
+            GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+            GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
+        }
+    }
 }
 
 - (void)testSRL
 {
-    
+    for (int i = 0; i < 2; i++) {
+        int8_t n = (i==0)?0xF3:0x6F;
+        REG_A = n;
+        
+        for (int j = 0; j < sizeof(int8_t)*8; j++) {
+            GHTestLog(@"Operation %d SRL(%#X)", j, n);
+            int8_t c = lessSignificantBit(n);
+            SRL(&REG_A);
+            n = n>>1 & 0x7F;
+            GHAssertTrue(REG_A == n, @"Result %#X --> expected %#X", REG_A, n);
+            GHAssertTrue(ALU_FLAG_C == c, @"C %d --> expected %d", ALU_FLAG_C, c);
+            GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
+            GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+            GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
+        }
+    }
 }
 
 - (void)testSWAP
 {
+    int8_t inValues[] = {
+        0x00,
+        0xFF,
+        0x3A,
+        0x0F,
+        0x9C,
+        0xB1,
+        0x2D
+    };
     
+    int8_t outValues[] = {
+        0x00,
+        0xFF,
+        0xA3,
+        0xF0,
+        0xC9,
+        0x1B,
+        0xD2
+    };
+    
+    int nTests = sizeof(inValues)/sizeof(int8_t);
+    
+    for (int i = 0; i < nTests; i++) {
+        GHTestLog(@"Operation %i SWAP(%#X)",i, inValues[i]);
+        SWAP(&inValues[i]);
+        GHAssertTrue(outValues[i] == inValues[i], @"Result %#X --> expected %#X", outValues[i], inValues[i]);
+        GHAssertTrue(ALU_FLAG_C == 0, @"C %d --> expected %d", ALU_FLAG_C, 0);
+        GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
+        GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+        GHAssertTrue(ALU_FLAG_Z == (outValues[i] == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (outValues[i] == 0));
+    }
 }
 
 - (void)testBIT
 {
-    
+
 }
 
 - (void)testSET
 {
-    
 }
 
 - (void)testRES
