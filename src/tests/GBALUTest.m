@@ -1062,12 +1062,76 @@
 
 - (void) testINC16
 {
-
+    int16_t initialValues[] = {
+        0x405A,
+        0xA896,
+        0XFFFF,
+        0x0000,
+        0xB6A5,
+        0x6794,
+        0xA751,
+        0xB796,
+        0x013D,
+        0x60AE
+    };
+    
+    int nTests = sizeof(initialValues)/sizeof(int16_t);
+    
+    for (int j = 0; j < 2; j++) {
+        if (0 == j) {
+            GHTestLog(@"Carry flag reset");
+            setFlagC(0);
+        }else {
+            setFlagC(1);
+            GHTestLog(@"Carry flag set");
+        }
+        
+        for (int i = 0; i < nTests; i++) {
+            int16_t rr = initialValues[i];
+            int16_t expectedRes = rr +1;
+            
+            GHTestLog(@"Operation INC16(%#X)",rr);
+            INC16(&rr);
+            GHAssertTrue(rr == expectedRes, @"Result %#X --> expected %#X", rr, expectedRes); 
+        }
+    }
 }
 
 - (void) testDEC16
 {
+    int16_t initialValues[] = {
+        0x405A,
+        0xA896,
+        0XFFFF,
+        0x0000,
+        0xB6A5,
+        0x6794,
+        0xA751,
+        0xB796,
+        0x013D,
+        0x60AE
+    };
     
+    int nTests = sizeof(initialValues)/sizeof(int16_t);
+    
+    for (int j = 0; j < 2; j++) {
+        if (0 == j) {
+            GHTestLog(@"Carry flag reset");
+            setFlagC(0);
+        }else {
+            setFlagC(1);
+            GHTestLog(@"Carry flag set");
+        }
+        
+        for (int i = 0; i < nTests; i++) {
+            int16_t rr = initialValues[i];
+            int16_t expectedRes = rr - 1;
+            
+            GHTestLog(@"Operation DEC16(%#X)",rr);
+            DEC16(&rr);
+            GHAssertTrue(rr == expectedRes, @"Result %#X --> expected %#X", rr, expectedRes);
+        }
+    }
 }
 
 
