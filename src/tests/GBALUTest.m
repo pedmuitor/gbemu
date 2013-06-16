@@ -121,9 +121,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -319,19 +319,19 @@
             expectedH = expectedH_cReset;
             expectedC = expectedC_cReset;
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
             expectedResult = expectedResult_cSet;
             expectedZ = expectedZ_cSet;
             expectedH = expectedH_cSet;
             expectedC = expectedC_cSet;
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
         for (int i = 0; i < nTests; i++) {
             REG_A = initialValues[i];
-            GHTestLog(@"Operation %d: %#X + %#X + %d", i, REG_A, numbersToAdd[i], getFlagC());
+            GHTestLog(@"Operation %d: %#X + %#X + %d", i, REG_A, numbersToAdd[i], GBCPU_getFlagC());
             ADC(numbersToAdd[i]);
             
             GHAssertTrue(REG_A == expectedResult[i], @"Result %#X --> expected %#X", REG_A, expectedResult[i]);
@@ -404,9 +404,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -530,9 +530,9 @@
             expectedZ = expectedZ_cReset;
             expectedH = expectedH_cReset;
             expectedC = expectedC_cReset;
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
             expectedResult = expectedResult_cSet;
             expectedZ = expectedZ_cSet;
@@ -542,7 +542,7 @@
         
         for (int i = 0; i < nTests; i++) {
             REG_A = initialValues[i];
-            GHTestLog(@"Operation %d: %#X - %#X - %d", i, REG_A, numbersToSub[i], getFlagC());
+            GHTestLog(@"Operation %d: %#X - %#X - %d", i, REG_A, numbersToSub[i], GBCPU_getFlagC());
             SBC(numbersToSub[i]);
             
             GHAssertTrue(REG_A == expectedResult[i], @"Result %#X --> expected %#X", REG_A, expectedResult[i]);
@@ -582,9 +582,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -633,9 +633,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -688,9 +688,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -767,9 +767,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -821,9 +821,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -875,9 +875,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -918,9 +918,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -967,9 +967,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -1040,9 +1040,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -1080,9 +1080,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -1117,9 +1117,9 @@
     for (int j = 0; j < 2; j++) {
         if (0 == j) {
             GHTestLog(@"Carry flag reset");
-            setFlagC(0);
+            GBCPU_setFlagC(0);
         }else {
-            setFlagC(1);
+            GBCPU_setFlagC(1);
             GHTestLog(@"Carry flag set");
         }
         
@@ -1187,7 +1187,7 @@
     
     int nTests = sizeof(inValues)/sizeof(int8_t);
     
-    setFlagC(0);
+    GBCPU_setFlagC(0);
     for (int i = 0; i < nTests; i++) {
         GHTestLog(@"Operation %i RL(%#X)", i, inValues[i]);
         REG_A = inValues[i];
@@ -1197,9 +1197,9 @@
         GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
         GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
         GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
-        setFlagC(ALU_FLAG_C);
+        GBCPU_setFlagC(ALU_FLAG_C);
     }
-    setFlagC(0);
+    GBCPU_setFlagC(0);
 }
 
 - (void)testRLC
@@ -1242,7 +1242,7 @@
     
     int nTests = sizeof(inValues)/sizeof(int8_t);
     
-    setFlagC(0);
+    GBCPU_setFlagC(0);
     for (int i = 0; i < nTests; i++) {
         GHTestLog(@"Operation %i RLC(%#X)", i, inValues[i]);
         REG_A = inValues[i];
@@ -1252,9 +1252,9 @@
         GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
         GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
         GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
-        setFlagC(ALU_FLAG_C);
+        GBCPU_setFlagC(ALU_FLAG_C);
     }
-    setFlagC(0);
+    GBCPU_setFlagC(0);
 }
 
 - (void)testRR
@@ -1298,7 +1298,7 @@
     
     int nTests = sizeof(inValues)/sizeof(int8_t);
     
-    setFlagC(0);
+    GBCPU_setFlagC(0);
     for (int i = 0; i < nTests; i++) {
         GHTestLog(@"Operation %i RR(%#X)", i, inValues[i]);
         REG_A = inValues[i];
@@ -1308,9 +1308,9 @@
         GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
         GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
         GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
-        setFlagC(ALU_FLAG_C);
+        GBCPU_setFlagC(ALU_FLAG_C);
     }
-    setFlagC(0);
+    GBCPU_setFlagC(0);
 }
 
 - (void)testRRC
@@ -1353,7 +1353,7 @@
     
     int nTests = sizeof(inValues)/sizeof(int8_t);
     
-    setFlagC(0);
+    GBCPU_setFlagC(0);
     for (int i = 0; i < nTests; i++) {
         GHTestLog(@"Operation %i RRC(%#X)", i, inValues[i]);
         REG_A = inValues[i];
@@ -1363,9 +1363,9 @@
         GHAssertTrue(ALU_FLAG_H == 0, @"H %d --> expected %d", ALU_FLAG_H, 0);
         GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
         GHAssertTrue(ALU_FLAG_Z == (REG_A == 0), @"Z %d --> expected %d", ALU_FLAG_Z, (REG_A == 0));
-        setFlagC(ALU_FLAG_C);
+        GBCPU_setFlagC(ALU_FLAG_C);
     }
-    setFlagC(0);
+    GBCPU_setFlagC(0);
 }
 
 - (void)testSLA

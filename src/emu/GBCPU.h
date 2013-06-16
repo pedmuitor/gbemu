@@ -57,8 +57,6 @@ void setUp(void);
 void shutDown(void);
 
 void nextOperation(void);
-int8_t readOperationWordParameter(void);
-int16_t readOpertionDwordParameter(void);
 
 //----------------------------------------------//
 //                                              //
@@ -66,14 +64,14 @@ int16_t readOpertionDwordParameter(void);
 //                                              //
 //----------------------------------------------//
 
-bool getFlagZ();
-void setFlagZ(bool z);
-bool getFlagN();
-void setFlagN(bool n);
-bool getFlagH();
-void setFlagH(bool h);
-bool getFlagC();
-void setFlagC(bool c);
+bool GBCPU_getFlagZ();
+void GBCPU_setFlagZ(bool z);
+bool GBCPU_getFlagN();
+void GBCPU_setFlagN(bool n);
+bool GBCPU_getFlagH();
+void GBCPU_setFlagH(bool h);
+bool GBCPU_getFlagC();
+void GBCPU_setFlagC(bool c);
 
 
 #endif

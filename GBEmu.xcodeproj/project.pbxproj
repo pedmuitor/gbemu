@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1C1F4330176D33C100420EA0 /* GBMemoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1F432E176D337700420EA0 /* GBMemoryTest.m */; };
 		1C46C0C21759EB87006D9BD9 /* GBMemory.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C46C0C11759EB87006D9BD9 /* GBMemory.c */; };
+		1C579DB2176DA68B003ECD01 /* GBCPUTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C579DB1176DA68B003ECD01 /* GBCPUTest.m */; };
 		1C930B99175AC05400889E2C /* GBCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C930B98175AC05400889E2C /* GBCPU.c */; };
 		EB24BC54176798A900B15730 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBEB3AD4176325A100C18938 /* Cocoa.framework */; };
 		EB24BC7917679A6800B15730 /* GBALUTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EB24BC7817679A6800B15730 /* GBALUTest.m */; };
@@ -52,6 +53,8 @@
 		1C1F432E176D337700420EA0 /* GBMemoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBMemoryTest.m; sourceTree = "<group>"; };
 		1C46C0C01759EB7E006D9BD9 /* GBMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBMemory.h; sourceTree = "<group>"; };
 		1C46C0C11759EB87006D9BD9 /* GBMemory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBMemory.c; sourceTree = "<group>"; };
+		1C579DB0176DA68B003ECD01 /* GBCPUTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBCPUTest.h; sourceTree = "<group>"; };
+		1C579DB1176DA68B003ECD01 /* GBCPUTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBCPUTest.m; sourceTree = "<group>"; };
 		1C930B97175AC02F00889E2C /* GBCPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPU.h; sourceTree = "<group>"; };
 		1C930B98175AC05400889E2C /* GBCPU.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBCPU.c; sourceTree = "<group>"; };
 		EB24BC53176798A900B15730 /* GBEmuTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GBEmuTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +109,8 @@
 				EB24BC7817679A6800B15730 /* GBALUTest.m */,
 				1C1F432D176D337700420EA0 /* GBMemoryTest.h */,
 				1C1F432E176D337700420EA0 /* GBMemoryTest.m */,
+				1C579DB0176DA68B003ECD01 /* GBCPUTest.h */,
+				1C579DB1176DA68B003ECD01 /* GBCPUTest.m */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 				EB24BC8917679CCE00B15730 /* GBCPU.c in Sources */,
 				EBDAF062176850F800EF42D4 /* GBUtils.c in Sources */,
 				1C1F4330176D33C100420EA0 /* GBMemoryTest.m in Sources */,
+				1C579DB2176DA68B003ECD01 /* GBCPUTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

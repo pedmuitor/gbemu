@@ -55,14 +55,12 @@ int8_t GBMemory_getWordAt(int16_t address)
 
 int16_t GBMemory_getDwordAt(int16_t address)
 {
-    int8_t l = GBMemory_getWordAt(address);
-    int8_t h = GBMemory_getWordAt(address + 1);
-    //TODO: verificar
+    int8_t w1 = GBMemory_getWordAt(address);
+    int8_t w2 = GBMemory_getWordAt(address + 1);
     if (GBMemory.memoryMode == GBMemoryModeLittleEndian) {
-        SWAP_XY(&h, &l);
+        SWAP_XY(&w1, &w2);
     }
-    
-    int16_t result = DWORD_FROM_HL(h, l);
+    int16_t result = DWORD_FROM_HL(w1, w2);
     
     return result;
 }
@@ -74,12 +72,11 @@ void GBMemory_writeWordAt(int16_t address, int8_t value)
 
 void GBMemory_writeDwordAt(int16_t address, int16_t value)
 {
-    int8_t h, l;
-    HL_FROM_DWORD(value, &h, &l);
-    //TODO: verificar
+    int8_t w1, w2;
+    HL_FROM_DWORD(value, &w1, &w2);
     if (GBMemory.memoryMode == GBMemoryModeLittleEndian) {
-        SWAP_XY(&h, &l);
+        SWAP_XY(&w1, &w2);
     }
-    GBMemory_writeWordAt(address, h);
-    GBMemory_writeWordAt(address + 1, l);
+    GBMemory_writeWordAt(address, w1);
+    GBMemory_writeWordAt(address + 1, w2);
 }

@@ -29,7 +29,7 @@ void subA (int8_t n, bool c, bool store);
 void add8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag)
 {
     if (c) {
-        c = getFlagC();
+        c = GBCPU_getFlagC();
     }
     
     int8_t number    = n + c;
@@ -84,7 +84,7 @@ void addA (int8_t n, bool c)
 void sub8(int8_t *r ,int8_t n, bool c, bool hFlag, bool cFlag, bool store)
 {
     if (c) {
-        c = getFlagC();
+        c = GBCPU_getFlagC();
     }
     
     int8_t number      = ~(n + c) + 0x01;
@@ -302,7 +302,7 @@ void RL (int8_t *r)
 {
     uint8_t msb = moreSignificantBit(*r, sizeof(int8_t));
     SLA(r);
-    *r |= getFlagC();
+    *r |= GBCPU_getFlagC();
     ALU_FLAG_C = msb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;
@@ -324,7 +324,7 @@ void RR (int8_t *r)
 {
     uint8_t lsb = lessSignificantBit(*r);
     SRL(r);
-    *r |= ((getFlagC() << 7) & 0x80);
+    *r |= ((GBCPU_getFlagC() << 7) & 0x80);
     ALU_FLAG_C = lsb;
     ALU_FLAG_Z = (0 == (*r));
     ALU_FLAG_N = 0;

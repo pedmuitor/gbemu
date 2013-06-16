@@ -34,8 +34,8 @@
 
 - (void)setUp
 {
-    int8_t dataLoad[100];
-    for (int i = 0; i < 100; i++) {
+    int8_t dataLoad[self.dataLoadLength];
+    for (int i = 0; i < self.dataLoadLength; i++) {
         dataLoad[i] = [self wordForIndex:i];
     }
     const int8_t * data = dataLoad;
@@ -92,14 +92,14 @@
 
 - (int16_t)dwordForIndex:(int)index memoryMode:(GBMemoryMode)memoryMode
 {
-    int8_t l = [self wordForIndex:index];
-    int8_t h = [self wordForIndex:index + 1];
+    int8_t w1 = [self wordForIndex:index];
+    int8_t w2 = [self wordForIndex:index + 1];
     
     if (memoryMode == GBMemoryModeLittleEndian) {
-        SWAP_XY(&h, &l);
+        SWAP_XY(&w1, &w2);
     }
     
-    return DWORD_FROM_HL(h, l);
+    return DWORD_FROM_HL(w1, w2);
 }
 
 

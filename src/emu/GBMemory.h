@@ -10,8 +10,8 @@
 #define GBEmu_GBMemory_h
 
 typedef enum {
-    GBMemoryModeLittleEndian,
-    GBMemoryModeBigEndian
+    GBMemoryModeLittleEndian,   //Most significative byte last
+    GBMemoryModeBigEndian       //Most significative byte first
 }GBMemoryMode;
 
 void GBMemory_setData(const int8_t *data, uint16_t dataLength, GBMemoryMode memoryMode);
