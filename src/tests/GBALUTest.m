@@ -1476,16 +1476,61 @@
 
 - (void)testBIT
 {
-
+    for (int i = 0; i < 2; i++) {
+        int8_t n = (0 == i)?0xFF:0x00;
+        
+        for (int j = 0; j <= sizeof(int8_t)*8; j++) {
+            if (i == 0) {
+                n-=pow(2, j);
+            }else {
+                n+=pow(2, j);
+            }
+            
+            for (int k = 0; k < sizeof(int8_t)*8; k++) {
+                uint8_t z;
+                
+                if (i == 0) {
+                    z = (k > j);
+                }else {
+                    z = (k <= j);
+                }
+                
+                GHTestLog(@"Operation %i BIT(%#X)",k, n);
+                
+                BIT(n, k);
+                GHAssertTrue(ALU_FLAG_N == 0, @"N %d --> expected %d", ALU_FLAG_N, 0);
+                GHAssertTrue(ALU_FLAG_H == 1, @"H %d --> expected %d", ALU_FLAG_H, 1);
+                GHAssertTrue(ALU_FLAG_Z == (z == 0), @"Z %d --> expected %d", ALU_FLAG_Z, z);
+            }
+        }
+    }
+    
 }
 
 - (void)testSET
 {
+    int8_t n = 0x00;
+    int8_t res = 0x00;
+    
+    for (int i = 0; i <= sizeof(int8_t)*8; i++) {
+        GHTestLog(@"Operation %i SET(%#X, %i)",i, n, i);
+        res+= pow(2, i);
+        SET(&n, i);
+        GHAssertTrue(n == res, @"Result %#X --> expected %#X", res, n);
+    }
 }
 
 - (void)testRES
 {
+    int8_t n = 0xFF;
+    int8_t res = 0xFF;
     
+    for (int i = 0; i <= sizeof(int8_t)*8; i++) {
+        GHTestLog(@"Operation %i RES(%#X, %i)",i, n, i);
+        res-= pow(2, i);
+        RES(&n, i);
+        GHAssertTrue(n == res, @"Result %#X --> expected %#X", res, n);
+    }
 }
 
 
