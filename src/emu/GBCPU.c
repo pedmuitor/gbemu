@@ -112,13 +112,10 @@ int8_t GBCPU_readOperationWordParameter(void)
     return result;
 }
 
-int16_t readOpertionDwordParameter(void)
+int16_t GBCPU_readOperationDwordParameter(void)
 {
-    //TODO: little endian o big endian?
-    uint16_t result;
-    uint8_t nH = GBMemory_getWordAt(REG_PC++);
-    uint8_t nL = GBMemory_getWordAt(REG_PC++);
-    result = DWORD_FROM_HL(nH, nL);
+    uint16_t result = GBMemory_getDwordAt(REG_PC++);
+    REG_PC++;
     
     return result;
 }
@@ -370,8 +367,7 @@ void nextOperation(void)
             GBCPU_LD(&REG_A, n);
             break;
         case 0xFA:
-            //TODO: mirar si big endian o little endian
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             n = GBMemory_getWordAt(nn);
             GBCPU_LD(&REG_A, n);
             break;
@@ -409,7 +405,7 @@ void nextOperation(void)
             GBMemory_writeWordAt(REG_HL, REG_A);
             break;
         case 0xEA:
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             GBMemory_writeWordAt(nn, REG_A);
             break;
             
@@ -465,19 +461,19 @@ void nextOperation(void)
             //16-bit ops
             //GBCPU_LD n, nn
         case 0x01:
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             GBCPU_LD16_HL(&REG_B, &REG_C, nn);
             break;
         case 0x11:
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             GBCPU_LD16_HL(&REG_D, &REG_E, nn);
             break;
         case 0x21:
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             GBCPU_LD16_HL(&REG_H, &REG_L, nn);
             break;
         case 0x31:
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             GBCPU_LD16(&REG_SP, nn);
             break;
             
@@ -503,7 +499,7 @@ void nextOperation(void)
             
             //GBCPU_LD (nn), SP
         case 0x08:
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             GBMemory_writeDwordAt(nn, REG_SP);
             break;
             
@@ -2161,15 +2157,14 @@ void nextOperation(void)
         //Jumps
         //JP nn
         case 0xC3:
-            //TODO: check little-big endian
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             //TODO: checkear si es esto
             REG_PC = nn;
             break;
         
         //JP cc, nn
         case 0xC2:
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagZ() == 0) {
                 //TODO: checkear si es esto
                 REG_PC = nn;
@@ -2177,7 +2172,7 @@ void nextOperation(void)
             break;
             
         case 0xCA:
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagZ() == 1) {
                 //TODO: checkear si es esto
                 REG_PC = nn;
@@ -2185,7 +2180,7 @@ void nextOperation(void)
             break;
             
         case 0xD2:
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagC() == 0) {
                 //TODO: checkear si es esto
                 REG_PC = nn;
@@ -2193,7 +2188,7 @@ void nextOperation(void)
             break;
             
         case 0xDA:
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagC() == 1) {
                 //TODO: checkear si es esto
                 REG_PC = nn;
@@ -2243,8 +2238,7 @@ void nextOperation(void)
             
         //CALL nn
         case 0xCD:
-            //TODO: mirar little, big endian
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = nn;
@@ -2252,8 +2246,7 @@ void nextOperation(void)
             
         //CALL cc, nn
         case 0xC4:
-            //TODO: mirar little, big endian
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagZ() == 0) {
                 GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
@@ -2262,8 +2255,7 @@ void nextOperation(void)
             break;
             
         case 0xCC:
-            //TODO: mirar little, big endian
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagZ() == 1) {
                 GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
@@ -2272,8 +2264,7 @@ void nextOperation(void)
             break;
             
         case 0xD4:
-            //TODO: mirar little, big endian
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagC() == 0) {
                 GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
@@ -2282,8 +2273,7 @@ void nextOperation(void)
             break;
             
         case 0xDD:
-            //TODO: mirar little, big endian
-            nn = readOpertionDwordParameter();
+            nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagC() == 1) {
                 GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
