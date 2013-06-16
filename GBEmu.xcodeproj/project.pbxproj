@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C1F4330176D33C100420EA0 /* GBMemoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1F432E176D337700420EA0 /* GBMemoryTest.m */; };
 		1C46C0C21759EB87006D9BD9 /* GBMemory.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C46C0C11759EB87006D9BD9 /* GBMemory.c */; };
 		1C930B99175AC05400889E2C /* GBCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C930B98175AC05400889E2C /* GBCPU.c */; };
 		EB24BC54176798A900B15730 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBEB3AD4176325A100C18938 /* Cocoa.framework */; };
@@ -47,6 +48,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1C1F432D176D337700420EA0 /* GBMemoryTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBMemoryTest.h; sourceTree = "<group>"; };
+		1C1F432E176D337700420EA0 /* GBMemoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBMemoryTest.m; sourceTree = "<group>"; };
 		1C46C0C01759EB7E006D9BD9 /* GBMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBMemory.h; sourceTree = "<group>"; };
 		1C46C0C11759EB87006D9BD9 /* GBMemory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBMemory.c; sourceTree = "<group>"; };
 		1C930B97175AC02F00889E2C /* GBCPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPU.h; sourceTree = "<group>"; };
@@ -101,6 +104,8 @@
 				EB24BC7A17679B0000B15730 /* testApp */,
 				EB24BC7717679A6800B15730 /* GBALUTest.h */,
 				EB24BC7817679A6800B15730 /* GBALUTest.m */,
+				1C1F432D176D337700420EA0 /* GBMemoryTest.h */,
+				1C1F432E176D337700420EA0 /* GBMemoryTest.m */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -276,6 +281,7 @@
 				EB24BC8817679CCE00B15730 /* GBMemory.c in Sources */,
 				EB24BC8917679CCE00B15730 /* GBCPU.c in Sources */,
 				EBDAF062176850F800EF42D4 /* GBUtils.c in Sources */,
+				1C1F4330176D33C100420EA0 /* GBMemoryTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

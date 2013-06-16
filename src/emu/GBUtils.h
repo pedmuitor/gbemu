@@ -11,6 +11,7 @@
 
 #define DWORD_FROM_HL(_H, _L)                 ((0xFF00 & _H << 8) | (0x00FF & _L))
 #define HL_FROM_DWORD(_DWORD, ptrH, ptrL)     (*(ptrH) = (0xFF00 & _DWORD) >> 8); (*(ptrL) = (0x00FF & _DWORD));
+#define SWAP_XY(ptrX, ptrY)                   (*(ptrX) = (*ptrX^*ptrY), *(ptrY) = (*ptrX^*ptrY), *(ptrX) = (*ptrX^*ptrY))
 
 uint8_t bitAtIndex (int n, int index);
 
