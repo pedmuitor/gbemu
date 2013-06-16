@@ -53,10 +53,10 @@ struct {
 //                                              //
 //----------------------------------------------//
 
-void setUp(void);
-void shutDown(void);
+void GBCPU_setUp(void);
+void GBCPU_shutDown(void);
 
-void nextOperation(void);
+void GBCPU_nextOperation(void);
 
 //----------------------------------------------//
 //                                              //

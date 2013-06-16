@@ -30,18 +30,44 @@
 
 - (void)setUp
 {
-    int dataLength = 100;
-    int8_t dataLoad[dataLength];
-    for (int i = 0; i < dataLength; i++) {
-        dataLoad[i] = [self wordForIndex:i];
-    }
-    const int8_t * data = dataLoad;
-    GBMemory_setData(data, dataLength, GBMemoryModeBigEndian);
-
+    GBCPU_setUp();
 }
 
 - (void)tearDown
 {
+    GBCPU_shutDown();
+}
+
+
+- (void)testLoadInstructions
+{
+    int nDataLength = 100;
+    int8_t dataLoad[nDataLength];
+    
+    //Operaciones de carga directas R <- n
+    int nLoadCommands = 6;
+    int8_t loadCommands[] = {
+        0x06, 0x0E, 0x16, 0x1E, 0x26, 0x2E
+    };
+    for (int i = 0; i < nLoadCommands; i++) {
+        dataLoad[2 * i] = loadCommands[i];
+        dataLoad[2 * i + 1] = [self wordForIndex:i];
+    }
+    
+    GBMemory_setData(dataLoad, nDataLength, GBMemoryModeBigEndian);
+    for (int i = 0; i < nLoadCommands; i++) {
+        GBCPU_nextOperation();
+    }
+    
+    GHAssertTrue(REG_B == [self wordForIndex:0], @"Data not loaded in REG_B");
+    GHAssertTrue(REG_C == [self wordForIndex:1], @"Data not loaded in REG_C");
+    GHAssertTrue(REG_D == [self wordForIndex:2], @"Data not loaded in REG_D");
+    GHAssertTrue(REG_E == [self wordForIndex:3], @"Data not loaded in REG_E");
+    GHAssertTrue(REG_H == [self wordForIndex:4], @"Data not loaded in REG_H");
+    GHAssertTrue(REG_L == [self wordForIndex:5], @"Data not loaded in REG_L");
+    
+    //Operaciones de carga indirectas R <- (HL)
+    
     GBMemory_freeData();
 }
 

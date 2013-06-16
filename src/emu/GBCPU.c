@@ -131,12 +131,12 @@ void GBCPU_setUp(void)
     FLAGS_HALT = false;
 }
 
-void GBCPU_shuwdown(void)
+void GBCPU_shutDown(void)
 {
     
 }
 
-void nextOperation(void)
+void GBCPU_nextOperation(void)
 {
     uint8_t opCode = GBMemory_getWordAt(REG_PC++);
     int8_t n = 0;
