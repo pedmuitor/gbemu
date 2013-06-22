@@ -69,7 +69,7 @@
     GHAssertTrue(REG_L == 0x02, @"Data not loaded in REG_L");
 }
 
-- (void)testLoadRegister {
+- (void)testLoadRegisterToRegister {
     
     //R1 <- R2
     int nDestRegisters = 2;
@@ -77,7 +77,7 @@
     int8_t * destRegisters[] = {
       &REG_A, &REG_B, &REG_C, &REG_D, &REG_E, &REG_H, &REG_L
     };
-    int8_t testDataLoad[7][7] = {
+    int8_t testData[7][7] = {
         //A
         {0x78, 0x79, 0x7A, 0x7B, 0x7C, 0x7D, 0x7E},
         //B
@@ -97,7 +97,7 @@
     for (int i = 0; i < nDestRegisters; i++) {
         int8_t * destRegister = destRegisters[i];
         
-        [self loadTestDataInMemory:testDataLoad[i] length:nInstructions];
+        [self loadTestDataInMemory:testData[i] length:nInstructions];
         [self setDefaultRegistersValues];
         
         int regB = REG_B;
@@ -136,15 +136,37 @@
         GBCPU_nextOperation();
         int16_t hlAddress = DWORD_FROM_HL(REG_H, REG_L);
         int8_t byteAtHL = GBMemory_getWordAt(hlAddress);
-        GHAssertTrue(byteAtHL == testDataLoad[i][hlAddress], @"Byte at (HL) needs to be equal to 0x0C");
+        GHAssertTrue(byteAtHL == testData[i][hlAddress], @"Byte at (HL) needs to be equal to 0x0C");
         GHAssertTrue(*destRegister == byteAtHL, @"Register must have (HL) value");
         GHAssertTrue(REG_H == regH, @"Register must have his value");
         GHAssertTrue(REG_L == regL, @"Register must have his value");
     }
+}
+
+- (void)testWriteRegisterInMemory
+{
+    int8_t testData[] = {
+        0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x36, 0x55, 0xFF
+    };
     
+    int8_t n = testData[7];
+    int8_t * sourceRegisters[] = {
+        &REG_B, &REG_C, &REG_D, &REG_E, &REG_H, &REG_L, &n
+    };
     
+    [self loadTestDataInMemory:testData length:9];
+    [self setDefaultRegistersValues];
+    REG_H = 0x00;
+    REG_L = 0x08;
     
+    uint8_t hlData = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+    GHAssertTrue(hlData == 0xFF, @"(HL) must contain 0xFF");
     
+    for (int i = 0; i < 6; i++) {
+        GBCPU_nextOperation();
+        hlData = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+        GHAssertTrue(hlData == *(sourceRegisters[i]), @"Data must contain register value");
+    }
 }
 
 
