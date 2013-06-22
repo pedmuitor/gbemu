@@ -159,8 +159,8 @@
     REG_H = 0x00;
     REG_L = 0x08;
     
-    uint8_t hlData = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
-    GHAssertTrue(hlData == 0xFF, @"(HL) must contain 0xFF");
+    int8_t hlData = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+    GHAssertTrue(hlData == (int8_t)0xFF, @"(HL) must contain 0xFF");
     
     for (int i = 0; i < 6; i++) {
         GBCPU_nextOperation();
@@ -169,6 +169,81 @@
     }
 }
 
+- (void)testLD_nA
+{
+    int8_t testData[] = {
+        0x0A,
+        0x1A,
+        0xFA, 0x00, 0x07,
+        0x3E, 0xF0,
+        0xFA, 0xFB, 0xFC, 0x0FD, 0xFE
+    };
+    [self loadTestDataInMemory:testData length:12];
+    [self setDefaultRegistersValues];
+    
+    REG_B = 0x00;
+    REG_C = 0x08;
+    
+    REG_D = 0x00;
+    REG_E = 0x09;
+    
+    GBCPU_nextOperation();
+    GHAssertTrue(REG_A == (int8_t)0xFB, @"REG A must have (BC)");
+    
+    GBCPU_nextOperation();
+    GHAssertTrue(REG_A == (int8_t)0xFC, @"REG A must have (DE)");
+    
+    GBCPU_nextOperation();
+    GHAssertTrue(REG_A == (int8_t)0xFA, @"REG A must have (nn)");
+    
+    GBCPU_nextOperation();
+    GHAssertTrue(REG_A == (int8_t)0xF0, @"REG A must have n");
+}
+
+- (void)testLD_An
+{
+    int8_t testData[] = {
+        0x47, 0x4F, 0x57, 0x5F, 0x67, 0x6F, 0x02, 0x12, 0x77, 0xEA, 0x00, 0x12,
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+    };
+    [self loadTestDataInMemory:testData length:22];
+    [self setDefaultRegistersValues];
+    
+    REG_A = 0x0F;
+    
+    GBCPU_nextOperation();
+    GHAssertTrue(REG_B == REG_A, @"REG B must have A value");
+    
+    GBCPU_nextOperation();
+    GHAssertTrue(REG_C == REG_A, @"REG C must have A value");
+    
+    GBCPU_nextOperation();
+    GHAssertTrue(REG_D == REG_A, @"REG D must have A value");
+    
+    GBCPU_nextOperation();
+    GHAssertTrue(REG_E == REG_A, @"REG E must have A value");
+    
+    GBCPU_nextOperation();
+    GHAssertTrue(REG_H == REG_A, @"REG H must have A value");
+    
+    GBCPU_nextOperation();
+    GHAssertTrue(REG_L == REG_A, @"REG L must have A value");
+    
+    REG_B = 0x00;
+    REG_C = 0x13;
+    GBCPU_nextOperation();
+    GHAssertTrue(GBMemory_getWordAt(0x0013) == REG_A, @"(BC) must have A value");
+    
+    REG_D = 0x00;
+    REG_E = 0x14;
+    GBCPU_nextOperation();
+    GHAssertTrue(GBMemory_getWordAt(0x0014) == REG_A, @"(DE) must have A value");
+    
+    REG_H = 0x00;
+    REG_L = 0x15;
+    GBCPU_nextOperation();
+    GHAssertTrue(GBMemory_getWordAt(0x0015) == REG_A, @"(HL) must have A value");
+}
 
 #pragma mark Private
 
