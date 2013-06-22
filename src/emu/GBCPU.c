@@ -133,7 +133,7 @@ void GBCPU_setUp(void)
 
 void GBCPU_shutDown(void)
 {
-    
+    GBMemory_freeData();
 }
 
 void GBCPU_nextOperation(void)
@@ -2332,14 +2332,12 @@ void GBCPU_nextOperation(void)
             
         //RET
         case 0xC9:
-            //TODO: mirar little, big endian
             REG_PC = GBMemory_getDwordAt(REG_SP);
             REG_SP += 2;
             break;
             
         //RET cc
         case 0xC0:
-            //TODO: mirar little, big endian
             if (GBCPU_getFlagZ() == 0) {
                 REG_PC = GBMemory_getDwordAt(REG_SP);
                 REG_SP += 2;
@@ -2347,7 +2345,6 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0xC8:
-            //TODO: mirar little, big endian
             if (GBCPU_getFlagZ() == 1) {
                 REG_PC = GBMemory_getDwordAt(REG_SP);
                 REG_SP += 2;
@@ -2355,7 +2352,6 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0xD0:
-            //TODO: mirar little, big endian
             if (GBCPU_getFlagC() == 0) {
                 REG_PC = GBMemory_getDwordAt(REG_SP);
                 REG_SP += 2;
@@ -2363,7 +2359,6 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0xD8:
-            //TODO: mirar little, big endian
             if (GBCPU_getFlagC() == 1) {
                 REG_PC = GBMemory_getDwordAt(REG_SP);
                 REG_SP += 2;
