@@ -14,17 +14,21 @@ typedef enum {
     GBMemoryModeBigEndian       //Most significative byte first
 }GBMemoryMode;
 
-void GBMemory_setData(const int8_t *data, uint16_t dataLength, GBMemoryMode memoryMode);
+typedef int16_t GBMemoryAddress;
+typedef int8_t GBMemoryWord;
+typedef int16_t GBMemoryDWord;
+
+void GBMemory_setData(const GBMemoryWord *data, uint16_t dataLength, GBMemoryMode memoryMode);
 void GBMemory_freeData();
 
 void GBMemory_setMemoryMode(GBMemoryMode memoryMode);
 GBMemoryMode GBMemory_memoryMode();
 
 
-int8_t GBMemory_getWordAt(int16_t address);
-int16_t GBMemory_getDwordAt(int16_t address);
+GBMemoryWord GBMemory_getWordAt(GBMemoryAddress address);
+GBMemoryDWord GBMemory_getDwordAt(GBMemoryAddress address);
 
-void GBMemory_writeWordAt(int16_t address, int8_t value);
-void GBMemory_writeDwordAt(int16_t address, int16_t value);
+void GBMemory_writeWordAt(GBMemoryAddress address, GBMemoryWord value);
+void GBMemory_writeDwordAt(GBMemoryAddress address, GBMemoryDWord value);
 
 #endif

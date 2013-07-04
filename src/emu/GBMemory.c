@@ -15,18 +15,47 @@
 #include "GBMemory.h"
 #include "GBUtils.h"
 
+GBMemoryAddress const GBMemoryAddressRomBank0Start = 0x0000;
+GBMemoryAddress const GBMemoryAddressRomBank0End = 0x3FFF;
+
+GBMemoryAddress const GBMemoryAddressRomBankSwitchableStart = 0x4000;
+GBMemoryAddress const GBMemoryAddressRomBankSwitchableEnd = 0x7FFF;
+
+GBMemoryAddress const GBMemoryAddressVideoRamStart = 0x8000;
+GBMemoryAddress const GBMemoryAddressVideoRamEnd = 0x9FFF;
+
+GBMemoryAddress const GBMemoryAddressSwitchableRamBankStart = 0xA000;
+GBMemoryAddress const GBMemoryAddressSwitchableRamBankEnd = 0xBFFF;
+
+GBMemoryAddress const GBMemoryAddressInternalRAM0Start = 0xC000;
+GBMemoryAddress const GBMemoryAddressInternalRAM0End = 0xDFFF;
+
+GBMemoryAddress const GBMemoryAddressInternalRAMEchoStart = 0xE000;
+GBMemoryAddress const GBMemoryAddressInternalRAMEchoEnd = 0xFDFF;
+
+GBMemoryAddress const GBMemoryAddressOAMStart = 0xFE00;
+GBMemoryAddress const GBMemoryAddressOAMEnd = 0xFE9F;
+
+GBMemoryAddress const GBMemoryAddressIOPortsStart = 0xFF00;
+GBMemoryAddress const GBMemoryAddressIOPortsEnd = 0xFF4B;
+
+GBMemoryAddress const GBMemoryAddressInternalRAM1Start = 0xFF80;
+GBMemoryAddress const GBMemoryAddressInternalRAM1End = 0xFFFE;
+
+GBMemoryAddress const GBMemoryAddressInterruptEnableRegister = 0xFFFF;
+
 struct {
-    int8_t *data;
+    GBMemoryWord *data;
     int16_t dataLength;
     GBMemoryMode memoryMode;
 }GBMemory;
 
-void GBMemory_setData(const int8_t *data, uint16_t dataLength, GBMemoryMode memoryMode)
+void GBMemory_setData(const GBMemoryWord *data, uint16_t dataLength, GBMemoryMode memoryMode)
 {
     GBMemory.memoryMode = memoryMode;
     GBMemory.dataLength = dataLength;
     
-    GBMemory.data = calloc(dataLength, sizeof(int8_t));
+    GBMemory.data = calloc(dataLength, sizeof(GBMemoryWord));
     memcpy(GBMemory.data, data, dataLength);
 }
 
@@ -46,33 +75,32 @@ GBMemoryMode GBMemory_memoryMode()
     return GBMemory.memoryMode;
 }
 
-
-int8_t GBMemory_getWordAt(int16_t address)
+GBMemoryWord GBMemory_getWordAt(GBMemoryAddress address)
 {
-    int8_t result = GBMemory.data[address];
+    GBMemoryWord result = GBMemory.data[address];
     return result;
 }
 
-int16_t GBMemory_getDwordAt(int16_t address)
+GBMemoryDWord GBMemory_getDwordAt(GBMemoryAddress address)
 {
-    int8_t w1 = GBMemory_getWordAt(address);
-    int8_t w2 = GBMemory_getWordAt(address + 1);
+    GBMemoryWord w1 = GBMemory_getWordAt(address);
+    GBMemoryWord w2 = GBMemory_getWordAt(address + 1);
     if (GBMemory.memoryMode == GBMemoryModeLittleEndian) {
         SWAP_XY(&w1, &w2);
     }
-    int16_t result = DWORD_FROM_HL(w1, w2);
+    GBMemoryDWord result = DWORD_FROM_HL(w1, w2);
     
     return result;
 }
 
-void GBMemory_writeWordAt(int16_t address, int8_t value)
+void GBMemory_writeWordAt(GBMemoryAddress address, GBMemoryWord value)
 {
     GBMemory.data[address] = value;
 }
 
-void GBMemory_writeDwordAt(int16_t address, int16_t value)
+void GBMemory_writeDwordAt(GBMemoryAddress address, GBMemoryDWord value)
 {
-    int8_t w1, w2;
+    GBMemoryWord w1, w2;
     HL_FROM_DWORD(value, &w1, &w2);
     if (GBMemory.memoryMode == GBMemoryModeLittleEndian) {
         SWAP_XY(&w1, &w2);

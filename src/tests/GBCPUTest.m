@@ -245,11 +245,13 @@
     GHAssertTrue(GBMemory_getWordAt(0x0015) == REG_A, @"(HL) must have A value");
 }
 
+
+
 #pragma mark Private
 
 - (void)loadTestDataInMemory:(int8_t *)testData length:(int)testDataLength
 {
-    int nDataLength = 100;
+    int nDataLength = 0xFFFF;
     int8_t dataLoad[nDataLength];
     
     for (int i = 0; i < nDataLength; i++) {
