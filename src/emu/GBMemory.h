@@ -57,6 +57,9 @@ void GBMemoryFreeData();
 void GBMemorySetMemoryMode(GBMemoryMode memoryMode);
 GBMemoryMode GBMemoryMemoryMode();
 
+void GBMemorySetRomMemoryEnabled(bool enabled);
+bool GBMemoryRomMemoryEnabled();
+
 GBMemoryWord GBMemoryGetWordAt(GBMemoryAddress address);
 GBMemoryDWord GBMemoryGetDwordAt(GBMemoryAddress address);
 

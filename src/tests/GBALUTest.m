@@ -8,27 +8,12 @@
 
 #import "GBALUTest.h"
 
+#include "GBMemory.h"
 #include "GBCPU.h"
 #include "GBCPU_ALU.h"
 #include "GBUtils.h"
 
 @implementation GBALUTest
-
-- (void)setUpClass {
-    // Run at start of all tests in the class
-}
-
-- (void)tearDownClass {
-    // Run at end of all tests in the class
-}
-
-- (void)setUp {
-    // Run before each test method
-}
-
-- (void)tearDown {
-    // Run after each test method
-}
 
 - (void)testADD
 {

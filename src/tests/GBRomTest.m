@@ -7,6 +7,7 @@
 //
 
 #import "GBRomTest.h"
+#import "GBMemory.h"
 #import "GBRom.h"
 #import "GBUtils.h"
 
@@ -27,6 +28,7 @@
     NSString *romPath = [[NSBundle mainBundle] pathForResource:@"rom_sample.txt" ofType:nil];
     bool result = GBRomLoad([romPath cStringUsingEncoding:NSUTF8StringEncoding]);
     GHAssertTrue(result == YES, @"Result must be true");
+    GHAssertTrue(GBMemoryRomMemoryEnabled() == true, @"Memory rom enabled must be true");
 }
 
 - (void)testLoadWord
@@ -64,6 +66,7 @@
 {
     bool result = GBRomRelease();
     GHAssertTrue(result == YES, @"Close rom must return true");
+    GHAssertTrue(GBMemoryRomMemoryEnabled() == false, @"Memory rom enabled must be false");
 }
 
 @end

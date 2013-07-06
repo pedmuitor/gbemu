@@ -19,13 +19,19 @@ bool GBRomLoad(const char* romName)
 {
     GBRomRelease();
     GBMemoryRomData.romFile = fopen(romName, "r");
-    return GBMemoryRomData.romFile != NULL;
+    
+    bool result = GBMemoryRomData.romFile != NULL;
+    if (result) {
+        GBMemorySetRomMemoryEnabled(true);
+    }
+    return result;
 }
 
 bool GBRomRelease()
 {
     if (GBMemoryRomData.romFile != NULL) {
         fclose(GBMemoryRomData.romFile);
+        GBMemorySetRomMemoryEnabled(false);
         GBMemoryRomData.romFile = NULL;
     }
     return GBMemoryRomData.romFile == NULL;

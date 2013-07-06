@@ -13,6 +13,7 @@
 
 #include "GBCPU.h"
 #include "GBMemory.h"
+#include "GBRom.h"
 #include "GBUtils.h"
 
 GBMemoryRange const GBMemoryAddressRomBank0 = {.start = 0x0000, .end = 0x3FFF};
@@ -39,14 +40,24 @@ struct {
     GBMemoryWord *data;
     int16_t dataLength;
     GBMemoryMode memoryMode;
+    bool romMemory;
 }GBMemory;
+
+
+bool _GBMemoryIsRomAddress(GBMemoryAddress address)
+{
+    bool result = GBMemoryRangeContains(GBMemoryAddressRomBank0, address);
+    result |= GBMemoryRangeContains(GBMemoryAddressRomBankSwitchable, address);
+    return result;
+}
+
 
 void GBMemorySetData(const GBMemoryWord *data, uint16_t dataLength, GBMemoryMode memoryMode)
 {
     GBMemory.memoryMode = memoryMode;
     GBMemory.dataLength = dataLength;
-    
     GBMemory.data = calloc(dataLength, sizeof(GBMemoryWord));
+    GBMemory.romMemory = false;
     memcpy(GBMemory.data, data, dataLength);
 }
 
@@ -66,9 +77,32 @@ GBMemoryMode GBMemoryMemoryMode()
     return GBMemory.memoryMode;
 }
 
+void GBMemorySetRomMemoryEnabled(bool enabled)
+{
+    GBMemory.romMemory = enabled;
+}
+
+bool GBMemoryRomMemoryEnabled()
+{
+    return GBMemory.romMemory;
+}
+
 GBMemoryWord GBMemoryGetWordAt(GBMemoryAddress address)
 {
-    GBMemoryWord result = GBMemory.data[address];
+    GBMemoryWord result;
+    if (GBMemory.romMemory && _GBMemoryIsRomAddress(address)) {
+        GBMemoryAddress romAddress = address;
+        if (GBMemoryRangeContains(GBMemoryAddressRomBank0, address)) {
+            result = GBRomReadWord(romAddress);
+        } else {
+            //TODO: switchable ram bank, add offset to address
+            result = 0x00;
+        }
+    } else {
+        result = GBMemory.data[address];
+    }
+    
+    
     return result;
 }
 
@@ -86,7 +120,11 @@ GBMemoryDWord GBMemoryGetDwordAt(GBMemoryAddress address)
 
 void GBMemoryWriteWordAt(GBMemoryAddress address, GBMemoryWord value)
 {
-    GBMemory.data[address] = value;
+    if (GBMemory.romMemory && _GBMemoryIsRomAddress(address)) {
+        //TODO: nothing here, trying to write on rom address
+    } else {
+        GBMemory.data[address] = value;
+    }
 }
 
 void GBMemoryWriteDwordAt(GBMemoryAddress address, GBMemoryDWord value)

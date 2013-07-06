@@ -9,6 +9,7 @@
 #import "GBMemory.h"
 #import "GBMemoryTest.h"
 #import "GBMemory.h"
+#import "GBRom.h"
 #import "GBUtils.h"
 
 @interface GBMemoryTest ()
@@ -47,6 +48,15 @@
     GBMemoryFreeData();
 }
 
+- (void)testRomMemoryEnabled
+{
+    GBMemorySetRomMemoryEnabled(false);
+    GHAssertTrue(GBMemoryRomMemoryEnabled() == false, @"Rom memory must be disabled");
+    
+    GBMemorySetRomMemoryEnabled(true);
+    GHAssertTrue(GBMemoryRomMemoryEnabled() == true, @"Rom memory must be enabled");
+}
+
 - (void)testReadWord
 {
     //Big endian
@@ -81,6 +91,50 @@
     }
 }
 
+
+- (void)testLoadWordFromRom
+{
+    NSString *romPath = [[NSBundle mainBundle] pathForResource:@"rom_sample.txt" ofType:nil];
+    GBRomLoad([romPath cStringUsingEncoding:NSUTF8StringEncoding]);
+    
+    int nRomBytes = 12;
+    GBMemoryWord romBytes[14] = {0x72, 0x6F, 0x6D, 0x5F, 0x73, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x2E, 0x74, 0x78, 0x74};
+    
+    //Bank0
+    for (GBMemoryAddress i = 0x00; i < nRomBytes; i++) {
+        GBMemoryWord romData = GBMemoryGetWordAt(i);
+        GHAssertTrue(romData == romBytes[i], @"Reading from memory must be equals to the rom");
+    }
+    
+    //TODO: switchableBank
+}
+
+
+- (void)testLoadDWordFromRom
+{
+    NSString *romPath = [[NSBundle mainBundle] pathForResource:@"rom_sample.txt" ofType:nil];
+    GBRomLoad([romPath cStringUsingEncoding:NSUTF8StringEncoding]);
+    
+    int nRomBytes = 12;
+    GBMemoryWord romBytes[14] = {0x72, 0x6F, 0x6D, 0x5F, 0x73, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x2E, 0x74, 0x78, 0x74};
+    
+    //Little endian
+    GBMemorySetMemoryMode(GBMemoryModeLittleEndian);
+    for (GBMemoryAddress i = 0x0000; i < nRomBytes / 2; i+= 2) {
+        GBMemoryDWord romData = GBMemoryGetDwordAt(i);
+        GHAssertTrue(romData == DWORD_FROM_HL(romBytes[i + 1], romBytes[i]), @"Rom data must be equal to rom bytes");
+    }
+    
+    //Big endian
+    GBMemorySetMemoryMode(GBMemoryModeBigEndian);
+    for (GBMemoryAddress i = 0x0000; i < nRomBytes / 2; i+= 2) {
+        GBMemoryDWord romData = GBMemoryGetDwordAt(i);
+        GHAssertTrue(romData == DWORD_FROM_HL(romBytes[i], romBytes[i + 1]), @"Rom data must be equal to rom bytes");
+    }
+}
+
+
+//TODO: Write tests
 
 
 #pragma mark Private
