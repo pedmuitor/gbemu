@@ -39,27 +39,27 @@
         dataLoad[i] = [self wordForIndex:i];
     }
     const int8_t * data = dataLoad;
-    GBMemory_setData(data, self.dataLoadLength, GBMemoryModeBigEndian);
+    GBMemorySetData(data, self.dataLoadLength, GBMemoryModeBigEndian);
 }
 
 - (void)tearDown
 {
-    GBMemory_freeData();
+    GBMemoryFreeData();
 }
 
 - (void)testReadWord
 {
     //Big endian
-    GBMemory_setMemoryMode(GBMemoryModeBigEndian);
+    GBMemorySetMemoryMode(GBMemoryModeBigEndian);
     for (int i = 0; i < self.dataLoadLength; i++) {
-        int8_t word = GBMemory_getWordAt((int16_t)i);
+        int8_t word = GBMemoryGetWordAt((int16_t)i);
         GHAssertTrue(word == [self wordForIndex:i], @"Stored word is incorrect");
     }
     
     //Little endian
-    GBMemory_setMemoryMode(GBMemoryModeLittleEndian);
+    GBMemorySetMemoryMode(GBMemoryModeLittleEndian);
     for (int i = 0; i < self.dataLoadLength; i++) {
-        int8_t word = GBMemory_getWordAt((int16_t)i);
+        int8_t word = GBMemoryGetWordAt((int16_t)i);
         GHAssertTrue(word == [self wordForIndex:i], @"Stored word is incorrect");
     }
 }
@@ -67,17 +67,17 @@
 - (void)testReadDWord
 {
     //Big endian
-    GBMemory_setMemoryMode(GBMemoryModeBigEndian);
+    GBMemorySetMemoryMode(GBMemoryModeBigEndian);
     for (int i = 0; i < self.dataLoadLength / 2; i+= 2) {
-        int16_t dword = GBMemory_getDwordAt((int16_t)i);
-        GHAssertTrue(dword == [self dwordForIndex:i memoryMode:GBMemory_memoryMode()], @"Stored dword in incorrect");
+        int16_t dword = GBMemoryGetDwordAt((int16_t)i);
+        GHAssertTrue(dword == [self dwordForIndex:i memoryMode:GBMemoryMemoryMode()], @"Stored dword in incorrect");
     }
     
     //Little endian
-    GBMemory_setMemoryMode(GBMemoryModeLittleEndian);
+    GBMemorySetMemoryMode(GBMemoryModeLittleEndian);
     for (int i = 0; i < self.dataLoadLength / 2; i+= 2) {
-        int16_t dword = GBMemory_getDwordAt((int16_t)i);
-        GHAssertTrue(dword == [self dwordForIndex:i memoryMode:GBMemory_memoryMode()], @"Stored dword in incorrect");
+        int16_t dword = GBMemoryGetDwordAt((int16_t)i);
+        GHAssertTrue(dword == [self dwordForIndex:i memoryMode:GBMemoryMemoryMode()], @"Stored dword in incorrect");
     }
 }
 

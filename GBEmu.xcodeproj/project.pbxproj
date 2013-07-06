@@ -11,6 +11,10 @@
 		1C46C0C21759EB87006D9BD9 /* GBMemory.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C46C0C11759EB87006D9BD9 /* GBMemory.c */; };
 		1C579DB2176DA68B003ECD01 /* GBCPUTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C579DB1176DA68B003ECD01 /* GBCPUTest.m */; };
 		1C930B99175AC05400889E2C /* GBCPU.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C930B98175AC05400889E2C /* GBCPU.c */; };
+		1C9FD8C5178721EC0056F2E6 /* GBRom.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C9FD8C4178721EC0056F2E6 /* GBRom.c */; };
+		1C9FD8C6178721F60056F2E6 /* GBRom.c in Sources */ = {isa = PBXBuildFile; fileRef = 1C9FD8C4178721EC0056F2E6 /* GBRom.c */; };
+		1CFCC6B917886F3300502509 /* GBRomTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFCC6B617886DE000502509 /* GBRomTest.m */; };
+		1CFCC6BA17886F7F00502509 /* rom_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1CFCC6B817886DFE00502509 /* rom_sample.txt */; };
 		EB24BC54176798A900B15730 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBEB3AD4176325A100C18938 /* Cocoa.framework */; };
 		EB24BC7917679A6800B15730 /* GBALUTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EB24BC7817679A6800B15730 /* GBALUTest.m */; };
 		EB24BC8017679B0000B15730 /* GHUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB24BC7D17679B0000B15730 /* GHUnit.framework */; };
@@ -57,6 +61,11 @@
 		1C579DB1176DA68B003ECD01 /* GBCPUTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBCPUTest.m; sourceTree = "<group>"; };
 		1C930B97175AC02F00889E2C /* GBCPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBCPU.h; sourceTree = "<group>"; };
 		1C930B98175AC05400889E2C /* GBCPU.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBCPU.c; sourceTree = "<group>"; };
+		1C9FD8C3178721460056F2E6 /* GBRom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBRom.h; sourceTree = "<group>"; };
+		1C9FD8C4178721EC0056F2E6 /* GBRom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GBRom.c; sourceTree = "<group>"; };
+		1CFCC6B517886DE000502509 /* GBRomTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBRomTest.h; sourceTree = "<group>"; };
+		1CFCC6B617886DE000502509 /* GBRomTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBRomTest.m; sourceTree = "<group>"; };
+		1CFCC6B817886DFE00502509 /* rom_sample.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = rom_sample.txt; sourceTree = "<group>"; };
 		EB24BC53176798A900B15730 /* GBEmuTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GBEmuTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB24BC7717679A6800B15730 /* GBALUTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBALUTest.h; sourceTree = "<group>"; };
 		EB24BC7817679A6800B15730 /* GBALUTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBALUTest.m; sourceTree = "<group>"; };
@@ -111,6 +120,9 @@
 				1C1F432E176D337700420EA0 /* GBMemoryTest.m */,
 				1C579DB0176DA68B003ECD01 /* GBCPUTest.h */,
 				1C579DB1176DA68B003ECD01 /* GBCPUTest.m */,
+				1CFCC6B517886DE000502509 /* GBRomTest.h */,
+				1CFCC6B617886DE000502509 /* GBRomTest.m */,
+				1CFCC6B817886DFE00502509 /* rom_sample.txt */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -196,6 +208,8 @@
 				1C930B98175AC05400889E2C /* GBCPU.c */,
 				EBDAF05F176850EC00EF42D4 /* GBUtils.h */,
 				EBDAF060176850F800EF42D4 /* GBUtils.c */,
+				1C9FD8C3178721460056F2E6 /* GBRom.h */,
+				1C9FD8C4178721EC0056F2E6 /* GBRom.c */,
 			);
 			path = emu;
 			sourceTree = "<group>";
@@ -270,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CFCC6BA17886F7F00502509 /* rom_sample.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +303,8 @@
 				EBDAF062176850F800EF42D4 /* GBUtils.c in Sources */,
 				1C1F4330176D33C100420EA0 /* GBMemoryTest.m in Sources */,
 				1C579DB2176DA68B003ECD01 /* GBCPUTest.m in Sources */,
+				1C9FD8C6178721F60056F2E6 /* GBRom.c in Sources */,
+				1CFCC6B917886F3300502509 /* GBRomTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +317,7 @@
 				1C46C0C21759EB87006D9BD9 /* GBMemory.c in Sources */,
 				1C930B99175AC05400889E2C /* GBCPU.c in Sources */,
 				EBDAF061176850F800EF42D4 /* GBUtils.c in Sources */,
+				1C9FD8C5178721EC0056F2E6 /* GBRom.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

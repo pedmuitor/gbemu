@@ -9,26 +9,58 @@
 #ifndef GBEmu_GBMemory_h
 #define GBEmu_GBMemory_h
 
-typedef enum {
-    GBMemoryModeLittleEndian,   //Most significative byte last
-    GBMemoryModeBigEndian       //Most significative byte first
-}GBMemoryMode;
+#import <stdint.h>
+#import <stdbool.h>
 
 typedef int16_t GBMemoryAddress;
 typedef int8_t GBMemoryWord;
 typedef int16_t GBMemoryDWord;
 
-void GBMemory_setData(const GBMemoryWord *data, uint16_t dataLength, GBMemoryMode memoryMode);
-void GBMemory_freeData();
+typedef enum {
+    GBMemoryModeLittleEndian,   //Most significative byte last
+    GBMemoryModeBigEndian       //Most significative byte first
+}GBMemoryMode;
 
-void GBMemory_setMemoryMode(GBMemoryMode memoryMode);
-GBMemoryMode GBMemory_memoryMode();
+struct GBMemoryRange {
+    GBMemoryAddress start;
+    GBMemoryAddress end;
+};
 
+/*
+ * GBMemoryRange
+ */
 
-GBMemoryWord GBMemory_getWordAt(GBMemoryAddress address);
-GBMemoryDWord GBMemory_getDwordAt(GBMemoryAddress address);
+typedef struct GBMemoryRange GBMemoryRange;
 
-void GBMemory_writeWordAt(GBMemoryAddress address, GBMemoryWord value);
-void GBMemory_writeDwordAt(GBMemoryAddress address, GBMemoryDWord value);
+extern GBMemoryRange const GBMemoryAddressRomBank0;
+extern GBMemoryRange const GBMemoryAddressRomBankSwitchable;
+extern GBMemoryRange const GBMemoryAddressRomBankSwitchable;
+extern GBMemoryRange const GBMemoryAddressVideoRam;
+extern GBMemoryRange const GBMemoryAddressSwitchableRamBank;
+extern GBMemoryRange const GBMemoryAddressInternalRAM;
+extern GBMemoryRange const GBMemoryAddressInternalRAMEcho;
+extern GBMemoryRange const GBMemoryAddressOAMStart;
+extern GBMemoryRange const GBMemoryAddressIOPorts;
+extern GBMemoryRange const GBMemoryAddressInternalRAM1;
+extern GBMemoryRange const GBMemoryAddressInterruptEnableRegister;
+
+GBMemoryRange GBMemoryRangeMake(GBMemoryAddress start, GBMemoryAddress end);
+bool GBMemoryRangeContains(GBMemoryRange range, GBMemoryAddress address);
+
+/*
+ * GBMemory
+ */
+
+void GBMemorySetData(const GBMemoryWord *data, uint16_t dataLength, GBMemoryMode memoryMode);
+void GBMemoryFreeData();
+
+void GBMemorySetMemoryMode(GBMemoryMode memoryMode);
+GBMemoryMode GBMemoryMemoryMode();
+
+GBMemoryWord GBMemoryGetWordAt(GBMemoryAddress address);
+GBMemoryDWord GBMemoryGetDwordAt(GBMemoryAddress address);
+
+void GBMemoryWriteWordAt(GBMemoryAddress address, GBMemoryWord value);
+void GBMemoryWriteDwordAt(GBMemoryAddress address, GBMemoryDWord value);
 
 #endif

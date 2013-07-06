@@ -135,7 +135,7 @@
         
         GBCPU_nextOperation();
         int16_t hlAddress = DWORD_FROM_HL(REG_H, REG_L);
-        int8_t byteAtHL = GBMemory_getWordAt(hlAddress);
+        int8_t byteAtHL = GBMemoryGetWordAt(hlAddress);
         GHAssertTrue(byteAtHL == testData[i][hlAddress], @"Byte at (HL) needs to be equal to 0x0C");
         GHAssertTrue(*destRegister == byteAtHL, @"Register must have (HL) value");
         GHAssertTrue(REG_H == regH, @"Register must have his value");
@@ -159,12 +159,12 @@
     REG_H = 0x00;
     REG_L = 0x08;
     
-    int8_t hlData = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+    int8_t hlData = GBMemoryGetWordAt(DWORD_FROM_HL(REG_H, REG_L));
     GHAssertTrue(hlData == (int8_t)0xFF, @"(HL) must contain 0xFF");
     
     for (int i = 0; i < 6; i++) {
         GBCPU_nextOperation();
-        hlData = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+        hlData = GBMemoryGetWordAt(DWORD_FROM_HL(REG_H, REG_L));
         GHAssertTrue(hlData == *(sourceRegisters[i]), @"Data must contain register value");
     }
 }
@@ -232,17 +232,17 @@
     REG_B = 0x00;
     REG_C = 0x13;
     GBCPU_nextOperation();
-    GHAssertTrue(GBMemory_getWordAt(0x0013) == REG_A, @"(BC) must have A value");
+    GHAssertTrue(GBMemoryGetWordAt(0x0013) == REG_A, @"(BC) must have A value");
     
     REG_D = 0x00;
     REG_E = 0x14;
     GBCPU_nextOperation();
-    GHAssertTrue(GBMemory_getWordAt(0x0014) == REG_A, @"(DE) must have A value");
+    GHAssertTrue(GBMemoryGetWordAt(0x0014) == REG_A, @"(DE) must have A value");
     
     REG_H = 0x00;
     REG_L = 0x15;
     GBCPU_nextOperation();
-    GHAssertTrue(GBMemory_getWordAt(0x0015) == REG_A, @"(HL) must have A value");
+    GHAssertTrue(GBMemoryGetWordAt(0x0015) == REG_A, @"(HL) must have A value");
 }
 
 
@@ -261,7 +261,7 @@
     for (int i = 0; i < testDataLength; i++) {
         dataLoad[i] = testData[i];
     }
-    GBMemory_setData(dataLoad, nDataLength, GBMemoryModeBigEndian);
+    GBMemorySetData(dataLoad, nDataLength, GBMemoryModeBigEndian);
     [self resetGBCPU_PC];
 }
 

@@ -108,13 +108,13 @@ void GBCPU_setInterruptsEnabled(bool enabled)
 
 int8_t GBCPU_readOperationWordParameter(void)
 {
-    uint8_t result = GBMemory_getWordAt(REG_PC++);
+    uint8_t result = GBMemoryGetWordAt(REG_PC++);
     return result;
 }
 
 int16_t GBCPU_readOperationDwordParameter(void)
 {
-    uint16_t result = GBMemory_getDwordAt(REG_PC++);
+    uint16_t result = GBMemoryGetDwordAt(REG_PC++);
     REG_PC++;
     
     return result;
@@ -133,12 +133,12 @@ void GBCPU_setUp(void)
 
 void GBCPU_shutDown(void)
 {
-    GBMemory_freeData();
+    GBMemoryFreeData();
 }
 
 void GBCPU_nextOperation(void)
 {
-    uint8_t opCode = GBMemory_getWordAt(REG_PC++);
+    uint8_t opCode = GBMemoryGetWordAt(REG_PC++);
     int8_t n = 0;
     int16_t nn = 0;
     
@@ -192,7 +192,7 @@ void GBCPU_nextOperation(void)
             GBCPU_LD(&REG_A, REG_L);
             break;
         case 0x7E:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             GBCPU_LD(&REG_A, n);
             break;
             
@@ -215,7 +215,7 @@ void GBCPU_nextOperation(void)
             GBCPU_LD(&REG_B, REG_L);
             break;
         case 0x46:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             GBCPU_LD(&REG_B, n);
             break;
             
@@ -238,7 +238,7 @@ void GBCPU_nextOperation(void)
             GBCPU_LD(&REG_C, REG_L);
             break;
         case 0x4E:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             GBCPU_LD(&REG_C, n);
             break;
             
@@ -261,7 +261,7 @@ void GBCPU_nextOperation(void)
             GBCPU_LD(&REG_D, REG_L);
             break;
         case 0x56:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             GBCPU_LD(&REG_D, n);
             break;
             
@@ -284,7 +284,7 @@ void GBCPU_nextOperation(void)
             GBCPU_LD(&REG_E, REG_L);
             break;
         case 0x5E:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             GBCPU_LD(&REG_E, n);
             break;
             
@@ -307,7 +307,7 @@ void GBCPU_nextOperation(void)
             GBCPU_LD(&REG_H, REG_L);
             break;
         case 0x66:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             GBCPU_LD(&REG_H, n);
             break;
             
@@ -330,45 +330,45 @@ void GBCPU_nextOperation(void)
             GBCPU_LD(&REG_L, REG_L);
             break;
         case 0x6E:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             GBCPU_LD(&REG_L, n);
             break;
             
         case 0x70:
-            GBMemory_writeWordAt(REG_HL, REG_B);
+            GBMemoryWriteWordAt(REG_HL, REG_B);
             break;
         case 0x71:
-            GBMemory_writeWordAt(REG_HL, REG_C);
+            GBMemoryWriteWordAt(REG_HL, REG_C);
             break;
         case 0x72:
-            GBMemory_writeWordAt(REG_HL, REG_D);
+            GBMemoryWriteWordAt(REG_HL, REG_D);
             break;
         case 0x73:
-            GBMemory_writeWordAt(REG_HL, REG_E);
+            GBMemoryWriteWordAt(REG_HL, REG_E);
             break;
         case 0x74:
-            GBMemory_writeWordAt(REG_HL, REG_H);
+            GBMemoryWriteWordAt(REG_HL, REG_H);
             break;
         case 0x75:
-            GBMemory_writeWordAt(REG_HL, REG_L);
+            GBMemoryWriteWordAt(REG_HL, REG_L);
             break;
         case 0x36:
             n = GBCPU_readOperationWordParameter();
-            GBMemory_writeWordAt(REG_HL, n);
+            GBMemoryWriteWordAt(REG_HL, n);
             break;
             
             //GBCPU_LD A, n
         case 0x0A:
-            n = GBMemory_getWordAt(REG_BC);
+            n = GBMemoryGetWordAt(REG_BC);
             GBCPU_LD(&REG_A, n);
             break;
         case 0x1A:
-            n = GBMemory_getWordAt(REG_DE);
+            n = GBMemoryGetWordAt(REG_DE);
             GBCPU_LD(&REG_A, n);
             break;
         case 0xFA:
             nn = GBCPU_readOperationDwordParameter();
-            n = GBMemory_getWordAt(nn);
+            n = GBMemoryGetWordAt(nn);
             GBCPU_LD(&REG_A, n);
             break;
         case 0x3E:
@@ -396,66 +396,66 @@ void GBCPU_nextOperation(void)
             GBCPU_LD(&REG_L, REG_A);
             break;
         case 0x02:
-            GBMemory_writeWordAt(REG_BC, REG_A);
+            GBMemoryWriteWordAt(REG_BC, REG_A);
             break;
         case 0x12:
-            GBMemory_writeWordAt(REG_DE, REG_A);
+            GBMemoryWriteWordAt(REG_DE, REG_A);
             break;
         case 0x77:
-            GBMemory_writeWordAt(REG_HL, REG_A);
+            GBMemoryWriteWordAt(REG_HL, REG_A);
             break;
         case 0xEA:
             nn = GBCPU_readOperationDwordParameter();
-            GBMemory_writeWordAt(nn, REG_A);
+            GBMemoryWriteWordAt(nn, REG_A);
             break;
             
             //GBCPU_LD A, (C)
         case 0xF2:
-            n = GBMemory_getWordAt(0xFF00 + REG_C);
+            n = GBMemoryGetWordAt(0xFF00 + REG_C);
             GBCPU_LD(&REG_A, n);
             break;
             
             //GBCPU_LD (C), A
         case 0xE2:
-            GBMemory_writeWordAt(0xFF00 + REG_C, REG_A);
+            GBMemoryWriteWordAt(0xFF00 + REG_C, REG_A);
             break;
             
             //GBCPU_LDD A, (HL)
         case 0x3A:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             GBCPU_LD(&REG_A, n);
             GBCPU_DEC16_HL(&REG_H, &REG_L);
             break;
             
             //GBCPU_LDD (HL), A
         case 0x32:
-            GBMemory_writeWordAt(REG_HL, REG_A);
+            GBMemoryWriteWordAt(REG_HL, REG_A);
             GBCPU_DEC16_HL(&REG_H, &REG_L);
             break;
             
             //GBCPU_LDI A, (HL)
         case 0x2A: 
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             GBCPU_LD(&REG_A, n);
             GBCPU_INC16_HL(&REG_H, &REG_L);
             break;
             
             //GBCPU_LDI (HL), A
         case 0x22:
-            GBMemory_writeWordAt(REG_HL, REG_A);
+            GBMemoryWriteWordAt(REG_HL, REG_A);
             GBCPU_INC16_HL(&REG_H, &REG_L);
             break;
             
             //GBCPU_LDH (n), A
         case 0xE0:
             n = GBCPU_readOperationWordParameter();
-            GBMemory_writeWordAt(0xFF00 + n, REG_A);
+            GBMemoryWriteWordAt(0xFF00 + n, REG_A);
             break;
             
             //GBCPU_LDH A, (n)
         case 0xF0:
             n = GBCPU_readOperationWordParameter();
-            n = GBMemory_getWordAt(0xFF00 + n);
+            n = GBMemoryGetWordAt(0xFF00 + n);
             GBCPU_LD(&REG_A, n);
             
             //16-bit ops
@@ -500,45 +500,45 @@ void GBCPU_nextOperation(void)
             //GBCPU_LD (nn), SP
         case 0x08:
             nn = GBCPU_readOperationDwordParameter();
-            GBMemory_writeDwordAt(nn, REG_SP);
+            GBMemoryWriteDwordAt(nn, REG_SP);
             break;
             
             //PUSH nn
         case 0xF5:
-            GBMemory_writeDwordAt(REG_SP, REG_AF);
+            GBMemoryWriteDwordAt(REG_SP, REG_AF);
             REG_SP -= 2;
             break;
         case 0xC5:
-            GBMemory_writeDwordAt(REG_SP, REG_BC);
+            GBMemoryWriteDwordAt(REG_SP, REG_BC);
             REG_SP -= 2;
             break;
         case 0xD5:
-            GBMemory_writeDwordAt(REG_SP, REG_DE);
+            GBMemoryWriteDwordAt(REG_SP, REG_DE);
             REG_SP -= 2;
             break;
         case 0xE5:
-            GBMemory_writeDwordAt(REG_SP, REG_HL);
+            GBMemoryWriteDwordAt(REG_SP, REG_HL);
             REG_SP -= 2;
             break;
             
             //POP nn
         case 0xF1:
-            nn = GBMemory_getDwordAt(REG_SP);
+            nn = GBMemoryGetDwordAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_A, &REG_F);
             REG_SP += 2;
             break;
         case 0xC1:
-            nn = GBMemory_getDwordAt(REG_SP);
+            nn = GBMemoryGetDwordAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_B, &REG_C);
             REG_SP += 2;
             break;
         case 0xD1:
-            nn = GBMemory_getDwordAt(REG_SP);
+            nn = GBMemoryGetDwordAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_D, &REG_E);
             REG_SP += 2;
             break;
         case 0xE1:
-            nn = GBMemory_getDwordAt(REG_SP);
+            nn = GBMemoryGetDwordAt(REG_SP);
             HL_FROM_DWORD(nn, &REG_H, &REG_L);
             REG_SP += 2;
             break;
@@ -593,7 +593,7 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0x86:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             ADD(n);
             GBCPU_setFlagZ(ALU_FLAG_Z);
             GBCPU_setFlagN(0);
@@ -668,7 +668,7 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0x8E:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             ADD(n + GBCPU_getFlagC());
             GBCPU_setFlagZ(ALU_FLAG_Z);
             GBCPU_setFlagN(0);
@@ -743,7 +743,7 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0x96:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             SUB(n);
             GBCPU_setFlagZ(ALU_FLAG_Z);
             GBCPU_setFlagN(1);
@@ -818,7 +818,7 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0x9E:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             SUB(n + GBCPU_getFlagC());
             GBCPU_setFlagZ(ALU_FLAG_Z);
             GBCPU_setFlagN(1);
@@ -893,7 +893,7 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0xA6:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             AND(n);
             GBCPU_setFlagZ(ALU_FLAG_Z);
             GBCPU_setFlagN(0);
@@ -968,7 +968,7 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0xB6:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             OR(n);
             GBCPU_setFlagZ(ALU_FLAG_Z);
             GBCPU_setFlagN(0);
@@ -1043,7 +1043,7 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0xAE:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             XOR(n);
             GBCPU_setFlagZ(ALU_FLAG_Z);
             GBCPU_setFlagN(0);
@@ -1118,7 +1118,7 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0xBE:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             CP(n);
             GBCPU_setFlagZ(ALU_FLAG_Z);
             GBCPU_setFlagN(1);
@@ -1186,9 +1186,9 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0x34:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             INC(&n);
-            GBMemory_writeWordAt(REG_HL, n);
+            GBMemoryWriteWordAt(REG_HL, n);
             
             GBCPU_setFlagZ(ALU_FLAG_Z);
             GBCPU_setFlagN(0);
@@ -1246,9 +1246,9 @@ void GBCPU_nextOperation(void)
             break;
             
         case 0x35:
-            n = GBMemory_getWordAt(REG_HL);
+            n = GBMemoryGetWordAt(REG_HL);
             DEC(&n);
-            GBMemory_writeWordAt(REG_HL, n);
+            GBMemoryWriteWordAt(REG_HL, n);
             
             GBCPU_setFlagZ(ALU_FLAG_Z);
             GBCPU_setFlagN(1);
@@ -1411,9 +1411,9 @@ void GBCPU_nextOperation(void)
                     break;
                     
                 case 0x36:
-                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemoryGetWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     SWAP(&n);
-                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemoryWriteWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     GBCPU_setFlagZ(ALU_FLAG_Z);
                     GBCPU_setFlagN(0);
                     GBCPU_setFlagH(0);
@@ -1479,9 +1479,9 @@ void GBCPU_nextOperation(void)
                     break;
                     
                 case 0x06:
-                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemoryGetWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     RLC(&n);
-                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemoryWriteWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     GBCPU_setFlagZ(ALU_FLAG_Z);
                     GBCPU_setFlagN(0);
@@ -1547,9 +1547,9 @@ void GBCPU_nextOperation(void)
                     break;
                     
                 case 0x16:
-                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemoryGetWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     RL(&n);
-                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemoryWriteWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     GBCPU_setFlagZ(ALU_FLAG_Z);
                     GBCPU_setFlagN(0);
@@ -1615,9 +1615,9 @@ void GBCPU_nextOperation(void)
                     break;
                     
                 case 0x0E:
-                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemoryGetWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     RRC(&n);
-                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemoryWriteWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     GBCPU_setFlagZ(ALU_FLAG_Z);
                     GBCPU_setFlagN(0);
@@ -1683,9 +1683,9 @@ void GBCPU_nextOperation(void)
                     break;
                     
                 case 0x1E:
-                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemoryGetWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     RR(&n);
-                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemoryWriteWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     GBCPU_setFlagZ(ALU_FLAG_Z);
                     GBCPU_setFlagN(0);
@@ -1751,9 +1751,9 @@ void GBCPU_nextOperation(void)
                     break;
                     
                 case 0x26:
-                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemoryGetWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     SLA(&n);
-                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemoryWriteWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     GBCPU_setFlagZ(ALU_FLAG_Z);
                     GBCPU_setFlagN(0);
@@ -1819,9 +1819,9 @@ void GBCPU_nextOperation(void)
                     break;
                     
                 case 0x2E:
-                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemoryGetWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     SRA(&n);
-                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemoryWriteWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     GBCPU_setFlagZ(ALU_FLAG_Z);
                     GBCPU_setFlagN(0);
@@ -1887,9 +1887,9 @@ void GBCPU_nextOperation(void)
                     break;
                     
                 case 0x3E:
-                    n = GBMemory_getWordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    n = GBMemoryGetWordAt(DWORD_FROM_HL(REG_H, REG_L));
                     SRL(&n);
-                    GBMemory_writeWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
+                    GBMemoryWriteWordAt(DWORD_FROM_HL(REG_H, REG_L), n);
                     
                     GBCPU_setFlagZ(ALU_FLAG_Z);
                     GBCPU_setFlagN(0);
@@ -1956,7 +1956,7 @@ void GBCPU_nextOperation(void)
                     
                 case 0x46: {
                     n = GBCPU_readOperationWordParameter();
-                    int8_t n2 = GBMemory_getDwordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    int8_t n2 = GBMemoryGetDwordAt(DWORD_FROM_HL(REG_H, REG_L));
                     BIT(n2, n);
                     GBCPU_setFlagZ(ALU_FLAG_Z);
                     GBCPU_setFlagN(0);
@@ -2003,7 +2003,7 @@ void GBCPU_nextOperation(void)
                     
                 case 0xC6: {
                     n = GBCPU_readOperationWordParameter();
-                    int8_t n2 = GBMemory_getDwordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    int8_t n2 = GBMemoryGetDwordAt(DWORD_FROM_HL(REG_H, REG_L));
                     SET(&n2, n);
                     break;
                 }
@@ -2046,7 +2046,7 @@ void GBCPU_nextOperation(void)
                     
                 case 0x86: {
                     n = GBCPU_readOperationWordParameter();
-                    int8_t n2 = GBMemory_getDwordAt(DWORD_FROM_HL(REG_H, REG_L));
+                    int8_t n2 = GBMemoryGetDwordAt(DWORD_FROM_HL(REG_H, REG_L));
                     RES(&n2, n);
                     break;
                 }
@@ -2239,7 +2239,7 @@ void GBCPU_nextOperation(void)
         //CALL nn
         case 0xCD:
             nn = GBCPU_readOperationDwordParameter();
-            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = nn;
             break;
@@ -2248,7 +2248,7 @@ void GBCPU_nextOperation(void)
         case 0xC4:
             nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagZ() == 0) {
-                GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+                GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
                 REG_PC = nn;
             }
@@ -2257,7 +2257,7 @@ void GBCPU_nextOperation(void)
         case 0xCC:
             nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagZ() == 1) {
-                GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+                GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
                 REG_PC = nn;
             }
@@ -2266,7 +2266,7 @@ void GBCPU_nextOperation(void)
         case 0xD4:
             nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagC() == 0) {
-                GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+                GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
                 REG_PC = nn;
             }
@@ -2275,7 +2275,7 @@ void GBCPU_nextOperation(void)
         case 0xDD:
             nn = GBCPU_readOperationDwordParameter();
             if (GBCPU_getFlagC() == 1) {
-                GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+                GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
                 REG_SP -= 2;
                 REG_PC = nn;
             }
@@ -2283,84 +2283,84 @@ void GBCPU_nextOperation(void)
             
         //RST n
         case 0xC7:
-            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x00;
             break;
         
         case 0xCF:
-            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x08;
             break;
             
         case 0xD7:
-            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x10;
             break;
             
         case 0xDF:
-            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x08;
             break;
             
         case 0xE7:
-            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x20;
             break;
             
         case 0xEF:
-            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x28;
             break;
             
         case 0xF7:
-            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x30;
             break;
             
         case 0xFF:
-            GBMemory_writeDwordAt(REG_SP - 2, REG_PC);
+            GBMemoryWriteDwordAt(REG_SP - 2, REG_PC);
             REG_SP -= 2;
             REG_PC = 0x38;
             break;
             
         //RET
         case 0xC9:
-            REG_PC = GBMemory_getDwordAt(REG_SP);
+            REG_PC = GBMemoryGetDwordAt(REG_SP);
             REG_SP += 2;
             break;
             
         //RET cc
         case 0xC0:
             if (GBCPU_getFlagZ() == 0) {
-                REG_PC = GBMemory_getDwordAt(REG_SP);
+                REG_PC = GBMemoryGetDwordAt(REG_SP);
                 REG_SP += 2;
             }
             break;
             
         case 0xC8:
             if (GBCPU_getFlagZ() == 1) {
-                REG_PC = GBMemory_getDwordAt(REG_SP);
+                REG_PC = GBMemoryGetDwordAt(REG_SP);
                 REG_SP += 2;
             }
             break;
             
         case 0xD0:
             if (GBCPU_getFlagC() == 0) {
-                REG_PC = GBMemory_getDwordAt(REG_SP);
+                REG_PC = GBMemoryGetDwordAt(REG_SP);
                 REG_SP += 2;
             }
             break;
             
         case 0xD8:
             if (GBCPU_getFlagC() == 1) {
-                REG_PC = GBMemory_getDwordAt(REG_SP);
+                REG_PC = GBMemoryGetDwordAt(REG_SP);
                 REG_SP += 2;
             }
             break;
@@ -2368,7 +2368,7 @@ void GBCPU_nextOperation(void)
         
         //RETI
         case 0xD9:
-            REG_PC = GBMemory_getDwordAt(REG_SP);
+            REG_PC = GBMemoryGetDwordAt(REG_SP);
             REG_SP += 2;
             GBCPU_setInterruptsEnabled(true);
             break;

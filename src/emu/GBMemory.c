@@ -15,34 +15,25 @@
 #include "GBMemory.h"
 #include "GBUtils.h"
 
-GBMemoryAddress const GBMemoryAddressRomBank0Start = 0x0000;
-GBMemoryAddress const GBMemoryAddressRomBank0End = 0x3FFF;
+GBMemoryRange const GBMemoryAddressRomBank0 = {.start = 0x0000, .end = 0x3FFF};
+GBMemoryRange const GBMemoryAddressRomBankSwitchable = {.start = 0x4000, .end = 0x7FFF};
+GBMemoryRange const GBMemoryAddressVideoRam = {.start = 0x8000, .end = 0x9FFF};
+GBMemoryRange const GBMemoryAddressSwitchableRamBank = {.start = 0xA000, .end = 0xBFFF};
+GBMemoryRange const GBMemoryAddressInternalRAM = {.start = 0xC000, .end = 0xDFFF};
+GBMemoryRange const GBMemoryAddressInternalRAMEcho = {.start = 0xE000, .end = 0xFDFF};
+GBMemoryRange const GBMemoryAddressOAMStart = {.start = 0xFE00, .end = 0xFE9F};
+GBMemoryRange const GBMemoryAddressIOPorts = {.start = 0xFF00, .end = 0xFF4B};
+GBMemoryRange const GBMemoryAddressInternalRAM1 = {.start = 0xFF80, .end = 0xFF4B};
+GBMemoryRange const GBMemoryAddressInterruptEnableRegister = {.start = 0xFFFF, .end = 0xFFFF};
 
-GBMemoryAddress const GBMemoryAddressRomBankSwitchableStart = 0x4000;
-GBMemoryAddress const GBMemoryAddressRomBankSwitchableEnd = 0x7FFF;
+GBMemoryRange GBMemoryRangeMake(GBMemoryAddress start, GBMemoryAddress end){
+    GBMemoryRange result = {.start = start, .end = end};
+    return result;
+}
 
-GBMemoryAddress const GBMemoryAddressVideoRamStart = 0x8000;
-GBMemoryAddress const GBMemoryAddressVideoRamEnd = 0x9FFF;
-
-GBMemoryAddress const GBMemoryAddressSwitchableRamBankStart = 0xA000;
-GBMemoryAddress const GBMemoryAddressSwitchableRamBankEnd = 0xBFFF;
-
-GBMemoryAddress const GBMemoryAddressInternalRAM0Start = 0xC000;
-GBMemoryAddress const GBMemoryAddressInternalRAM0End = 0xDFFF;
-
-GBMemoryAddress const GBMemoryAddressInternalRAMEchoStart = 0xE000;
-GBMemoryAddress const GBMemoryAddressInternalRAMEchoEnd = 0xFDFF;
-
-GBMemoryAddress const GBMemoryAddressOAMStart = 0xFE00;
-GBMemoryAddress const GBMemoryAddressOAMEnd = 0xFE9F;
-
-GBMemoryAddress const GBMemoryAddressIOPortsStart = 0xFF00;
-GBMemoryAddress const GBMemoryAddressIOPortsEnd = 0xFF4B;
-
-GBMemoryAddress const GBMemoryAddressInternalRAM1Start = 0xFF80;
-GBMemoryAddress const GBMemoryAddressInternalRAM1End = 0xFFFE;
-
-GBMemoryAddress const GBMemoryAddressInterruptEnableRegister = 0xFFFF;
+bool GBMemoryRangeContains(GBMemoryRange range, GBMemoryAddress address){
+    return (address >= range.start) && (address <= range.end);
+}
 
 struct {
     GBMemoryWord *data;
@@ -50,7 +41,7 @@ struct {
     GBMemoryMode memoryMode;
 }GBMemory;
 
-void GBMemory_setData(const GBMemoryWord *data, uint16_t dataLength, GBMemoryMode memoryMode)
+void GBMemorySetData(const GBMemoryWord *data, uint16_t dataLength, GBMemoryMode memoryMode)
 {
     GBMemory.memoryMode = memoryMode;
     GBMemory.dataLength = dataLength;
@@ -59,32 +50,32 @@ void GBMemory_setData(const GBMemoryWord *data, uint16_t dataLength, GBMemoryMod
     memcpy(GBMemory.data, data, dataLength);
 }
 
-void GBMemory_freeData()
+void GBMemoryFreeData()
 {
     free(GBMemory.data);
     GBMemory.dataLength = -1;
 }
 
-void GBMemory_setMemoryMode(GBMemoryMode memoryMode)
+void GBMemorySetMemoryMode(GBMemoryMode memoryMode)
 {
     GBMemory.memoryMode = memoryMode;
 }
 
-GBMemoryMode GBMemory_memoryMode()
+GBMemoryMode GBMemoryMemoryMode()
 {
     return GBMemory.memoryMode;
 }
 
-GBMemoryWord GBMemory_getWordAt(GBMemoryAddress address)
+GBMemoryWord GBMemoryGetWordAt(GBMemoryAddress address)
 {
     GBMemoryWord result = GBMemory.data[address];
     return result;
 }
 
-GBMemoryDWord GBMemory_getDwordAt(GBMemoryAddress address)
+GBMemoryDWord GBMemoryGetDwordAt(GBMemoryAddress address)
 {
-    GBMemoryWord w1 = GBMemory_getWordAt(address);
-    GBMemoryWord w2 = GBMemory_getWordAt(address + 1);
+    GBMemoryWord w1 = GBMemoryGetWordAt(address);
+    GBMemoryWord w2 = GBMemoryGetWordAt(address + 1);
     if (GBMemory.memoryMode == GBMemoryModeLittleEndian) {
         SWAP_XY(&w1, &w2);
     }
@@ -93,18 +84,18 @@ GBMemoryDWord GBMemory_getDwordAt(GBMemoryAddress address)
     return result;
 }
 
-void GBMemory_writeWordAt(GBMemoryAddress address, GBMemoryWord value)
+void GBMemoryWriteWordAt(GBMemoryAddress address, GBMemoryWord value)
 {
     GBMemory.data[address] = value;
 }
 
-void GBMemory_writeDwordAt(GBMemoryAddress address, GBMemoryDWord value)
+void GBMemoryWriteDwordAt(GBMemoryAddress address, GBMemoryDWord value)
 {
     GBMemoryWord w1, w2;
     HL_FROM_DWORD(value, &w1, &w2);
     if (GBMemory.memoryMode == GBMemoryModeLittleEndian) {
         SWAP_XY(&w1, &w2);
     }
-    GBMemory_writeWordAt(address, w1);
-    GBMemory_writeWordAt(address + 1, w2);
+    GBMemoryWriteWordAt(address, w1);
+    GBMemoryWriteWordAt(address + 1, w2);
 }
